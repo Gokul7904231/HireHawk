@@ -27,3 +27,10 @@
 - **Tests**: 1 passed, 0 failed
 - **Status**: Completed tracker-mcp server with mock_db.py in MOCK_MODE (persisting to mock_tracker_data.json) and Supabase client fallback. Wrapped all 7 tools with @self_healing and supabase_breaker. Verified CRUD + stats pipeline via pytest.
 - **Blockers**: None
+
+## Phase 4 — jd-parser-mcp
+- **Started**: 2026-06-14T14:40:00+05:30
+- **Completed**: 2026-06-14T15:10:00+05:30
+- **Tests**: 4 passed, 0 failed
+- **Status**: Completed jd-parser-mcp server with mock branching utilizing fixtures/sample_jd_signals.json. Wrapped all 5 tools with @self_healing and firecrawl_breaker/llm_breaker. Verified output structure and correct parsing shapes via pytest.
+- **Blockers**: None

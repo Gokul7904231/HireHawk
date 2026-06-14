@@ -99,13 +99,23 @@ async def get_culture_keywords_endpoint(payload: dict):
         raise HTTPException(status_code=500, detail=res["error"])
     return res
 
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "server": "jd-parser-mcp",
+        "circuit_breakers": {
+            "firecrawl": tools.firecrawl_breaker.state,
+            "llm": tools.llm_breaker.state
+        }
+    }
+
 @app.get("/")
 async def health():
     """
     Standard HTTP health check endpoint.
     """
     return {"status": "ok", "server": "jd-parser-mcp"}
-
 
 # Mount FastMCP SSE application onto FastAPI AFTER standard routes to avoid shadowing
 app.mount("/", mcp.sse_app())
