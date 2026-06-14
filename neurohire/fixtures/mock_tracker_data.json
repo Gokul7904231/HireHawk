@@ -11,6 +11,18 @@
       "applied_at": "2026-06-14T08:51:49.438489",
       "last_activity": "2026-06-14T08:51:49.440289",
       "notes": null
+    },
+    {
+      "id": "0ca9fd62-bb98-497a-9048-5f84acd6b74d",
+      "company": "Breathe ESG",
+      "role": "AI Engineer Intern",
+      "jd_url": null,
+      "fit_score": 0.95,
+      "resume_version": "v1.0",
+      "status": "applied",
+      "applied_at": "2026-06-14T09:09:00.188484",
+      "last_activity": "2026-06-14T09:09:00.189416",
+      "notes": null
     }
   ],
   "events": [
@@ -27,6 +39,13 @@
       "event_type": "interview",
       "note": "Status updated to interview",
       "created_at": "2026-06-14T08:51:49.440276"
+    },
+    {
+      "id": "9aee6ea6-925b-41c2-b69c-48112a852217",
+      "app_id": "0ca9fd62-bb98-497a-9048-5f84acd6b74d",
+      "event_type": "applied",
+      "note": "Applied to Breathe ESG as AI Engineer Intern",
+      "created_at": "2026-06-14T09:09:00.189400"
     }
   ],
   "drafts": [
@@ -36,6 +55,13 @@
       "draft_type": "cold_email",
       "content": "This is a test cold email content",
       "created_at": "2026-06-14T09:05:00.999230"
+    },
+    {
+      "id": "7bcea20b-bcc4-4e37-8f43-e9892325293a",
+      "app_id": "0ca9fd62-bb98-497a-9048-5f84acd6b74d",
+      "draft_type": "cold_email",
+      "content": "Hi there,\n\nYour work on sustainable ESG metrics at Breathe ESG caught my eye. I recently shipped Sentixcare (huggingface.co/spaces/Gokul7904231/sentixcare), a multimodal emotion recognition AI, and CineRAG, a conversational RAG agent, which align well with your tech stack.\n\nI'm a B.Tech CS student at Crescent College and recently finished a RAG-based document Q&A internship at Infosys. I'd love to chat about how my experience in Python and LLMs can help you build reporting agents as an AI Engineer Intern.\n\nWould you be open to a 10-minute call this week?\n\nBest,\nGokul",
+      "created_at": "2026-06-14T09:09:03.212567"
     }
   ]
 }

@@ -48,3 +48,52 @@
 - **Tests**: 4 passed, 0 failed
 - **Status**: Completed outreach-mcp server with templates.py generating mock emails, referrals, and cover letters. Wrapped all 5 tools with @self_healing and llm_breaker. Enforced F1 word-count checks and implemented a direct tracker mock_db write-back fallback. Verified correct generation lengths and draft-saving via pytest.
 - **Blockers**: None
+
+## Phase 7 — Integration smoke test
+- **Started**: 2026-06-14T16:05:00+05:30
+- **Completed**: 2026-06-14T16:20:00+05:30
+- **Tests**: E2E Integration Pipeline (7/7 steps passed)
+- **Status**: Verified end-to-end integration flow programmatically launching all 5 servers on ports 8001–8005 in MOCK_MODE=true. Validated candidate profile retrieval, JD parsing, company intelligence lookup, tailored email generation (< 150 words), application tracking database insertion, email draft saving, and application verification.
+- **Blockers**: None
+
+### Integration Test Output
+```
+Starting integration test. Launching 5 servers programmatically...
+Launching resume-mcp on port 8001 in C:\Users\ASUS\OneDrive\Desktop\123\Hirepros\neurohire\mcp_servers\resume_mcp...
+Launching jd-parser-mcp on port 8002 in C:\Users\ASUS\OneDrive\Desktop\123\Hirepros\neurohire\mcp_servers\jd_parser_mcp...
+Launching tracker-mcp on port 8003 in C:\Users\ASUS\OneDrive\Desktop\123\Hirepros\neurohire\mcp_servers\tracker_mcp...
+Launching company-intel-mcp on port 8004 in C:\Users\ASUS\OneDrive\Desktop\123\Hirepros\neurohire\mcp_servers\company_intel_mcp...
+Launching outreach-mcp on port 8005 in C:\Users\ASUS\OneDrive\Desktop\123\Hirepros\neurohire\mcp_servers\outreach_mcp...
+Waiting for servers to initialize...
+All servers are healthy and ready!
+
+=== STARTING E2E INTEGRATION PIPELINE ===
+
+Step 1: Fetching candidate profile...
+Candidate Profile: Gokul <gokul32499@gmail.com>
+
+Step 2: Parsing Job Description URL...
+JD Signals: Breathe ESG - AI Engineer Intern (Domain: ai)
+
+Step 3: Fetching Company Intelligence...
+Company Intel: Breathe ESG - Funding: series_a
+
+Step 4: Generating Tailored Cold Email...
+Cold Email Generated (Subject: AI / RAG projects for Breathe ESG)
+Word Count: 90 (Limit < 150)
+
+Step 5: Logging Application to Tracker...
+Logged Application. ID: 0ca9fd62-bb98-497a-9048-5f84acd6b74d
+
+Step 6: Saving Cold Email Draft Linked to Application...
+Saved Draft. Success: True
+
+Step 7: Verifying Draft Logged in Tracker DB...
+Verified! Application in DB: Breathe ESG - AI Engineer Intern (Status: applied)
+
+=== ALL E2E PIPELINE STEPS PASSED SUCCESSFULLY ===
+
+Tearing down servers...
+Tear down complete.
+```
+
