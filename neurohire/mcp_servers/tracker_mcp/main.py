@@ -147,13 +147,22 @@ async def get_stats_endpoint():
         raise HTTPException(status_code=500, detail=res["error"])
     return res
 
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "server": "tracker-mcp",
+        "circuit_breakers": {
+            "supabase": tools.supabase_breaker.state
+        }
+    }
+
 @app.get("/")
 async def health():
     """
     Standard HTTP health check endpoint.
     """
     return {"status": "ok", "server": "tracker-mcp"}
-
 
 # Mount FastMCP SSE application onto FastAPI AFTER standard routes to avoid shadowing
 app.mount("/", mcp.sse_app())

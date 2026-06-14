@@ -1,1 +1,33 @@
-[]
+{
+  "applications": [
+    {
+      "id": "f43e8a63-be69-4048-96f4-119db25b2c19",
+      "company": "Breathe ESG",
+      "role": "AI Engineer Intern",
+      "jd_url": null,
+      "fit_score": 0.91,
+      "resume_version": null,
+      "status": "interview",
+      "applied_at": "2026-06-14T08:51:49.438489",
+      "last_activity": "2026-06-14T08:51:49.440289",
+      "notes": null
+    }
+  ],
+  "events": [
+    {
+      "id": "225d3fb2-e3b9-4def-b2cc-0c9e5bc38e42",
+      "app_id": "f43e8a63-be69-4048-96f4-119db25b2c19",
+      "event_type": "applied",
+      "note": "Applied to Breathe ESG as AI Engineer Intern",
+      "created_at": "2026-06-14T08:51:49.439218"
+    },
+    {
+      "id": "c012ecc5-59fb-4eae-bd12-f4ad01449930",
+      "app_id": "f43e8a63-be69-4048-96f4-119db25b2c19",
+      "event_type": "interview",
+      "note": "Status updated to interview",
+      "created_at": "2026-06-14T08:51:49.440276"
+    }
+  ],
+  "drafts": []
+}

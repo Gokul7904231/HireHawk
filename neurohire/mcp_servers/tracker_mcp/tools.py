@@ -1,15 +1,20 @@
 import logging
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone, timedelta
-from config import supabase
+from config import supabase, MOCK_MODE
+from mock_db import mock_db
 from models import ApplicationRecord, EventRecord, DraftRecord
+from mcp_servers.shared.self_healing import self_healing, CircuitBreaker
 
 logger = logging.getLogger(__name__)
+
+supabase_breaker = CircuitBreaker(failure_threshold=3, recovery_timeout=30.0)
 
 def check_supabase():
     if supabase is None:
         raise ValueError("Supabase client is not initialized. Please configure SUPABASE_URL and SUPABASE_KEY in .env.")
 
+@self_healing(max_retries=3, base_delay=0.5, fallback_value={"success": False, "error": "tracker unavailable"})
 async def add_application(
     company: str,
     role: str,
@@ -22,7 +27,18 @@ async def add_application(
     Add a new job application to the tracker.
     Returns the application ID and success status.
     """
-    try:
+    if MOCK_MODE:
+        app_id = mock_db.add_application(
+            company=company,
+            role=role,
+            jd_url=jd_url,
+            fit_score=fit_score,
+            resume_version=resume_version,
+            notes=notes
+        )
+        return {"id": app_id, "success": True}
+
+    async def _run():
         check_supabase()
         data = {
             "company": company,
@@ -40,16 +56,20 @@ async def add_application(
             raise Exception("No data returned from insert operation.")
         new_uuid = res.data[0]["id"]
         return {"id": new_uuid, "success": True}
-    except Exception as e:
-        logger.error(f"Error in add_application: {e}")
-        return {"error": str(e), "success": False}
 
+    return await supabase_breaker.call(_run)
+
+@self_healing(max_retries=3, base_delay=0.5, fallback_value={"success": False, "error": "tracker unavailable"})
 async def update_status(app_id: str, status: str) -> Dict[str, Any]:
     """
     Update the status of a job application.
     Also logs an event row and updates last_activity.
     """
-    try:
+    if MOCK_MODE:
+        success = mock_db.update_status(app_id, status)
+        return {"success": success}
+
+    async def _run():
         check_supabase()
         now_str = datetime.now(timezone.utc).isoformat()
         # Update application
@@ -69,33 +89,39 @@ async def update_status(app_id: str, status: str) -> Dict[str, Any]:
         }).execute()
 
         return {"success": True}
-    except Exception as e:
-        logger.error(f"Error in update_status: {e}")
-        return {"error": str(e), "success": False}
 
+    return await supabase_breaker.call(_run)
+
+@self_healing(max_retries=3, base_delay=0.5, fallback_value={"error": "tracker unavailable", "success": False})
 async def get_applications(status_filter: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]] | Dict[str, Any]:
     """
     Get job applications from the tracker.
     Can be filtered by status, and defaults to a limit of 50.
     """
-    try:
+    if MOCK_MODE:
+        return mock_db.get_applications(status_filter, limit)
+
+    async def _run():
         check_supabase()
         query = supabase.table("applications").select("*")
         if status_filter:
             query = query.eq("status", status_filter)
         res = query.order("last_activity", desc=True).limit(limit).execute()
         return res.data
-    except Exception as e:
-        logger.error(f"Error in get_applications: {e}")
-        return {"error": str(e), "success": False}
 
+    return await supabase_breaker.call(_run)
+
+@self_healing(max_retries=3, base_delay=0.5, fallback_value={"error": "tracker unavailable", "success": False})
 async def get_followups_due(days_threshold: int = 7) -> List[Dict[str, Any]] | Dict[str, Any]:
     """
     Get applications that require follow-up.
     Returns applications where last_activity is older than the days_threshold,
     excluding 'rejected' and 'offer' states.
     """
-    try:
+    if MOCK_MODE:
+        return mock_db.get_followups_due(days_threshold)
+
+    async def _run():
         check_supabase()
         cutoff = (datetime.now(timezone.utc) - timedelta(days=days_threshold)).isoformat()
         res = supabase.table("applications").select("*")\
@@ -104,16 +130,20 @@ async def get_followups_due(days_threshold: int = 7) -> List[Dict[str, Any]] | D
             .neq("status", "offer")\
             .execute()
         return res.data
-    except Exception as e:
-        logger.error(f"Error in get_followups_due: {e}")
-        return {"error": str(e), "success": False}
 
+    return await supabase_breaker.call(_run)
+
+@self_healing(max_retries=3, base_delay=0.5, fallback_value={"success": False, "error": "tracker unavailable"})
 async def log_event(app_id: str, event_type: str, note: Optional[str] = None) -> Dict[str, Any]:
     """
     Log a communication or pipeline event for an application.
     Updates last_activity on the application.
     """
-    try:
+    if MOCK_MODE:
+        success = mock_db.log_event(app_id, event_type, note)
+        return {"success": success}
+
+    async def _run():
         check_supabase()
         now_str = datetime.now(timezone.utc).isoformat()
         
@@ -130,15 +160,19 @@ async def log_event(app_id: str, event_type: str, note: Optional[str] = None) ->
         }).eq("id", app_id).execute()
 
         return {"success": True}
-    except Exception as e:
-        logger.error(f"Error in log_event: {e}")
-        return {"error": str(e), "success": False}
 
+    return await supabase_breaker.call(_run)
+
+@self_healing(max_retries=3, base_delay=0.5, fallback_value={"success": False, "error": "tracker unavailable"})
 async def save_draft(app_id: str, draft_type: str, content: str) -> Dict[str, Any]:
     """
     Save generated outreach templates (cold email, referral, cover letter) for an application.
     """
-    try:
+    if MOCK_MODE:
+        draft_id = mock_db.save_draft(app_id, draft_type, content)
+        return {"id": draft_id, "success": True}
+
+    async def _run():
         check_supabase()
         data = {
             "app_id": app_id,
@@ -150,16 +184,19 @@ async def save_draft(app_id: str, draft_type: str, content: str) -> Dict[str, An
             raise Exception("No data returned from insert draft operation.")
         new_uuid = res.data[0]["id"]
         return {"id": new_uuid, "success": True}
-    except Exception as e:
-        logger.error(f"Error in save_draft: {e}")
-        return {"error": str(e), "success": False}
 
+    return await supabase_breaker.call(_run)
+
+@self_healing(max_retries=3, base_delay=0.5, fallback_value={"error": "tracker unavailable", "success": False})
 async def get_stats() -> Dict[str, Any]:
     """
     Retrieve application tracker statistics.
     Returns total, status breakdown, average fit score, and total interviews.
     """
-    try:
+    if MOCK_MODE:
+        return mock_db.get_stats()
+
+    async def _run():
         check_supabase()
         res = supabase.table("applications").select("*").execute()
         apps = res.data
@@ -185,6 +222,5 @@ async def get_stats() -> Dict[str, Any]:
             "avg_fit_score": round(avg_fit_score, 4),
             "interviews": interviews
         }
-    except Exception as e:
-        logger.error(f"Error in get_stats: {e}")
-        return {"error": str(e), "success": False}
+
+    return await supabase_breaker.call(_run)
