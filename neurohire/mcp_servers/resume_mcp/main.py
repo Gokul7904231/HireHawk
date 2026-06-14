@@ -127,6 +127,14 @@ async def sih_achievement_endpoint():
         raise HTTPException(status_code=500, detail=res["error"])
     return res
 
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "server": "resume-mcp",
+        "circuit_breakers": {}
+    }
+
 @app.get("/")
 async def health():
     """
