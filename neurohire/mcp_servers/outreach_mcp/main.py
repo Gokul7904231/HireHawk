@@ -129,8 +129,15 @@ async def save_draft_endpoint(payload: dict):
     return res
 
 
-# Mount FastMCP SSE application onto FastAPI
-app.mount("/", mcp.sse_app())
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "server": "outreach-mcp",
+        "circuit_breakers": {
+            "llm": tools.llm_breaker.state
+        }
+    }
 
 @app.get("/")
 async def health():
@@ -138,6 +145,9 @@ async def health():
     Standard HTTP health check endpoint.
     """
     return {"status": "ok", "server": "outreach-mcp"}
+
+# Mount FastMCP SSE application onto FastAPI
+app.mount("/", mcp.sse_app())
 
 if __name__ == "__main__":
     import uvicorn
