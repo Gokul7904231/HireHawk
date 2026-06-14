@@ -34,3 +34,10 @@
 - **Tests**: 4 passed, 0 failed
 - **Status**: Completed jd-parser-mcp server with mock branching utilizing fixtures/sample_jd_signals.json. Wrapped all 5 tools with @self_healing and firecrawl_breaker/llm_breaker. Verified output structure and correct parsing shapes via pytest.
 - **Blockers**: None
+
+## Phase 5 — company-intel-mcp
+- **Started**: 2026-06-14T15:10:00+05:30
+- **Completed**: 2026-06-14T15:40:00+05:30
+- **Tests**: 5 passed, 0 failed
+- **Status**: Completed company-intel-mcp server with mock branching utilizing fixtures/sample_company_intel.json. Wrapped all 5 tools with @self_healing and firecrawl_breaker/llm_breaker. Setup NeuroHireSemanticCache wrapper inside main.py. Verified profiles, tech stack, and funding information retrieval via pytest.
+- **Blockers**: None

@@ -100,13 +100,35 @@ async def get_funding_info_endpoint(payload: dict):
         raise HTTPException(status_code=500, detail=res["error"])
     return res
 
+from mcp_servers.shared.semantic_cache import NeuroHireSemanticCache
+from config import UPSTASH_REDIS_URL, GITHUB_TOKEN, GITHUB_MODELS_ENDPOINT
+
+cache = NeuroHireSemanticCache(
+    redis_url=UPSTASH_REDIS_URL,
+    github_token=GITHUB_TOKEN,
+    github_endpoint=GITHUB_MODELS_ENDPOINT
+)
+
+# Wrap get_company_intel tool with the semantic cache decorator
+tools.get_company_intel = cache.cache_company_intel(tools.get_company_intel)
+
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "server": "company-intel-mcp",
+        "circuit_breakers": {
+            "firecrawl": tools.firecrawl_breaker.state,
+            "llm": tools.llm_breaker.state
+        }
+    }
+
 @app.get("/")
 async def health():
     """
     Standard HTTP health check endpoint.
     """
     return {"status": "ok", "server": "company-intel-mcp"}
-
 
 # Mount FastMCP SSE application onto FastAPI AFTER standard routes to avoid shadowing
 app.mount("/", mcp.sse_app())
