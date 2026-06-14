@@ -12,10 +12,10 @@ def clean_mock_db():
             os.remove(MOCK_DB_PATH)
         except Exception:
             pass
-    # Reimport/reset mock_db state
-    from mcp_servers.tracker_mcp.mock_db import mock_db
-    mock_db.data = {"applications": [], "events": [], "drafts": []}
-    mock_db.save()
+    # Reset tools.mock_db state directly to avoid dual-module import mismatch
+    if hasattr(tools, 'mock_db'):
+        tools.mock_db.data = {"applications": [], "events": [], "drafts": []}
+        tools.mock_db.save()
 
 @pytest.mark.asyncio
 async def test_tracker_flow():

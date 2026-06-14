@@ -1,67 +1,33 @@
 {
   "applications": [
     {
-      "id": "f43e8a63-be69-4048-96f4-119db25b2c19",
+      "id": "0b93700a-0484-47f4-80ee-57a6d1cd8581",
       "company": "Breathe ESG",
       "role": "AI Engineer Intern",
       "jd_url": null,
       "fit_score": 0.91,
       "resume_version": null,
       "status": "interview",
-      "applied_at": "2026-06-14T08:51:49.438489",
-      "last_activity": "2026-06-14T08:51:49.440289",
-      "notes": null
-    },
-    {
-      "id": "0ca9fd62-bb98-497a-9048-5f84acd6b74d",
-      "company": "Breathe ESG",
-      "role": "AI Engineer Intern",
-      "jd_url": null,
-      "fit_score": 0.95,
-      "resume_version": "v1.0",
-      "status": "applied",
-      "applied_at": "2026-06-14T09:09:00.188484",
-      "last_activity": "2026-06-14T09:09:00.189416",
+      "applied_at": "2026-06-14T09:13:58.505312",
+      "last_activity": "2026-06-14T09:13:58.506886",
       "notes": null
     }
   ],
   "events": [
     {
-      "id": "225d3fb2-e3b9-4def-b2cc-0c9e5bc38e42",
-      "app_id": "f43e8a63-be69-4048-96f4-119db25b2c19",
+      "id": "b1a638d9-b439-4242-8b73-faa625256e5d",
+      "app_id": "0b93700a-0484-47f4-80ee-57a6d1cd8581",
       "event_type": "applied",
       "note": "Applied to Breathe ESG as AI Engineer Intern",
-      "created_at": "2026-06-14T08:51:49.439218"
+      "created_at": "2026-06-14T09:13:58.505810"
     },
     {
-      "id": "c012ecc5-59fb-4eae-bd12-f4ad01449930",
-      "app_id": "f43e8a63-be69-4048-96f4-119db25b2c19",
+      "id": "679c255e-2109-49bc-9323-431d8d496409",
+      "app_id": "0b93700a-0484-47f4-80ee-57a6d1cd8581",
       "event_type": "interview",
       "note": "Status updated to interview",
-      "created_at": "2026-06-14T08:51:49.440276"
-    },
-    {
-      "id": "9aee6ea6-925b-41c2-b69c-48112a852217",
-      "app_id": "0ca9fd62-bb98-497a-9048-5f84acd6b74d",
-      "event_type": "applied",
-      "note": "Applied to Breathe ESG as AI Engineer Intern",
-      "created_at": "2026-06-14T09:09:00.189400"
+      "created_at": "2026-06-14T09:13:58.506873"
     }
   ],
-  "drafts": [
-    {
-      "id": "0ca71b04-48f3-4fe9-b0fd-7462e7a8eaf3",
-      "app_id": "test-app-uuid",
-      "draft_type": "cold_email",
-      "content": "This is a test cold email content",
-      "created_at": "2026-06-14T09:05:00.999230"
-    },
-    {
-      "id": "7bcea20b-bcc4-4e37-8f43-e9892325293a",
-      "app_id": "0ca9fd62-bb98-497a-9048-5f84acd6b74d",
-      "draft_type": "cold_email",
-      "content": "Hi there,\n\nYour work on sustainable ESG metrics at Breathe ESG caught my eye. I recently shipped Sentixcare (huggingface.co/spaces/Gokul7904231/sentixcare), a multimodal emotion recognition AI, and CineRAG, a conversational RAG agent, which align well with your tech stack.\n\nI'm a B.Tech CS student at Crescent College and recently finished a RAG-based document Q&A internship at Infosys. I'd love to chat about how my experience in Python and LLMs can help you build reporting agents as an AI Engineer Intern.\n\nWould you be open to a 10-minute call this week?\n\nBest,\nGokul",
-      "created_at": "2026-06-14T09:09:03.212567"
-    }
-  ]
+  "drafts": []
 }
