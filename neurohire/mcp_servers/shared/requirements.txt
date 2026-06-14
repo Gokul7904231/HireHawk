@@ -1,0 +1,7 @@
+qdrant-client
+openai
+redisvl
+redis
+python-dotenv
+pytest
+pytest-asyncio
