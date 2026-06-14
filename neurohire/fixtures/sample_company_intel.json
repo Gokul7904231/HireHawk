@@ -1,0 +1,25 @@
+{
+  "company_name": "Breathe ESG",
+  "funding_stage": "series_a",
+  "headcount": "~40",
+  "hq_location": "Bangalore, India",
+  "tech_stack": ["Django", "React", "PostgreSQL", "Python", "AWS"],
+  "glassdoor_rating": 4.2,
+  "culture_signals": ["sustainability-first", "collaborative", "high growth"],
+  "recent_news": [
+    {
+      "title": "Breathe ESG raises Series A to accelerate carbon accounting platform",
+      "summary": "Breathe ESG secured $5M in Series A funding to expand its SaaS platform helping enterprises measure and reduce scope 1, 2, and 3 emissions.",
+      "date": "2026-03-15",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Breathe ESG launches AI-powered emission tracking tools",
+      "summary": "New features automate data ingestion from utility bills and logistics reports using multimodal document extraction algorithms.",
+      "date": "2026-05-10",
+      "source": "ESG Today"
+    }
+  ],
+  "engineering_blog_url": "https://breatheesg.com/tech-blog",
+  "careers_url": "https://breatheesg.com/careers"
+}

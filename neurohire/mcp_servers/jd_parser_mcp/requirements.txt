@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+mcp[server]
+pydantic>=2.0
+firecrawl-py
+openai
+instructor
+python-dotenv

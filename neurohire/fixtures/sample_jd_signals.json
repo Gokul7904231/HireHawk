@@ -1,0 +1,13 @@
+{
+  "company_name": "Breathe ESG",
+  "role_title": "AI Engineer Intern",
+  "required_skills": ["Python", "Django", "React", "LangChain", "FastAPI"],
+  "nice_to_have_skills": ["PyTorch", "TensorFlow", "PostgreSQL", "Docker"],
+  "culture_keywords": ["sustainability", "ESG", "ownership", "fast-paced"],
+  "seniority": "intern",
+  "domain": "ai",
+  "remote_status": "hybrid",
+  "location": "Chennai, India",
+  "salary_range": "Rs 25,000 - Rs 35,000 / month",
+  "raw_text": "We are looking for an AI Engineer Intern at Breathe ESG to help build carbon ingestion pipelines and LLM-powered ESG reporting agents. Tech stack includes Python, Django, React, and LangChain."
+}
