@@ -34,4 +34,6 @@ export interface Env {
   LOGO_DEV_TOKEN?: string;
   GEMINI_MOCK?: string;
   SUPABASE_MOCK?: string;
+  /** LangGraph FastAPI backend base URL, e.g. http://localhost:8000 */
+  AGENT_BACKEND_URL?: string;
 }

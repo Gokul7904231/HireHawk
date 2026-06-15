@@ -18,7 +18,6 @@ from graph.nodes.tracker import track_application_node
 def wrap_node(node_fn, node_name):
     async def wrapped(state: NeuroHireState):
         logger.info(f"Executing node: {node_name}")
-        state["current_phase"] = node_name
         attempts = 0
         max_retries = 2
         last_error = None

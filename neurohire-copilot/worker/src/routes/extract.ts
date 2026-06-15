@@ -3,6 +3,16 @@ import { callGemini } from "../lib/gemini";
 import { selfHealing } from "../lib/self-healing";
 import { MOCK_JD_SIGNALS } from "../lib/mock-fixtures";
 
+/**
+ * handleExtract — Phase 11 update
+ *
+ * When AGENT_BACKEND_URL is set the Worker acts as a thin SSE proxy:
+ *   1. POST /run → FastAPI to start the LangGraph pipeline
+ *   2. Pipe GET /stream/{run_id} SSE events back to the extension
+ *
+ * When AGENT_BACKEND_URL is absent (MOCK / legacy mode) the original
+ * direct-Gemini path is preserved so existing Vitest tests keep passing.
+ */
 export async function handleExtract(request: Request, env: Env): Promise<Response> {
   if (request.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
@@ -21,6 +31,47 @@ export async function handleExtract(request: Request, env: Env): Promise<Respons
       });
     }
 
+    // ── AGENTIC PATH: proxy to LangGraph FastAPI backend ──────────────────────
+    const backendUrl = env.AGENT_BACKEND_URL;
+    if (backendUrl) {
+      // 1. Start a new graph run
+      const runRes = await fetch(`${backendUrl}/run`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jd_raw: jd_markdown })
+      });
+
+      if (!runRes.ok) {
+        const errText = await runRes.text();
+        return new Response(JSON.stringify({ error: `Backend /run failed: ${errText}` }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      const { run_id } = (await runRes.json()) as { run_id: string };
+
+      // 2. Pipe SSE stream from FastAPI back to the extension client
+      const streamRes = await fetch(`${backendUrl}/stream/${run_id}`);
+      if (!streamRes.ok || !streamRes.body) {
+        return new Response(JSON.stringify({ error: "Backend /stream failed" }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      // Forward as Server-Sent Events so the extension popup can consume events live
+      return new Response(streamRes.body, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          "X-Run-Id": run_id
+        }
+      });
+    }
+
+    // ── LEGACY / MOCK PATH: call Gemini directly ───────────────────────────────
     const mockMode = env.GEMINI_MOCK !== "false"; // default true
     const apiKey = env.GEMINI_API_KEY || "";
     const modelName = "gemini-1.5-flash";

@@ -3,6 +3,17 @@ import { callGemini } from "../lib/gemini";
 import { selfHealing } from "../lib/self-healing";
 import { MOCK_TAILOR_OUTPUT } from "../lib/mock-fixtures";
 
+/**
+ * handleTailor — Phase 11 update
+ *
+ * When AGENT_BACKEND_URL is set, this handler:
+ *   1. Expects a run_id to already exist (started by /extract SSE stream) — OR
+ *      starts a new run with the tailor payload.
+ *   2. Posts approval to FastAPI /approve/{run_id} to resume the HITL checkpoint,
+ *      then pipes the resulting SSE stream back to the extension.
+ *
+ * When AGENT_BACKEND_URL is absent the original direct-Gemini path runs.
+ */
 export async function handleTailor(request: Request, env: Env): Promise<Response> {
   if (request.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
@@ -13,7 +24,7 @@ export async function handleTailor(request: Request, env: Env): Promise<Response
 
   try {
     const body = (await request.json()) as any;
-    const { jd_signals, profile } = body;
+    const { jd_signals, profile, run_id: existingRunId } = body;
     if (!jd_signals || !profile) {
       return new Response(JSON.stringify({ error: "Missing jd_signals or profile parameters" }), {
         status: 400,
@@ -21,6 +32,66 @@ export async function handleTailor(request: Request, env: Env): Promise<Response
       });
     }
 
+    // ── AGENTIC PATH: proxy to LangGraph FastAPI backend ──────────────────────
+    const backendUrl = env.AGENT_BACKEND_URL;
+    if (backendUrl) {
+      let run_id = existingRunId as string | undefined;
+
+      // If no existing run_id, start a fresh graph run with jd_signals as raw text
+      if (!run_id) {
+        const runRes = await fetch(`${backendUrl}/run`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jd_raw: JSON.stringify(jd_signals),
+            user_id: "extension_user"
+          })
+        });
+        if (!runRes.ok) {
+          const errText = await runRes.text();
+          return new Response(JSON.stringify({ error: `Backend /run failed: ${errText}` }), {
+            status: 502,
+            headers: { "Content-Type": "application/json" }
+          });
+        }
+        const data = (await runRes.json()) as { run_id: string };
+        run_id = data.run_id;
+      }
+
+      // Approve the HITL checkpoint (resume after breakpoint)
+      const approveRes = await fetch(`${backendUrl}/approve/${run_id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ approved: true })
+      });
+      if (!approveRes.ok) {
+        const errText = await approveRes.text();
+        return new Response(JSON.stringify({ error: `Backend /approve failed: ${errText}` }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      // Pipe resuming SSE stream back to extension
+      const streamRes = await fetch(`${backendUrl}/stream/${run_id}`);
+      if (!streamRes.ok || !streamRes.body) {
+        return new Response(JSON.stringify({ error: "Backend /stream failed after approve" }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      return new Response(streamRes.body, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          "X-Run-Id": run_id
+        }
+      });
+    }
+
+    // ── LEGACY / MOCK PATH: call Gemini directly ───────────────────────────────
     const mockMode = env.GEMINI_MOCK !== "false";
     const apiKey = env.GEMINI_API_KEY || "";
     const modelName = "gemini-1.5-flash";

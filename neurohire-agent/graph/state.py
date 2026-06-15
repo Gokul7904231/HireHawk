@@ -1,4 +1,18 @@
-from typing import TypedDict, List, Dict, Any, Optional
+from typing import TypedDict, List, Dict, Any, Optional, Annotated
+
+def reduce_phase(old_phase: Optional[str], new_phase: str) -> str:
+    return new_phase
+
+def reduce_errors(old_errors: Optional[List[str]], new_errors: List[str]) -> List[str]:
+    if old_errors is None:
+        old_errors = []
+    if new_errors is None:
+        new_errors = []
+    result = list(old_errors)
+    for err in new_errors:
+        if err not in result:
+            result.append(err)
+    return result
 
 class NeuroHireState(TypedDict):
     # Raw input job description (markdown or raw text)
@@ -32,7 +46,7 @@ class NeuroHireState(TypedDict):
     hitl_approved: bool
     
     # Diagnostic log list for errors
-    error_log: List[str]
+    error_log: Annotated[List[str], reduce_errors]
     
     # Current node / execution phase name
-    current_phase: str
+    current_phase: Annotated[str, reduce_phase]
