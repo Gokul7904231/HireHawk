@@ -44,6 +44,13 @@
 
 ## Phase 7 — mem0 memory
 - **Started**: 2026-06-15T15:25:00+05:30
+- **Completed**: 2026-06-15T15:30:00+05:30
+- **Tests**: N/A
+- **Status**: Mem0 client structured with 4-dimension scoping built in memory/mem0_client.py. Integrated memory queries into graph nodes (resume_tailor, outreach) to retrieve candidate preferences.
+- **Blockers**: None
+
+## Phase 8 — FastAPI server
+- **Started**: 2026-06-15T15:30:00+05:30
 - **Completed**: 
 - **Tests**: 
 - **Status**: 
