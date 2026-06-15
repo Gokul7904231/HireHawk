@@ -37,6 +37,13 @@
 
 ## Phase 6 — CrewAI A2A resume tailor
 - **Started**: 2026-06-15T15:20:00+05:30
+- **Completed**: 2026-06-15T15:25:00+05:30
+- **Tests**: N/A
+- **Status**: CrewAI ResumeTailorCrew defined in crew/resume_crew.py and exposed via FastAPI server in crew/server.py listening on port 8001.
+- **Blockers**: None
+
+## Phase 7 — mem0 memory
+- **Started**: 2026-06-15T15:25:00+05:30
 - **Completed**: 
 - **Tests**: 
 - **Status**: 
