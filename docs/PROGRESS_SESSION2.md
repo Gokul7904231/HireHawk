@@ -51,6 +51,13 @@
 
 ## Phase 8 — FastAPI server
 - **Started**: 2026-06-15T15:30:00+05:30
+- **Completed**: 2026-06-15T15:35:00+05:30
+- **Tests**: N/A
+- **Status**: FastAPI server in api/server.py fully implemented exposing /run, /stream/{run_id} (SSE event source stream), /approve/{run_id} (resume breakpoint), and /status/{run_id} routes. CORS configurations enabled.
+- **Blockers**: None
+
+## Phase 9 — Langfuse + DeepEval observability
+- **Started**: 2026-06-15T15:35:00+05:30
 - **Completed**: 
 - **Tests**: 
 - **Status**: 
