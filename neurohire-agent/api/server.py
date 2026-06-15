@@ -171,5 +171,19 @@ async def status_run(run_id: str):
         raise HTTPException(status_code=404, detail="Run ID not found.")
     return active_states[run_id]
 
+@server_app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "service": "neurohire-agent",
+        "version": "1.0.0",
+        "mock_mode": {
+            "gemini": os.getenv("GEMINI_MOCK", "true"),
+            "supabase": os.getenv("SUPABASE_MOCK", "true"),
+            "mcp": os.getenv("MCP_MOCK", "true"),
+            "a2a": os.getenv("A2A_MOCK", "true"),
+        }
+    }
+
 # Alias app for uvicorn lookup
 app = server_app

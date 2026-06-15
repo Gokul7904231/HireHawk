@@ -17,6 +17,15 @@ async def tailor_endpoint(payload: dict):
     result = await crew.run(jd_signals, profile)
     return result
 
+@app.get("/health")
+async def health():
+    return {
+        "status": "ok",
+        "service": "neurohire-crew",
+        "version": "1.0.0",
+        "a2a_mock": os.getenv("A2A_MOCK", "true")
+    }
+
 if __name__ == "__main__":
     crew_port = int(os.getenv("CREW_PORT", "8001"))
     host = os.getenv("HOST", "127.0.0.1")

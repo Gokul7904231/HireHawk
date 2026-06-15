@@ -1,0 +1,73 @@
+services:
+  # ── FastAPI LangGraph Backend (port 8000) ────────────────────────────────────
+  - type: web
+    name: neurohire-agent
+    runtime: python
+    rootDir: neurohire-agent
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: HOST
+        value: "0.0.0.0"
+      - key: CREW_PORT
+        value: "8001"
+      # Mock flags — set to false for live mode
+      - key: MCP_MOCK
+        value: "false"
+      - key: GEMINI_MOCK
+        value: "false"
+      - key: SUPABASE_MOCK
+        value: "false"
+      - key: A2A_MOCK
+        value: "false"
+      # Secrets — populate from Render dashboard
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: LANGFUSE_PUBLIC_KEY
+        sync: false
+      - key: LANGFUSE_SECRET_KEY
+        sync: false
+      - key: LANGFUSE_HOST
+        value: "https://cloud.langfuse.com"
+      - key: MEM0_API_KEY
+        sync: false
+      # MCP server URLs — point to Azure Function live URLs
+      - key: JD_PARSER_MCP_URL
+        sync: false
+      - key: RESUME_MCP_URL
+        sync: false
+      - key: COMPANY_INTEL_MCP_URL
+        sync: false
+      - key: OUTREACH_MCP_URL
+        sync: false
+      - key: TRACKER_MCP_URL
+        sync: false
+      # CrewAI A2A service URL (internal Render service)
+      - key: CREW_BASE_URL
+        fromService:
+          name: neurohire-crew
+          type: web
+          property: host
+
+  # ── CrewAI A2A Resume Tailor (port 8001) ─────────────────────────────────────
+  - type: web
+    name: neurohire-crew
+    runtime: python
+    rootDir: neurohire-agent
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn crew.server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "8001"
+      - key: A2A_MOCK
+        value: "false"
+      - key: GEMINI_API_KEY
+        sync: false

@@ -1,0 +1,111 @@
+name: NeuroHire CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  # ── Python Backend Tests (pytest) ─────────────────────────────────────────
+  pytest:
+    name: pytest (neurohire-agent)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: neurohire-agent
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pytest (mock mode)
+        env:
+          MCP_MOCK: "true"
+          GEMINI_MOCK: "true"
+          SUPABASE_MOCK: "true"
+          A2A_MOCK: "true"
+          MEM0_MOCK: "true"
+          GEMINI_API_KEY: "ci-mock-key"
+          SUPABASE_URL: "https://mock.supabase.co"
+          SUPABASE_KEY: "ci-mock-key"
+          LANGFUSE_PUBLIC_KEY: "pk-mock"
+          LANGFUSE_SECRET_KEY: "sk-mock"
+          MEM0_API_KEY: "m0-mock"
+        run: python -m pytest -v --tb=short
+
+  # ── Python MCP Server Tests (pytest) ──────────────────────────────────────
+  pytest-mcp:
+    name: pytest (neurohire MCP servers)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: neurohire
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install shared dependencies
+        run: pip install -r mcp_servers/shared/requirements.txt
+
+      - name: Run shared layer tests
+        env:
+          MOCK_MODE: "true"
+        run: |
+          python -m pytest mcp_servers/shared/test_self_healing.py -v
+          python -m pytest mcp_servers/shared/test_routing.py -v
+
+  # ── TypeScript Worker Tests (Vitest) ──────────────────────────────────────
+  vitest:
+    name: vitest (neurohire-copilot worker)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: neurohire-copilot/worker
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: neurohire-copilot/worker/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript type-check
+        run: npx tsc --noEmit
+
+      - name: Run Vitest (mock mode)
+        env:
+          GEMINI_MOCK: "true"
+          SUPABASE_MOCK: "true"
+          GEMINI_API_KEY: "ci-mock-key"
+          SUPABASE_URL: "https://mock.supabase.co"
+          SUPABASE_KEY: "ci-mock-key"
+        run: npx vitest run
+
+  # ── Summary gate ──────────────────────────────────────────────────────────
+  all-tests-pass:
+    name: All tests pass
+    runs-on: ubuntu-latest
+    needs: [pytest, pytest-mcp, vitest]
+    steps:
+      - run: echo "All test suites passed ✅"

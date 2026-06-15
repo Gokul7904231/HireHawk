@@ -1,0 +1,44 @@
+[
+  {
+    "id": "job_001",
+    "title": "AI Engineer Intern",
+    "company": "Breathe ESG",
+    "location": "Bangalore, India",
+    "remote_status": "hybrid",
+    "seniority": "intern",
+    "domain": "ai",
+    "posted_date": "2026-06-10",
+    "raw_jd": "We are Breathe ESG, a climate-tech startup building AI-powered ESG reporting tools for enterprise clients. We're looking for an AI Engineer Intern to join our Bangalore team for 6 months.\n\nResponsibilities:\n- Build and fine-tune LLM pipelines for ESG data extraction from sustainability reports\n- Develop FastAPI microservices and integrate with our React dashboard\n- Write and maintain Python test suites with >90% coverage\n- Collaborate with founding engineers in a fast-paced startup environment\n\nRequirements:\n- Strong Python fundamentals (FastAPI, Pydantic, asyncio)\n- Experience with LLM APIs (Gemini, OpenAI) or prompt engineering\n- Familiarity with React or any frontend framework\n- Understanding of vector databases (Qdrant, Pinecone, or Chroma)\n- Excellent written communication — you'll write technical docs weekly\n\nNice to have:\n- Prior exposure to ESG/sustainability domain\n- Experience with LangChain, LangGraph, or CrewAI\n- Contributions to open-source projects\n\nCulture:\n- Builder mindset, ownership over outcomes\n- Bias for action — we ship fast and iterate\n- Remote-first async culture with weekly in-person syncs",
+    "required_skills": ["Python", "FastAPI", "LLM APIs", "React", "vector databases"],
+    "nice_to_have": ["LangGraph", "CrewAI", "ESG domain", "open-source"],
+    "culture_keywords": ["builder mindset", "ownership", "bias for action", "remote-first"]
+  },
+  {
+    "id": "job_002",
+    "title": "Full Stack Engineer",
+    "company": "Sarvam AI",
+    "location": "Bangalore, India",
+    "remote_status": "onsite",
+    "seniority": "junior",
+    "domain": "fullstack",
+    "posted_date": "2026-06-08",
+    "raw_jd": "Sarvam AI is building India's foundational AI stack — large language models, speech systems, and developer APIs for Indic languages. We're hiring a Full Stack Engineer to build the developer portal and API playground.\n\nResponsibilities:\n- Design and implement developer-facing APIs and dashboards using Next.js and FastAPI\n- Manage PostgreSQL schemas and write complex queries for analytics\n- Build real-time streaming UI components for model inference outputs\n- Work directly with AI research team to surface model capabilities as clean APIs\n\nRequirements:\n- 1-2 years of experience in full-stack development\n- Strong proficiency in TypeScript, React/Next.js, and Python\n- PostgreSQL or Supabase experience\n- REST and WebSocket API design\n- Ability to work in a fast-moving research-adjacent environment\n\nNice to have:\n- Experience with Cloudflare Workers or Edge computing\n- Familiarity with streaming APIs (SSE, WebSocket)\n- Prior contributions to developer tools or SDKs\n\nCulture:\n- Mission-driven — we're building for Bharat\n- Strong engineering standards with code reviews and CI/CD discipline\n- Transparent, flat hierarchy",
+    "required_skills": ["TypeScript", "React", "Next.js", "Python", "PostgreSQL", "FastAPI"],
+    "nice_to_have": ["Cloudflare Workers", "SSE", "WebSocket", "SDKs"],
+    "culture_keywords": ["mission-driven", "engineering standards", "transparent", "flat hierarchy"]
+  },
+  {
+    "id": "job_003",
+    "title": "ML Engineer",
+    "company": "Ola Electric",
+    "location": "Bangalore, India",
+    "remote_status": "hybrid",
+    "seniority": "mid",
+    "domain": "ai",
+    "posted_date": "2026-06-12",
+    "raw_jd": "Ola Electric is building the future of sustainable mobility. Our ML team develops predictive models for battery performance, route optimization, and demand forecasting across 1M+ active vehicles.\n\nResponsibilities:\n- Design and deploy ML models for battery degradation prediction and anomaly detection\n- Build scalable ML pipelines using Python, Spark, and cloud-native tooling\n- Collaborate with data engineers on feature engineering and data quality\n- Monitor model performance in production and implement drift detection\n- Write production-grade, well-tested Python code\n\nRequirements:\n- 2-4 years ML engineering experience\n- Strong Python, scikit-learn, PyTorch or TensorFlow\n- Experience with MLflow, DVC, or similar ML lifecycle tools\n- Working knowledge of SQL and data pipeline tooling (Airflow, Spark)\n- Understanding of model deployment patterns (REST, batch inference)\n\nNice to have:\n- Experience with time-series forecasting\n- Familiarity with IoT or vehicle telemetry data\n- Cloud certifications (AWS, GCP, Azure)\n\nCulture:\n- Impact at scale — your models run on millions of vehicles\n- Data-driven decision making at every level\n- Engineering excellence — no cowboy deployments",
+    "required_skills": ["Python", "PyTorch", "scikit-learn", "MLflow", "SQL", "Spark", "Airflow"],
+    "nice_to_have": ["time-series", "IoT", "cloud certifications"],
+    "culture_keywords": ["impact at scale", "data-driven", "engineering excellence"]
+  }
+]
