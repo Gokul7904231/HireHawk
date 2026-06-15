@@ -1,0 +1,12 @@
+{
+  "company_name": "Breathe ESG",
+  "role_title": "AI Engineer Intern",
+  "required_skills": ["Python", "Django", "React", "LangChain"],
+  "nice_to_have_skills": ["PostgreSQL", "Qdrant", "Docker"],
+  "culture_keywords": ["sustainability", "ESG", "fast-paced"],
+  "seniority": "intern",
+  "domain": "ai",
+  "remote_status": "hybrid",
+  "location": "Chennai, India",
+  "salary_range": "Unknown"
+}
