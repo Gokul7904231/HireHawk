@@ -20,3 +20,10 @@
 - **Tests**: N/A
 - **Status**: Implemented worker route endpoints for /extract (JDSignals parsing), /tailor (LLM draft creation + claim verification trace + rewrites), /company-intel (parallel Wikidata/DDG query runner), and /tracker (Supabase CRUD & stats API with in-memory fallback), wired under a main index.ts dispatcher with preflight CORS headers.
 - **Blockers**: None
+
+## Phase 3 — Worker Unit Tests
+- **Started**: 2026-06-15T13:40:00+05:30
+- **Completed**: 2026-06-15T13:58:00+05:30
+- **Tests**: 12 passed, 0 failed
+- **Status**: Wrote comprehensive Vitest specifications for the Cloudflare Worker inside worker/test/index.spec.ts. Verified CORS preflight headers, /extract, /tailor fact-check trace, /company-intel Map-Reduce aggregation, /tracker CRUD operations (applications, stats, followups, drafts), self-healing transient errors, and circuit breaker tripping.
+- **Blockers**: None
