@@ -1,0 +1,36 @@
+{
+  "name": "Gokul",
+  "email": "gokul32499@gmail.com",
+  "github": "https://github.com/Gokul7904231",
+  "portfolio": "https://gokul-portfolio.vercel.app",
+  "top_projects": [
+    {
+      "name": "Sentixcare",
+      "description": "Multi-agent RAG workflow for analyzing medical and clinical records using FastAPI, LangChain, and Qdrant. Deployed on HuggingFace.",
+      "live_url": "https://huggingface.co/spaces/Gokul7904231/sentixcare",
+      "tags": ["FastAPI", "LangChain", "Qdrant", "Python", "RAG", "AI"]
+    },
+    {
+      "name": "Meeting Intelligence Service",
+      "description": "Enterprise microservice parsing transcipts and drawing action items, with fallback error correction self-healing layers.",
+      "live_url": "https://github.com/Gokul7904231/meeting-intel",
+      "tags": ["TypeScript", "Node.js", "FastAPI", "Supabase", "AI"]
+    }
+  ],
+  "top_skills": ["Python", "Django", "FastAPI", "React", "TypeScript", "LangChain", "Qdrant", "PostgreSQL", "Docker", "Git"],
+  "experience_summary": "AI/ML Intern at Infosys, Full Stack Intern at Zidio, specialized in agentic workflows and React frontend dashboards.",
+  "experience": [
+    {
+      "company": "Infosys",
+      "role": "AI/ML Developer Intern",
+      "description": "Developed and optimized retrieval models for corporate documents using semantic embeddings, reducing search latency by 40%.",
+      "period": "Jan 2026 - Present"
+    },
+    {
+      "company": "Zidio",
+      "role": "Full Stack Intern",
+      "description": "Constructed responsive frontend views using React and mapped data flows to Django APIs with PostgreSQL backends.",
+      "period": "Sep 2025 - Dec 2025"
+    }
+  ]
+}
