@@ -1,0 +1,15 @@
+langgraph>=0.2.0
+langchain-core>=0.3.0
+fastapi>=0.100.0
+uvicorn>=0.20.0
+crewai>=0.30.0
+mem0ai>=0.1.0
+langfuse>=2.0.0
+deepeval>=1.0.0
+mcp>=1.1.0
+httpx>=0.24.0
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+qdrant-client>=1.7.0
