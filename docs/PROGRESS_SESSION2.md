@@ -9,6 +9,13 @@
 
 ## Phase 2 — State definition
 - **Started**: 2026-06-15T15:02:00+05:30
+- **Completed**: 2026-06-15T15:05:00+05:30
+- **Tests**: N/A
+- **Status**: NeuroHireState TypedDict defined in graph/state.py, tracking elements like jd_signals, tailored_bullets, company_intel, outreach_draft, and hitl_approved.
+- **Blockers**: None
+
+## Phase 3 — Supervisor
+- **Started**: 2026-06-15T15:05:00+05:30
 - **Completed**: 
 - **Tests**: 
 - **Status**: 
