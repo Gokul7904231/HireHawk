@@ -300,7 +300,7 @@ function App() {
           <div className="results-container">
             {cacheHit && (
               <div className="badge badge-cache">
-                ⚡ Semantic Cache Hit (>0.95 similarity)
+                ⚡ Semantic Cache Hit (&gt;0.95 similarity)
               </div>
             )}
 
