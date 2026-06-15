@@ -48,3 +48,10 @@
 - **Tests**: N/A
 - **Status**: Created candidate baseline profile.json with realistic details (Gokul, Python, React, FastAPI), sample-job-posting.html replicating real DOM structure (AI Engineer Intern @ Breathe ESG), and sample-jd-signals.json containing the target mock outputs.
 - **Blockers**: None
+
+## Phase 7 — Extension Unit Tests
+- **Started**: 2026-06-15T14:35:00+05:30
+- **Completed**: 2026-06-15T14:48:00+05:30
+- **Tests**: 7 passed, 0 failed
+- **Status**: Wrote comprehensive Vitest specifications for the extension libraries under extension/tests. Verified cleaned and parsed Markdown output shapes, heuristic field matching under 3 ATS variants, and local Vector Cache hits/misses using normalized vectors.
+- **Blockers**: None
