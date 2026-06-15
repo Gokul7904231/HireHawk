@@ -65,7 +65,27 @@
 
 ## Phase 10 — Tests
 - **Started**: 2026-06-15T15:40:00+05:30
-- **Completed**: 
-- **Tests**: 
-- **Status**: 
+- **Completed**: 2026-06-15T16:20:00+05:30
+- **Tests**: 8/8 pytest passed (test_nodes ×6, test_graph ×1, test_integration ×1) | 12/12 Vitest Worker tests passed
+- **Status**: Fixed two bugs — (1) parallel fan-out `InvalidUpdateError` on `current_phase` resolved by adding `Annotated[str, reduce_phase]` reducer in state.py; (2) httpx.AsyncClient `app=` deprecated — fixed to use `ASGITransport`. Added `conftest.py` + `pytest.ini` so modules resolve correctly.
 - **Blockers**: None
+
+## Phase 11 — Worker update (join Session 1 → Session 2)
+- **Started**: 2026-06-15T16:20:00+05:30
+- **Completed**: 2026-06-15T16:28:00+05:30
+- **Tests**: 12/12 Vitest Worker tests passed — no regressions
+- **Status**: MODIFIED (not replaced) the existing `neurohire-copilot/worker/src/routes/extract.ts` and `tailor.ts`. When `AGENT_BACKEND_URL` env var is set: extract POSTs to FastAPI `/run` then pipes `/stream/{run_id}` SSE back; tailor POSTs to `/approve/{run_id}` then pipes resuming SSE stream. Backward-compatible — original Gemini path used when env var absent. Added `AGENT_BACKEND_URL?: string` to `Env` interface in `types.ts`.
+- **Blockers**: None — FastAPI (8000) and CrewAI (8001) confirmed on separate ports, no conflict.
+
+## Phase 12 — Documentation & Final Report
+- **Started**: 2026-06-15T16:28:00+05:30
+- **Completed**: 2026-06-15T16:30:00+05:30
+- **Tests**: N/A
+- **Status**: docs/FINAL_REPORT_SESSION2.md created. Full architecture diagram, port allocation table, test results, mock mode flags, and git commit hashes documented.
+- **Blockers**: None
+
+---
+## SESSION 2 COMPLETE ✅
+**Total tests**: 8 pytest (backend) + 12 Vitest (worker) = **20/20 passing**
+**Port allocation**: FastAPI=8000, CrewAI=8001, Worker=8787 — no conflicts
+**Worker update**: MODIFIED existing index.ts routes (not a new file)
