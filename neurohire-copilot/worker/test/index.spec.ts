@@ -35,8 +35,8 @@ describe("NeuroHire Copilot Worker Suite", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jd_markdown: "We need a React developer" })
       });
-      // Set mock environment
-      const mockEnv = { ...env, GEMINI_MOCK: "true" };
+      // Set mock environment and clear AGENT_BACKEND_URL to force the direct mock path
+      const mockEnv = { ...env, GEMINI_MOCK: "true", AGENT_BACKEND_URL: "" };
       const response = await worker.fetch(request, mockEnv, {} as any);
       expect(response.status).toBe(200);
       const data = (await response.json()) as any;
@@ -68,7 +68,7 @@ describe("NeuroHire Copilot Worker Suite", () => {
           profile: { name: "Gokul", skills: ["Python", "FastAPI"] }
         })
       });
-      const mockEnv = { ...env, GEMINI_MOCK: "true" };
+      const mockEnv = { ...env, GEMINI_MOCK: "true", AGENT_BACKEND_URL: "" };
       const response = await worker.fetch(request, mockEnv, {} as any);
       expect(response.status).toBe(200);
       const data = (await response.json()) as any;
