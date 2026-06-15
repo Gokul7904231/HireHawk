@@ -49,7 +49,10 @@ export async function cacheGet(jdMarkdown: string): Promise<TailorOutput | null>
 
   const results = await search(db, {
     mode: "vector",
-    vector: vector,
+    vector: {
+      value: vector,
+      property: "embedding"
+    },
     similarity: 0.95, // Cosine similarity threshold
     limit: 1
   });
