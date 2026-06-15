@@ -28,6 +28,15 @@ def wrap_node(node_fn, node_name):
                 res = await node_fn(state)
                 if isinstance(res, dict):
                     res["current_phase"] = node_name
+                
+                # Trace node execution in Langfuse
+                try:
+                    from observability.langfuse_client import LangfuseTraceLogger
+                    run_id = state.get("run_id") or "default_run_id"
+                    LangfuseTraceLogger().log_node_execution(run_id, node_name, state, res or {})
+                except Exception as trace_err:
+                    logger.warning(f"Failed to log trace for node {node_name}: {trace_err}")
+
                 return res
             except Exception as e:
                 attempts += 1
