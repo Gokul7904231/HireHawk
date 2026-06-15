@@ -41,3 +41,10 @@
 - **Tests**: N/A
 - **Status**: Built a React-based popup interface in App.tsx and App.css with step-by-step loading state representations (Extracting -> Tailoring -> Company Intel -> Ready). Populated widgets for JDSignals breakdown, Wikidata + DuckDuckGo company profiles, tailored experience bullet points, a tabbed workspace for cold emails/referrals/cover letters, and a fact-checking adjudication trace list mapping LLM-adjudicated claims. Added click actions for form autofilling, printing resume pages, and logging entries to the Supabase application tracker.
 - **Blockers**: None
+
+## Phase 6 — Extension Fixtures
+- **Started**: 2026-06-15T14:25:00+05:30
+- **Completed**: 2026-06-15T14:35:00+05:30
+- **Tests**: N/A
+- **Status**: Created candidate baseline profile.json with realistic details (Gokul, Python, React, FastAPI), sample-job-posting.html replicating real DOM structure (AI Engineer Intern @ Breathe ESG), and sample-jd-signals.json containing the target mock outputs.
+- **Blockers**: None
