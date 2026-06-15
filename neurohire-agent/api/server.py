@@ -12,7 +12,7 @@ load_dotenv()
 # Import the LangGraph application
 from graph.supervisor import app as graph_app
 
-server_app = FastAPI(title="NeuroHire LangGraph Agentic Backend", version="1.0.0")
+server_app = FastAPI(title="HireHawk LangGraph Agentic Backend", version="1.0.0")
 
 # Enable CORS for worker/extension origin
 server_app.add_middleware(
@@ -175,7 +175,7 @@ async def status_run(run_id: str):
 async def health_check():
     return {
         "status": "ok",
-        "service": "neurohire-agent",
+        "service": "hirehawk-agent",
         "version": "1.0.0",
         "mock_mode": {
             "gemini": os.getenv("GEMINI_MOCK", "true"),
@@ -185,5 +185,101 @@ async def health_check():
         }
     }
 
+@server_app.get("/profile")
+async def get_profile():
+    fixture_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+        "neurohire-copilot",
+        "extension",
+        "fixtures",
+        "profile.json"
+    )
+    if os.path.exists(fixture_path):
+        try:
+            with open(fixture_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to read profile fixture: {str(e)}")
+            
+    # Default fallback profile matching Gokul
+    return {
+        "name": "Gokul",
+        "email": "gokul32499@gmail.com",
+        "github": "https://github.com/Gokul7904231",
+        "portfolio": "https://gokul-portfolio.vercel.app",
+        "top_projects": [
+            {
+                "name": "Sentixcare",
+                "description": "Multi-agent RAG workflow for analyzing medical records.",
+                "live_url": "https://huggingface.co/spaces/Gokul7904231/sentixcare",
+                "tags": ["FastAPI", "LangChain", "Qdrant", "Python", "RAG"]
+            }
+        ],
+        "top_skills": ["Python", "Django", "FastAPI", "React", "TypeScript", "LangChain"],
+        "experience_summary": "AI/ML Intern at Infosys, Full Stack Intern at Zidio"
+    }
+
+@server_app.post("/profile")
+async def update_profile(payload: dict):
+    fixture_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+        "neurohire-copilot",
+        "extension",
+        "fixtures",
+        "profile.json"
+    )
+    try:
+        os.makedirs(os.path.dirname(fixture_path), exist_ok=True)
+        with open(fixture_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save profile fixture: {str(e)}")
+
+    # Add experience summary and skills to mem0 memory
+    try:
+        from memory.mem0_client import Mem0Client
+        mem0 = Mem0Client()
+        name = payload.get("name", "Gokul")
+        skills = payload.get("top_skills", [])
+        if skills:
+            skills_str = ", ".join(skills)
+            mem0.add_memory(f"Candidate {name} top skills: {skills_str}", user_id="default_user")
+            
+        summary = payload.get("experience_summary", "")
+        if summary:
+            mem0.add_memory(f"Candidate {name} experience: {summary}", user_id="default_user")
+    except Exception as e:
+        # Don't fail the request if mem0 fails
+        print(f"Mem0 client update failed: {e}")
+        
+    return {"success": True}
+
+@server_app.get("/mcp_status")
+async def mcp_status():
+    import httpx
+    # 5 local uvicorn servers setup in run_all_mock.ps1
+    servers = {
+        "resume-mcp": "http://localhost:8001/health",
+        "jd-parser-mcp": "http://localhost:8002/health",
+        "tracker-mcp": "http://localhost:8003/health",
+        "company-intel-mcp": "http://localhost:8004/health",
+        "outreach-mcp": "http://localhost:8005/health",
+    }
+    
+    results = {}
+    async with httpx.AsyncClient() as client:
+        for name, url in servers.items():
+            try:
+                resp = await client.get(url, timeout=1.0)
+                if resp.status_code == 200:
+                    results[name] = "healthy"
+                else:
+                    results[name] = "unhealthy"
+            except Exception:
+                results[name] = "offline"
+                
+    return results
+
 # Alias app for uvicorn lookup
 app = server_app
+
