@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, Mail, FileText, Send, Copy, Check, Download, AlertCircle, RefreshCw } from 'lucide-react';
 import Sidebar from './components/Sidebar';
-import MetricCards from './components/MetricCards';
-import AppTable from './components/AppTable';
-import AgentPanel from './components/AgentPanel';
 import FitScoreBar from './components/FitScoreBar';
 import ClaimsTrace from './components/ClaimsTrace';
 import CompanyIntel from './components/CompanyIntel';
 import LoginSignup from './components/LoginSignup';
+import Dashboard from './pages/Dashboard';
 
 import {
   useApplicationDetailQuery,
@@ -52,11 +50,6 @@ export default function App() {
     if (id) {
       setSelectedAppId(id);
     }
-  };
-
-  const handleSelectApp = (id: string) => {
-    setSelectedAppId(id);
-    setCurrentView('app');
   };
 
   const copyToClipboard = (text: string, type: 'email' | 'letter' | 'referral') => {
@@ -111,6 +104,17 @@ export default function App() {
     return <LoginSignup onLoginSuccess={() => setIsAuthenticated(true)} />;
   }
 
+  if (currentView === 'dashboard') {
+    return (
+      <Dashboard
+        currentView={currentView}
+        onNavigate={handleNavigate}
+        selectedId={selectedAppId}
+        onLogout={handleLogout}
+      />
+    );
+  }
+
   return (
     <div className="flex bg-[#05070c] min-h-screen text-slate-200">
       {/* Sidebar Nav */}
@@ -123,48 +127,7 @@ export default function App() {
 
       {/* Main Workspace Frame */}
       <main className="flex-1 overflow-y-auto h-screen p-8 space-y-8">
-        
-        {/* VIEW 1: DASHBOARD HOME */}
-        {currentView === 'dashboard' && (
-          <div className="space-y-8 animate-slide-in">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-[#1e293b] pb-5">
-              <div>
-                <h1 className="text-2xl font-extrabold tracking-tight text-white">Recruitment Workspace</h1>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-1">
-                  Active Applications & Live Agent Pipeline
-                </p>
-              </div>
-              {import.meta.env.VITE_MOCK === 'true' && (
-                <span className="text-[10px] font-bold tracking-widest bg-purple-500/10 border border-purple-500/20 text-purple-400 px-3 py-1 rounded-full uppercase">
-                  Mock Mode Active
-                </span>
-              )}
-            </div>
 
-            {/* Metrics */}
-            <MetricCards />
-
-            {/* Core Split Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Applications List Table */}
-              <div className="lg:col-span-2 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-base font-bold text-slate-100 uppercase tracking-wider">Application Tracker</h2>
-                </div>
-                <AppTable onSelectApplication={handleSelectApp} />
-              </div>
-
-              {/* Agent Console */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-base font-bold text-slate-100 uppercase tracking-wider">Live Agent Streaming</h2>
-                </div>
-                <AgentPanel />
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* VIEW 2: SINGLE APPLICATION DETAILS */}
         {currentView === 'app' && (
