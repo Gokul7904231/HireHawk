@@ -7,6 +7,7 @@ import AgentPanel from './components/AgentPanel';
 import FitScoreBar from './components/FitScoreBar';
 import ClaimsTrace from './components/ClaimsTrace';
 import CompanyIntel from './components/CompanyIntel';
+import LoginSignup from './components/LoginSignup';
 
 import {
   useApplicationDetailQuery,
@@ -17,8 +18,19 @@ import {
 } from './hooks/useTracker';
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('neurohire_auth') === 'true';
+  });
   const [currentView, setCurrentView] = useState<'dashboard' | 'app' | 'settings'>('dashboard');
   const [selectedAppId, setSelectedAppId] = useState<string | null>("6503e116-27c3-4647-b013-72c7736b608b");
+
+  const handleLogout = () => {
+    localStorage.removeItem('neurohire_auth');
+    localStorage.removeItem('neurohire_user_email');
+    localStorage.removeItem('neurohire_user_name');
+    localStorage.removeItem('neurohire_user_role');
+    setIsAuthenticated(false);
+  };
   const [copiedText, setCopiedText] = useState<'email' | 'letter' | 'referral' | null>(null);
 
   // Queries
@@ -95,6 +107,10 @@ export default function App() {
     alert("Triggered resume-render.ts PDF Compilation. Downloading tailored PDF template document...");
   };
 
+  if (!isAuthenticated) {
+    return <LoginSignup onLoginSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <div className="flex bg-[#05070c] min-h-screen text-slate-200">
       {/* Sidebar Nav */}
@@ -102,6 +118,7 @@ export default function App() {
         currentView={currentView}
         onNavigate={handleNavigate}
         selectedId={selectedAppId}
+        onLogout={handleLogout}
       />
 
       {/* Main Workspace Frame */}
