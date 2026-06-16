@@ -36,10 +36,10 @@ export default function Sidebar({ currentView, onNavigate, selectedId, onLogout 
             <button
               id="nav-dashboard"
               onClick={() => onNavigate('dashboard')}
-              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-3.5 px-4 py-3 text-sm transition-all duration-200 ${
                 currentView === 'dashboard'
-                  ? 'bg-purple-600/15 text-purple-300 border border-purple-500/30'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#121b2d] border border-transparent'
+                  ? 'bg-purple-600/10 text-purple-300 border-l-2 border-purple-500 rounded-r-lg font-semibold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#121b2d]/50 border-l-2 border-transparent'
               }`}
             >
               <LayoutDashboard size={18} />
@@ -49,10 +49,10 @@ export default function Sidebar({ currentView, onNavigate, selectedId, onLogout 
             <button
               id="nav-detail"
               onClick={() => onNavigate('app', selectedId || undefined)}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center justify-between px-4 py-3 text-sm transition-all duration-200 ${
                 currentView === 'app'
-                  ? 'bg-purple-600/15 text-purple-300 border border-purple-500/30'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#121b2d] border border-transparent'
+                  ? 'bg-purple-600/10 text-purple-300 border-l-2 border-purple-500 rounded-r-lg font-semibold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#121b2d]/50 border-l-2 border-transparent'
               }`}
             >
               <div className="flex items-center gap-3.5">
@@ -69,10 +69,10 @@ export default function Sidebar({ currentView, onNavigate, selectedId, onLogout 
             <button
               id="nav-settings"
               onClick={() => onNavigate('settings')}
-              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-3.5 px-4 py-3 text-sm transition-all duration-200 ${
                 currentView === 'settings'
-                  ? 'bg-purple-600/15 text-purple-300 border border-purple-500/30'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#121b2d] border border-transparent'
+                  ? 'bg-purple-600/10 text-purple-300 border-l-2 border-purple-500 rounded-r-lg font-semibold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#121b2d]/50 border-l-2 border-transparent'
               }`}
             >
               <Settings size={18} />

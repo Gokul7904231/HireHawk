@@ -171,16 +171,18 @@ export default function Sidepanel() {
         {/* Re-mapped vertical timeline */}
         <div className="space-y-3">
           <span className="text-[10px] font-mono tracking-wider text-gray-500 uppercase block">Execution Nodes</span>
-          {steps.map((s, idx) => (
-            <StreamCard
-              key={idx}
-              phase={s.phase}
-              type={s.type}
-              title={s.title}
-              duration={s.duration}
-              status={s.status}
-            />
-          ))}
+          <div className="relative border-l-2 border-[#1f1f23] ml-3 pl-6 space-y-4">
+            {steps.map((s, idx) => (
+              <StreamCard
+                key={idx}
+                phase={s.phase}
+                type={s.type}
+                title={s.title}
+                duration={s.duration}
+                status={s.status}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
