@@ -171,8 +171,8 @@ export async function getApplicationDetail(id: string): Promise<ApplicationDetai
     const claims: Claim[] = [
       {
         claim: "Built carbon emissions analysis models using Python, FastAPI, and LangChain in Sentixcare project",
-        supported_by_baseline: true,
-        reasoning: "Baseline profile lists Sentixcare as a FastAPI, LangChain, Python, RAG project which directly matches."
+        supported_by_baseline: false,
+        reasoning: "Fabricated claim. The baseline Sentixcare project is focused on clinical records RAG, not carbon emissions models. Caught by claims checker and rewritten."
       },
       {
         claim: "Led the entire engineering architecture of the Breathe ESG SaaS platform",
@@ -215,7 +215,7 @@ export async function getApplicationDetail(id: string): Promise<ApplicationDetai
         body: `Hi team,\n\nI saw ${app.company} is expanding its AI engineering and RAG automation pipelines. I recently built Sentixcare, a Python/FastAPI/LangChain project hosted live on HuggingFace, and completed a Full Stack Intern role at Zidio building React interfaces.\n\nI'd love to learn if you're open to an intern to help construct carbon ingestion parsing tools. Are you free for a 10-minute chat next week?\n\nBest,\nGokul`
       },
       cover_letter_paragraphs: [
-        `Dear Hiring Manager,\n\nI am thrilled to apply for the AI Engineer position at ${app.company}. Having followed your recent growth in automating sustainability analytics, I am highly motivated by your tech stack. I believe my background in building LangChain and FastAPI microservices aligns perfectly with your goals.`,
+        `Dear Hiring Manager,\n\nYour recent work automating sustainability analytics at ${app.company} caught my eye. I recently shipped Sentixcare, a Python/FastAPI/LangChain project hosted live on HuggingFace, and completed a Full Stack Intern role at Zidio building React interfaces. I believe my background in building LangChain and FastAPI microservices aligns perfectly with your goals.`,
         `During my Full Stack Internship at Zidio, I developed responsive frontend dashboards in React and connected them to Django/PostgreSQL databases. In addition, my personal project Sentixcare involved training multi-modal classifiers and building semantic routing engines in Python, giving me strong fundamentals in pipeline integration.`,
         `I would love to bring my programming skills and fast learning pace to ${app.company}. Thank you for your time, and I look forward to the opportunity to discuss my qualifications.`
       ],
@@ -225,7 +225,7 @@ export async function getApplicationDetail(id: string): Promise<ApplicationDetai
     const tailored_bullets = [
       {
         project_or_role: "Sentixcare (AI/ML Project)",
-        bullet: "Designed and implemented carbon emissions analysis models using Python, FastAPI, and LangChain to extract sustainability metrics from raw logistics data."
+        bullet: "Developed a multi-agent RAG workflow using Python, FastAPI, and LangChain to parse and analyze clinical records stored in a Qdrant database."
       },
       {
         project_or_role: "Full Stack Intern at Zidio",

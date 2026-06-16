@@ -15,7 +15,7 @@ MOCK_TAILOR_OUTPUT = {
     "tailored_bullets": [
         {
             "project_or_role": "Sentixcare (AI/ML Project)",
-            "bullet": "Designed and implemented carbon emissions analysis models using Python, FastAPI, and LangChain to extract sustainability metrics from raw logistics data."
+            "bullet": "Developed a multi-agent RAG workflow using Python, FastAPI, and LangChain to parse and analyze clinical records stored in a Qdrant database."
         },
         {
             "project_or_role": "Full Stack Intern at Zidio",
@@ -23,7 +23,7 @@ MOCK_TAILOR_OUTPUT = {
         }
     ],
     "cover_letter_paragraphs": [
-        "Dear Hiring Manager,\n\nI am thrilled to apply for the AI Engineer Intern position at Breathe ESG. Having followed your recent Series A funding round to expand your SaaS emissions measuring platform, I am inspired by your mission. I believe my hands-on experience in building LangChain and FastAPI services makes me a strong fit for your team.",
+        "Dear Hiring Manager,\n\nYour recent work expanding utility emissions parsing tools at Breathe ESG caught my eye. I recently shipped Sentixcare, a Python/FastAPI/LangChain project hosted live on HuggingFace, and completed a Full Stack Intern role at Zidio building React interfaces. I believe my background in building LangChain and FastAPI microservices aligns perfectly with your goals.",
         "During my Full Stack Internship at Zidio, I developed backend APIs using Django and React dashboards, which align directly with your core stack. Additionally, in my project Sentixcare, I designed custom AI parsers utilizing Python to extract structured metrics, which directly prepares me to build your carbon ingestion pipelines.",
         "I would love the opportunity to contribute my engineering skills to Breathe ESG's sustainability mission. Thank you for your time and consideration, and I look forward to discussing how my background aligns with your engineering goals."
     ],
@@ -35,8 +35,8 @@ MOCK_TAILOR_OUTPUT = {
     "claims": [
         {
             "claim": "Built carbon emissions analysis models using Python, FastAPI, and LangChain in Sentixcare project",
-            "supported_by_baseline": True,
-            "reasoning": "Baseline shows Sentixcare is a Python/FastAPI/LangChain project for health/metrics analysis, which supports building structured parsing utilities."
+            "supported_by_baseline": False,
+            "reasoning": "Fabricated claim. The baseline Sentixcare project is focused on clinical records RAG, not carbon emissions models. Caught by claims checker and rewritten."
         },
         {
             "claim": "Led the entire engineering architecture of the Breathe ESG SaaS platform",
