@@ -24,7 +24,7 @@ export default function Dashboard({ currentView, onNavigate, selectedId, onLogou
     : 0;
 
   return (
-    <div className="flex h-screen bg-[#09090b] text-white font-sans overflow-hidden">
+    <div className="flex h-screen bg-surface text-on-surface font-sans overflow-hidden">
       {/* 1. Left Sidebar Navigation */}
       <Sidebar
         currentView={currentView}
@@ -34,12 +34,12 @@ export default function Dashboard({ currentView, onNavigate, selectedId, onLogou
       />
 
       {/* 2. Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden px-8 py-6">
-        <Header title="Recruitment Workspace" subtitle="ACTIVE APPLICATIONS & HISTORIC METRICS" />
+      <div className="flex-1 flex flex-col overflow-hidden px-margin-desktop py-6">
+        <Header title="Workspace Dashboard" subtitle="GOOD MORNING, ALEX. YOU HAVE 12 FOLLOW-UPS TODAY." />
 
-        <div className="flex-1 overflow-y-auto space-y-8 mt-6 pr-2">
+        <div className="flex-1 overflow-y-auto space-y-8 mt-6 pr-2 custom-scrollbar">
           {/* Top Metrics Row */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter">
             <StatusCard
               title="TOTAL APPLICATIONS"
               value={stats?.total || 0}
@@ -67,16 +67,16 @@ export default function Dashboard({ currentView, onNavigate, selectedId, onLogou
           </div>
 
           {/* Bottom Grid Split */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left/Center: Table */}
-            <div className="lg:col-span-2 bg-[#121214] border border-[#1f1f23] rounded-xl p-6">
-              <h3 className="text-sm font-semibold tracking-wider text-gray-400 mb-4 uppercase">Application Tracker</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+            {/* Left/Center: Table (7 cols) */}
+            <div className="lg:col-span-7 bg-white border border-outline-variant rounded-card p-6 shadow-sm">
+              <h3 className="font-headline text-sm font-semibold tracking-wider text-on-surface-variant mb-4 uppercase">Application Tracker</h3>
               <TrackerTable onSelectApplication={(id) => onNavigate('app', id)} />
             </div>
 
-            {/* Right: Agent Console */}
-            <div className="bg-[#121214] border border-[#1f1f23] rounded-xl p-6">
-              <h3 className="text-sm font-semibold tracking-wider text-purple-400 mb-4 uppercase">Live Agent Stream</h3>
+            {/* Right: Agent Console (5 cols) */}
+            <div className="lg:col-span-5 agent-gradient border border-white/10 rounded-card p-6 shadow-xl flex flex-col h-full min-h-[500px]">
+              <h3 className="font-headline text-sm font-semibold tracking-wider text-white mb-4 uppercase">Live Agent Stream</h3>
               <AgentPanel />
             </div>
           </div>

@@ -9,10 +9,10 @@ interface StatusCardProps {
 }
 
 const iconMap = {
-  briefcase: { component: Briefcase, color: "from-blue-600 to-indigo-500", textColor: "text-blue-400" },
-  calendar: { component: Calendar, color: "from-emerald-600 to-teal-500", textColor: "text-emerald-400" },
-  star: { component: Star, color: "from-purple-600 to-pink-500", textColor: "text-purple-400" },
-  alert: { component: AlertCircle, color: "from-amber-600 to-orange-500", textColor: "text-amber-400" },
+  briefcase: { component: Briefcase, color: "bg-primary/10", textColor: "text-primary" },
+  calendar: { component: Calendar, color: "bg-emerald-100", textColor: "text-emerald-700" },
+  star: { component: Star, color: "bg-secondary-container/50", textColor: "text-secondary" },
+  alert: { component: AlertCircle, color: "bg-error-container/50", textColor: "text-error" },
 };
 
 export default function StatusCard({ title, value, sub, icon }: StatusCardProps) {
@@ -20,24 +20,21 @@ export default function StatusCard({ title, value, sub, icon }: StatusCardProps)
   const IconComponent = cfg.component;
 
   return (
-    <div className="group relative rounded-xl bg-[#121214] border border-[#1f1f23] p-5 transition-all duration-300 hover:scale-[1.02] hover:border-slate-700/60 hover:bg-[#161619] overflow-hidden">
-      {/* Background Glow */}
-      <div className={`absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-gradient-to-tr ${cfg.color} opacity-[0.03] blur-lg group-hover:scale-150 transition-transform duration-500`} />
-      
+    <div className="group relative rounded-card bg-white border border-outline-variant p-5 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 overflow-hidden">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{title}</span>
-        <div className={`p-2 rounded-lg bg-[#09090b] border border-[#1f1f23] ${cfg.textColor} group-hover:bg-[#1f1f23] transition-colors duration-300 shadow`}>
+        <span className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">{title}</span>
+        <div className={`p-2 rounded-lg ${cfg.color} ${cfg.textColor} transition-colors duration-300 shadow-sm`}>
           <IconComponent size={18} />
         </div>
       </div>
       
       <div className="mt-4">
-        <span className="text-3xl font-bold tracking-tight text-white">{value}</span>
-        <p className="text-xs text-slate-500 mt-1.5 font-medium">{sub}</p>
+        <span className="font-headline text-3xl font-bold tracking-tight text-on-surface">{value}</span>
+        <p className="text-xs text-on-surface-variant mt-1.5 font-medium">{sub}</p>
       </div>
 
-      {/* Top Indicator Gradient Line */}
-      <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${cfg.color} opacity-70`} />
+      {/* Top accent line */}
+      <div className={`absolute top-0 left-0 right-0 h-[2px] bg-primary/20`} />
     </div>
   );
 }

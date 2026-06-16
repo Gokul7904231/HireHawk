@@ -116,7 +116,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex bg-[#05070c] min-h-screen text-slate-200">
+    <div className="flex bg-surface min-h-screen text-on-surface font-sans">
       {/* Sidebar Nav */}
       <Sidebar
         currentView={currentView}
@@ -126,26 +126,26 @@ export default function App() {
       />
 
       {/* Main Workspace Frame */}
-      <main className="flex-1 overflow-y-auto h-screen p-8 space-y-8">
+      <main className="flex-1 overflow-y-auto h-screen p-margin-desktop space-y-8 custom-scrollbar">
 
 
         {/* VIEW 2: SINGLE APPLICATION DETAILS */}
         {currentView === 'app' && (
           <div className="space-y-6 animate-slide-in">
             {/* Back header */}
-            <div className="flex items-center justify-between border-b border-[#1e293b] pb-4">
+            <div className="flex items-center justify-between border-b border-outline-variant pb-4">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setCurrentView('dashboard')}
-                  className="p-2 rounded-lg border border-[#1e293b] bg-[#0b0f19] text-slate-400 hover:text-white hover:border-slate-500 transition-all"
+                  className="p-2 rounded-btn border border-outline-variant bg-white text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-all"
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <div>
-                  <h1 className="text-xl font-extrabold text-white">
+                  <h1 className="font-headline text-xl font-extrabold text-on-surface">
                     {detailData?.application.company || 'Loading Company...'}
                   </h1>
-                  <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-0.5">
+                  <span className="text-xs text-on-surface-variant font-semibold uppercase tracking-wider mt-0.5">
                     {detailData?.application.role || 'Loading Role...'}
                   </span>
                 </div>
@@ -154,12 +154,12 @@ export default function App() {
               {/* Application Details Actions / Status selectors */}
               {detailData && (
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold text-slate-400 uppercase">Status:</span>
+                  <span className="text-xs font-bold text-on-surface-variant uppercase">Status:</span>
                   <select
                     id="details-status-change"
                     value={detailData.application.status}
                     onChange={(e) => handleStatusChange(e.target.value)}
-                    className="px-3.5 py-1.5 rounded-lg bg-[#0d1321]/60 border border-[#1e293b] text-xs font-bold text-slate-300 focus:outline-none focus:border-purple-500 cursor-pointer"
+                    className="px-3 py-1.5 rounded-btn bg-white border border-outline-variant text-xs font-bold text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer"
                   >
                     <option value="applied">Applied</option>
                     <option value="interview">Interview</option>
@@ -172,27 +172,27 @@ export default function App() {
 
             {isDetailLoading ? (
               <div className="h-64 flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full border-4 border-purple-500 border-t-transparent animate-spin" />
+                <div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin" />
               </div>
             ) : detailData ? (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Left Large Column (Drafts, Bullets, Claims) */}
-                <div className="lg:col-span-2 space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+                {/* Left Large Column (Drafts, Bullets, Claims) (8 cols) */}
+                <div className="lg:col-span-8 space-y-6">
                   {/* Tailored outreach drafts */}
-                  <div className="rounded-xl border border-[#1e293b] bg-[#0d1321]/60 p-5 space-y-5">
+                  <div className="rounded-card border border-outline-variant bg-white p-5 space-y-5 shadow-sm">
                     <div>
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Generated Outreach Material</h3>
-                      <p className="text-xs text-slate-500 mt-1">
+                      <h3 className="font-headline text-xs font-bold text-on-surface-variant uppercase tracking-wider">Generated Outreach Material</h3>
+                      <p className="text-xs text-on-surface-variant mt-1">
                         AI customized copy prepared for candidate cold communications.
                       </p>
                     </div>
 
                     <div className="space-y-4">
                       {/* Cold Email block */}
-                      <div className="rounded-lg border border-[#1e293b]/70 bg-[#070b13]/50 overflow-hidden">
-                        <div className="flex items-center justify-between px-4 py-2.5 bg-[#0b0f19] border-b border-[#1e293b]/70">
-                          <span className="text-xs font-bold text-slate-300 flex items-center gap-2">
-                            <Mail size={13} className="text-purple-400" />
+                      <div className="rounded-card border border-outline-variant bg-surface-container-low/50 overflow-hidden">
+                        <div className="flex items-center justify-between px-4 py-2.5 bg-surface-container-low border-b border-outline-variant">
+                          <span className="text-xs font-bold text-on-surface flex items-center gap-2">
+                            <Mail size={13} className="text-primary" />
                             Cold Email Pitch
                           </span>
                           <button
@@ -200,12 +200,12 @@ export default function App() {
                               `Subject: ${detailData.outreach_draft.cold_email.subject}\n\n${detailData.outreach_draft.cold_email.body}`,
                               'email'
                             )}
-                            className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-white transition-colors focus:outline-none"
+                            className="flex items-center gap-1.5 text-[10px] font-bold text-on-surface-variant hover:text-primary transition-colors focus:outline-none"
                           >
                             {copiedText === 'email' ? (
                               <>
-                                <Check size={11} className="text-emerald-400" />
-                                <span className="text-emerald-400">Copied!</span>
+                                <Check size={11} className="text-emerald-600" />
+                                <span className="text-emerald-600">Copied!</span>
                               </>
                             ) : (
                               <>
@@ -215,12 +215,12 @@ export default function App() {
                             )}
                           </button>
                         </div>
-                        <div className="p-4 space-y-2.5 text-xs">
+                        <div className="p-4 space-y-2.5 text-xs text-on-surface">
                           <div>
-                            <span className="font-bold text-slate-500 mr-2">Subject:</span>
-                            <span className="text-slate-200 font-medium">{detailData.outreach_draft.cold_email.subject}</span>
+                            <span className="font-bold text-on-surface-variant mr-2">Subject:</span>
+                            <span className="text-on-surface font-medium">{detailData.outreach_draft.cold_email.subject}</span>
                           </div>
-                          <pre className="font-sans text-slate-300 font-medium whitespace-pre-wrap leading-relaxed border-t border-[#1e293b]/30 pt-2.5">
+                          <pre className="font-sans text-on-surface font-medium whitespace-pre-wrap leading-relaxed border-t border-outline-variant/30 pt-2.5">
                             {detailData.outreach_draft.cold_email.body}
                           </pre>
                         </div>
@@ -228,10 +228,10 @@ export default function App() {
 
                       {/* Cover letter block */}
                       {detailData.outreach_draft.cover_letter_paragraphs.length > 0 && (
-                        <div className="rounded-lg border border-[#1e293b]/70 bg-[#070b13]/50 overflow-hidden">
-                          <div className="flex items-center justify-between px-4 py-2.5 bg-[#0b0f19] border-b border-[#1e293b]/70">
-                            <span className="text-xs font-bold text-slate-300 flex items-center gap-2">
-                              <FileText size={13} className="text-purple-400" />
+                        <div className="rounded-card border border-outline-variant bg-surface-container-low/50 overflow-hidden">
+                          <div className="flex items-center justify-between px-4 py-2.5 bg-surface-container-low border-b border-outline-variant">
+                            <span className="text-xs font-bold text-on-surface flex items-center gap-2">
+                              <FileText size={13} className="text-primary" />
                               Cover Letter Paragraphs
                             </span>
                             <button
@@ -239,12 +239,12 @@ export default function App() {
                                 detailData.outreach_draft.cover_letter_paragraphs.join('\n\n'),
                                 'letter'
                               )}
-                              className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-white transition-colors focus:outline-none"
+                              className="flex items-center gap-1.5 text-[10px] font-bold text-on-surface-variant hover:text-primary transition-colors focus:outline-none"
                             >
                               {copiedText === 'letter' ? (
                                 <>
-                                  <Check size={11} className="text-emerald-400" />
-                                  <span className="text-emerald-400">Copied!</span>
+                                  <Check size={11} className="text-emerald-600" />
+                                  <span className="text-emerald-600">Copied!</span>
                                 </>
                               ) : (
                                 <>
@@ -254,7 +254,7 @@ export default function App() {
                               )}
                             </button>
                           </div>
-                          <div className="p-4 text-xs text-slate-300 whitespace-pre-wrap leading-relaxed font-medium space-y-3">
+                          <div className="p-4 text-xs text-on-surface whitespace-pre-wrap leading-relaxed font-medium space-y-3">
                             {detailData.outreach_draft.cover_letter_paragraphs.map((p, idx) => (
                               <p key={idx}>{p}</p>
                             ))}
@@ -264,20 +264,20 @@ export default function App() {
 
                       {/* Referral pitch block */}
                       {detailData.outreach_draft.referral_message && (
-                        <div className="rounded-lg border border-[#1e293b]/70 bg-[#070b13]/50 overflow-hidden">
-                          <div className="flex items-center justify-between px-4 py-2.5 bg-[#0b0f19] border-b border-[#1e293b]/70">
-                            <span className="text-xs font-bold text-slate-300 flex items-center gap-2">
-                              <Send size={13} className="text-purple-400" />
+                        <div className="rounded-card border border-outline-variant bg-surface-container-low/50 overflow-hidden">
+                          <div className="flex items-center justify-between px-4 py-2.5 bg-surface-container-low border-b border-outline-variant">
+                            <span className="text-xs font-bold text-on-surface flex items-center gap-2">
+                              <Send size={13} className="text-primary" />
                               LinkedIn / Referral Message
                             </span>
                             <button
                               onClick={() => copyToClipboard(detailData.outreach_draft.referral_message!, 'referral')}
-                              className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-white transition-colors focus:outline-none"
+                              className="flex items-center gap-1.5 text-[10px] font-bold text-on-surface-variant hover:text-primary transition-colors focus:outline-none"
                             >
                               {copiedText === 'referral' ? (
                                 <>
-                                  <Check size={11} className="text-emerald-400" />
-                                  <span className="text-emerald-400">Copied!</span>
+                                  <Check size={11} className="text-emerald-600" />
+                                  <span className="text-emerald-600">Copied!</span>
                                 </>
                               ) : (
                                 <>
@@ -287,7 +287,7 @@ export default function App() {
                               )}
                             </button>
                           </div>
-                          <div className="p-4 text-xs text-slate-300 whitespace-pre-wrap font-medium leading-relaxed">
+                          <div className="p-4 text-xs text-on-surface whitespace-pre-wrap font-medium leading-relaxed">
                             {detailData.outreach_draft.referral_message}
                           </div>
                         </div>
@@ -296,17 +296,17 @@ export default function App() {
                   </div>
 
                   {/* Tailored bullets compare view */}
-                  <div className="rounded-xl border border-[#1e293b] bg-[#0d1321]/60 p-5 space-y-4">
-                    <div className="flex items-center justify-between border-b border-[#1e293b]/70 pb-3">
+                  <div className="rounded-card border border-outline-variant bg-white p-5 space-y-4 shadow-sm">
+                    <div className="flex items-center justify-between border-b border-outline-variant pb-3">
                       <div>
-                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Tailored Resume Bullets</h3>
-                        <p className="text-xs text-slate-500 mt-1">
+                        <h3 className="font-headline text-xs font-bold text-on-surface-variant uppercase tracking-wider">Tailored Resume Bullets</h3>
+                        <p className="text-xs text-on-surface-variant mt-1">
                           Tailoring differences matching the baseline profile ground truth.
                         </p>
                       </div>
                       <button
                         onClick={handlePdfDownload}
-                        className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition-all shadow"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-btn bg-primary hover:bg-primary-container text-xs font-bold text-white transition-all shadow-sm"
                       >
                         <Download size={13} />
                         <span>Download PDF</span>
@@ -322,17 +322,17 @@ export default function App() {
                           : "Constructed frontend views using React and mapped database APIs.";
                           
                         return (
-                          <div key={index} className="space-y-2 p-3 rounded-lg bg-[#070b13]/30 border border-[#1e293b]/50">
-                            <span className="text-xs font-bold text-purple-400">{bullet.project_or_role}</span>
+                          <div key={index} className="space-y-2 p-4 rounded-card bg-surface-container-low/30 border border-outline-variant">
+                            <span className="text-xs font-bold text-primary">{bullet.project_or_role}</span>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                               {/* Original */}
-                              <div className="p-3.5 rounded bg-rose-950/10 border border-rose-500/10 text-rose-300/80">
-                                <span className="block font-bold text-[9px] uppercase tracking-wider text-rose-500 mb-1">Original</span>
-                                <p className="font-medium line-through decoration-rose-500/30">{originalBullet}</p>
+                              <div className="p-3.5 rounded bg-error-container/20 border border-error/15 text-error">
+                                <span className="block font-bold text-[9px] uppercase tracking-wider text-error mb-1">Original</span>
+                                <p className="font-medium line-through decoration-error/30">{originalBullet}</p>
                               </div>
                               {/* Tailored */}
-                              <div className="p-3.5 rounded bg-emerald-950/10 border border-emerald-500/10 text-emerald-300">
-                                <span className="block font-bold text-[9px] uppercase tracking-wider text-emerald-500 mb-1">Tailored (Adjudicated)</span>
+                              <div className="p-3.5 rounded bg-green-50 border border-green-200 text-green-800">
+                                <span className="block font-bold text-[9px] uppercase tracking-wider text-green-700 mb-1">Tailored (Adjudicated)</span>
                                 <p className="font-semibold">{bullet.bullet}</p>
                               </div>
                             </div>
@@ -346,14 +346,14 @@ export default function App() {
                   <ClaimsTrace claims={detailData.claims} />
                 </div>
 
-                {/* Right Small Column (Fit score, Company intel) */}
-                <div className="space-y-6">
+                {/* Right Small Column (Fit score, Company intel) (4 cols) */}
+                <div className="lg:col-span-4 space-y-6">
                   <FitScoreBar score={detailData.application.fit_score} />
                   <CompanyIntel intel={detailData.company_intel} />
                 </div>
               </div>
             ) : (
-              <div className="text-center py-10 text-slate-500">
+              <div className="text-center py-10 text-on-surface-variant">
                 Application not found.
               </div>
             )}
@@ -364,30 +364,30 @@ export default function App() {
         {currentView === 'settings' && (
           <div className="space-y-6 animate-slide-in">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-[#1e293b] pb-5">
+            <div className="flex items-center justify-between border-b border-outline-variant pb-5">
               <div>
-                <h1 className="text-2xl font-extrabold tracking-tight text-white">Candidate Settings</h1>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-1">
+                <h1 className="font-headline text-2xl font-extrabold tracking-tight text-on-surface">Candidate Settings</h1>
+                <p className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest mt-1">
                   JSON Editor & Microservice Statuses
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Profile Editor */}
-              <div className="lg:col-span-2 space-y-4">
-                <div className="rounded-xl border border-[#1e293b] bg-[#0d1321]/60 p-5 space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+              {/* Profile Editor (8 cols) */}
+              <div className="lg:col-span-8 space-y-4">
+                <div className="rounded-card border border-outline-variant bg-white p-5 space-y-4 shadow-sm">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider">Candidate Baseline Profile</h3>
-                      <p className="text-xs text-slate-400 mt-1 font-medium">
+                      <h3 className="font-headline text-sm font-bold text-on-surface uppercase tracking-wider">Candidate Baseline Profile</h3>
+                      <p className="text-xs text-on-surface-variant mt-1 font-medium">
                         This represents the candidate ground truth data (profile.json) that feeds into LLM validation.
                       </p>
                     </div>
                     {!isEditing && (
                       <button
                         onClick={startJsonEdit}
-                        className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition-all shadow"
+                        className="px-4 py-2 rounded-btn bg-primary hover:bg-primary-container text-xs font-bold text-white transition-all shadow-sm"
                       >
                         Edit Profile
                       </button>
@@ -398,7 +398,7 @@ export default function App() {
                   {isEditing ? (
                     <div className="space-y-4">
                       {jsonError && (
-                        <div className="flex items-center gap-3 p-3.5 rounded-lg border border-rose-500/30 bg-rose-500/5 text-xs text-rose-400">
+                        <div className="flex items-center gap-3 p-3.5 rounded-lg border border-error/30 bg-error-container/10 text-xs text-error">
                           <AlertCircle size={16} />
                           <span className="font-semibold">{jsonError}</span>
                         </div>
@@ -408,19 +408,19 @@ export default function App() {
                         value={jsonText}
                         onChange={(e) => handleJsonChange(e.target.value)}
                         rows={16}
-                        className="w-full p-4 rounded-lg bg-[#070b13] border border-[#1e293b] font-mono text-xs text-purple-300 placeholder-slate-700 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 leading-relaxed"
+                        className="w-full p-4 rounded-lg bg-surface-container-low border border-outline-variant font-mono text-xs text-primary placeholder-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary leading-relaxed"
                       />
                       <div className="flex justify-end gap-3">
                         <button
                           onClick={() => setIsEditing(false)}
-                          className="px-4 py-2 rounded-lg border border-[#1e293b] bg-[#0b0f19] text-xs font-semibold text-slate-300 hover:text-white hover:bg-[#161f30] transition-all"
+                          className="px-4 py-2 rounded-btn border border-outline-variant bg-white text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low transition-all"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={handleSaveProfile}
                           disabled={!!jsonError || saveProfileMutation.isPending}
-                          className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 disabled:opacity-50 disabled:cursor-not-allowed text-xs font-bold text-white transition-all shadow"
+                          className="px-4 py-2 rounded-btn bg-primary hover:bg-primary-container disabled:opacity-50 disabled:cursor-not-allowed text-xs font-bold text-white transition-all shadow-sm"
                         >
                           {saveProfileMutation.isPending ? 'Saving...' : 'Save Changes'}
                         </button>
@@ -428,24 +428,24 @@ export default function App() {
                     </div>
                   ) : isProfileLoading ? (
                     <div className="h-64 flex items-center justify-center">
-                      <div className="w-6 h-6 rounded-full border-3 border-purple-500 border-t-transparent animate-spin" />
+                      <div className="w-6 h-6 rounded-full border-3 border-primary border-t-transparent animate-spin" />
                     </div>
                   ) : (
-                    <pre className="p-4 rounded-lg bg-[#070b13]/80 border border-[#1e293b] overflow-x-auto text-xs text-slate-300 leading-relaxed font-mono whitespace-pre max-h-[400px]">
+                    <pre className="p-4 rounded-lg bg-surface-container-low border border-outline-variant overflow-x-auto text-xs text-on-surface leading-relaxed font-mono whitespace-pre max-h-[400px]">
                       {JSON.stringify(profileData, null, 2)}
                     </pre>
                   )}
                 </div>
               </div>
 
-              {/* MCP Status Sidebar list */}
-              <div className="space-y-4">
-                <div className="rounded-xl border border-[#1e293b] bg-[#0d1321]/60 p-5 space-y-4">
-                  <div className="flex items-center justify-between border-b border-[#1e293b]/70 pb-3">
-                    <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider">MCP Server Cluster</h3>
+              {/* MCP Status Sidebar list (4 cols) */}
+              <div className="lg:col-span-4 space-y-4">
+                <div className="rounded-card border border-outline-variant bg-white p-5 space-y-4 shadow-sm">
+                  <div className="flex items-center justify-between border-b border-outline-variant pb-3">
+                    <h3 className="font-headline text-sm font-bold text-on-surface uppercase tracking-wider">MCP Server Cluster</h3>
                     <button
                       onClick={() => refetchMcp()}
-                      className="p-1 rounded-md border border-[#1e293b] bg-[#0b0f19] text-slate-400 hover:text-white"
+                      className="p-1 rounded bg-white border border-outline-variant text-on-surface-variant hover:text-primary hover:bg-surface-container-low"
                       title="Re-check status"
                     >
                       <RefreshCw size={13} />
@@ -457,11 +457,11 @@ export default function App() {
                       Object.entries(mcpStatus).map(([name, status]) => (
                         <div
                           key={name}
-                          className="flex items-center justify-between p-3 rounded-lg bg-[#070b13]/40 border border-[#1e293b]/40 text-xs"
+                          className="flex items-center justify-between p-3 rounded-card bg-surface-container-low/50 border border-outline-variant/60 text-xs"
                         >
                           <div>
-                            <span className="font-bold text-slate-200 block">{name}</span>
-                            <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">
+                            <span className="font-bold text-on-surface block">{name}</span>
+                            <span className="text-[10px] text-on-surface-variant mt-0.5 block font-medium">
                               {name === 'resume-mcp' && 'Candidate Profile Reader'}
                               {name === 'jd-parser-mcp' && 'Job Description Signal Extractor'}
                               {name === 'tracker-mcp' && 'Supabase Application Sync'}
@@ -473,25 +473,25 @@ export default function App() {
                           <div className="flex items-center gap-2">
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold border capitalize ${
                               status === 'healthy' 
-                                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                                ? 'bg-emerald-100 text-emerald-700 border-emerald-200'
                                 : status === 'unhealthy'
-                                ? 'bg-rose-500/10 text-rose-400 border-rose-500/20'
-                                : 'bg-slate-500/10 text-slate-400 border-slate-500/20'
+                                ? 'bg-rose-100 text-rose-700 border-rose-200'
+                                : 'bg-slate-100 text-slate-700 border-slate-200'
                             }`}>
                               {status}
                             </span>
                             <div className={`w-2 h-2 rounded-full ${
                               status === 'healthy' 
-                                ? 'bg-emerald-500 shadow-md shadow-emerald-500/50' 
+                                ? 'bg-emerald-500 shadow-md shadow-emerald-500/20' 
                                 : status === 'unhealthy'
-                                ? 'bg-rose-500 shadow-md shadow-rose-500/50'
+                                ? 'bg-rose-500 shadow-md shadow-rose-500/20'
                                 : 'bg-slate-500'
                             }`} />
                           </div>
                         </div>
                       ))
                     ) : (
-                      <div className="text-center py-5 text-slate-500 text-xs">
+                      <div className="text-center py-5 text-on-surface-variant text-xs">
                         Checking server statuses...
                       </div>
                     )}

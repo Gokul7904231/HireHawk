@@ -109,30 +109,30 @@ export default function Sidepanel() {
   };
 
   return (
-    <div className="w-[380px] h-screen bg-[#09090b] text-white border-l border-[#1f1f23] flex flex-col font-sans overflow-hidden">
+    <div className="w-[380px] h-screen bg-gradient-to-b from-[#1E1B4B] to-[#111827] text-white border-l border-white/10 flex flex-col font-sans overflow-hidden">
       {/* Top Identity Header */}
-      <div className="p-4 border-b border-[#1f1f23] bg-[#121214] flex justify-between items-center">
+      <div className="p-4 border-b border-white/10 bg-black/20 flex justify-between items-center">
         <div>
-          <h2 className="text-sm font-bold tracking-tight text-purple-400">HIREHAWK</h2>
+          <h2 className="text-sm font-bold tracking-tight text-purple-300">HIREHAWK</h2>
           <p className="text-[10px] text-gray-400 uppercase font-semibold">Agentic Co-Pilot Window</p>
         </div>
-        <span className="text-[10px] bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded-full font-mono">
+        <span className="text-[10px] bg-white/10 text-white border border-white/20 px-2 py-0.5 rounded-full font-mono">
           Context Linked
         </span>
       </div>
 
       {/* Active Webpage Target Info Box */}
-      <div className="p-4 bg-[#161619] border-b border-[#1f1f23] flex justify-between items-center">
+      <div className="p-4 bg-black/10 border-b border-white/10 flex justify-between items-center">
         <div className="space-y-1">
-          <span className="text-[10px] font-mono tracking-wider text-gray-500 uppercase">Target Detected</span>
+          <span className="text-[10px] font-mono tracking-wider text-gray-400 uppercase">Target Detected</span>
           <h3 className="text-sm font-bold text-gray-100">{detectedJob.role}</h3>
-          <p className="text-xs text-purple-300">{detectedJob.company}</p>
+          <p className="text-xs text-purple-200 font-semibold">{detectedJob.company}</p>
         </div>
         
         {flowState === 'idle' && (
           <button
             onClick={triggerFlow}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition-all shadow"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container hover:bg-primary text-xs font-bold text-white transition-all shadow"
           >
             <Play size={12} />
             <span>Run</span>
@@ -142,7 +142,7 @@ export default function Sidepanel() {
         {(flowState === 'approved' || flowState === 'rejected') && (
           <button
             onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#1f1f23] bg-[#121214] hover:bg-[#1f1f23] text-xs font-semibold text-gray-300 transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-semibold text-gray-300 transition-all"
           >
             <RotateCcw size={12} />
             <span>Reset</span>
@@ -151,7 +151,7 @@ export default function Sidepanel() {
       </div>
 
       {/* Vertical Interactive Agent Engine Stream */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pr-2">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pr-2 custom-scrollbar">
         {/* Approved Banner */}
         {flowState === 'approved' && (
           <div className="flex items-center gap-3 p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 text-emerald-400 animate-slide-in">
@@ -170,8 +170,8 @@ export default function Sidepanel() {
 
         {/* Re-mapped vertical timeline */}
         <div className="space-y-3">
-          <span className="text-[10px] font-mono tracking-wider text-gray-500 uppercase block">Execution Nodes</span>
-          <div className="relative border-l-2 border-[#1f1f23] ml-3 pl-6 space-y-4">
+          <span className="text-[10px] font-mono tracking-wider text-gray-400 uppercase block">Execution Nodes</span>
+          <div className="relative border-l-2 border-white/10 ml-3 pl-6 space-y-4">
             {steps.map((s, idx) => (
               <StreamCard
                 key={idx}
