@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # ──────────────────────────────────────────────────────────────────────────────
-# deploy_azure_mcp.sh — Deploy all 5 NeuroHire MCP servers to Azure Functions
+# deploy_azure_mcp.sh — Deploy all 5 HireHawk MCP servers to Azure Functions
 # Usage: bash deploy_azure_mcp.sh <resource-group> <storage-account>
 # Requirements: az cli, azure-functions-core-tools (func)
 # ──────────────────────────────────────────────────────────────────────────────
 set -e
 
-RESOURCE_GROUP="${1:-neurohire-rg}"
-STORAGE_ACCOUNT="${2:-neurohirestorage}"
+RESOURCE_GROUP="${1:-hirehawk-rg}"
+STORAGE_ACCOUNT="${2:-hirehawkstorage}"
 LOCATION="eastus"
 PYTHON_VERSION="3.11"
 
@@ -19,7 +19,7 @@ MCP_SERVERS=(
   "tracker_mcp:tracker-mcp:8003"
 )
 
-echo "=== NeuroHire MCP Azure Functions Deployment ==="
+echo "=== HireHawk MCP Azure Functions Deployment ==="
 echo "Resource group : $RESOURCE_GROUP"
 echo "Storage account: $STORAGE_ACCOUNT"
 echo "Location       : $LOCATION"
@@ -44,8 +44,8 @@ for entry in "${MCP_SERVERS[@]}"; do
   echo ""
   echo "--- Deploying $app_name ---"
   
-  APP_NAME="neurohire-${app_name}"
-  MCP_DIR="neurohire/mcp_servers/${dir_name}"
+  APP_NAME="hirehawk-${app_name}"
+  MCP_DIR="hirehawk/mcp_servers/${dir_name}"
   
   # Create Function App
   az functionapp create \
@@ -84,8 +84,8 @@ echo ""
 echo "=== All MCP servers deployed ==="
 echo ""
 echo "Next step: Update Render environment variables with the Azure Function URLs:"
-echo "  JD_PARSER_MCP_URL     = https://neurohire-jd-parser-mcp.azurewebsites.net"
-echo "  RESUME_MCP_URL        = https://neurohire-resume-mcp.azurewebsites.net"
-echo "  COMPANY_INTEL_MCP_URL = https://neurohire-company-intel-mcp.azurewebsites.net"
-echo "  OUTREACH_MCP_URL      = https://neurohire-outreach-mcp.azurewebsites.net"
-echo "  TRACKER_MCP_URL       = https://neurohire-tracker-mcp.azurewebsites.net"
+echo "  JD_PARSER_MCP_URL     = https://hirehawk-jd-parser-mcp.azurewebsites.net"
+echo "  RESUME_MCP_URL        = https://hirehawk-resume-mcp.azurewebsites.net"
+echo "  COMPANY_INTEL_MCP_URL = https://hirehawk-company-intel-mcp.azurewebsites.net"
+echo "  OUTREACH_MCP_URL      = https://hirehawk-outreach-mcp.azurewebsites.net"
+echo "  TRACKER_MCP_URL       = https://hirehawk-tracker-mcp.azurewebsites.net"

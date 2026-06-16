@@ -1,24 +1,24 @@
-# NeuroHire Session 3 Progress Log
+# HireHawk Session 3 Progress Log
 
 ## Phase 1 — Go live (flip mock flags)
 - **Started**: 2026-06-15T16:49:00+05:30
 - **Completed**: 2026-06-15T16:55:00+05:30
 - **Tests**: 8/8 pytest — conftest.py updated to force mock mode so tests always run offline regardless of .env
-- **Status**: neurohire-agent/.env updated — MCP_MOCK=false, GEMINI_MOCK=false, SUPABASE_MOCK=false, A2A_MOCK=false, live Supabase/Gemini keys added. Worker .dev.vars AGENT_BACKEND_URL uncommented to http://localhost:8000. /health endpoint added to FastAPI and CrewAI servers.
+- **Status**: hirehawk-agent/.env updated — MCP_MOCK=false, GEMINI_MOCK=false, SUPABASE_MOCK=false, A2A_MOCK=false, live Supabase/Gemini keys added. Worker .dev.vars AGENT_BACKEND_URL uncommented to http://localhost:8000. /health endpoint added to FastAPI and CrewAI servers.
 - **Blockers**: None
 
 ## Phase 2 — Deploy LangGraph backend to Render
 - **Started**: 2026-06-15T16:55:00+05:30
 - **Completed**: 2026-06-15T17:00:00+05:30
 - **Tests**: N/A
-- **Status**: render.yaml created with two services — neurohire-agent (FastAPI :8000) and neurohire-crew (CrewAI :8001). Secrets marked sync:false to be populated from Render dashboard. Internal service reference CREW_BASE_URL wired via fromService. healthCheckPath=/health on both.
+- **Status**: render.yaml created with two services — hirehawk-agent (FastAPI :8000) and hirehawk-crew (CrewAI :8001). Secrets marked sync:false to be populated from Render dashboard. Internal service reference CREW_BASE_URL wired via fromService. healthCheckPath=/health on both.
 - **Blockers**: None — deploy command: push to master (Render auto-deploys)
 
 ## Phase 3 — Deploy Worker to Cloudflare
 - **Started**: 2026-06-15T17:00:00+05:30
 - **Completed**: 2026-06-15T17:05:00+05:30
 - **Tests**: 21/21 Vitest — no regressions
-- **Status**: wrangler.jsonc updated with name=neurohire-worker, vars block for non-secrets. Deployment command: npx wrangler deploy. Secrets (GEMINI_API_KEY, SUPABASE_KEY, AGENT_BACKEND_URL) set via npx wrangler secret put.
+- **Status**: wrangler.jsonc updated with name=hirehawk-worker, vars block for non-secrets. Deployment command: npx wrangler deploy. Secrets (GEMINI_API_KEY, SUPABASE_KEY, AGENT_BACKEND_URL) set via npx wrangler secret put.
 - **Blockers**: None
 
 ## Phase 4 — Deploy MCP servers to Azure Functions

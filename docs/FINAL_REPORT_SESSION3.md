@@ -1,4 +1,4 @@
-# NeuroHire — FINAL REPORT SESSION 3
+# HireHawk — FINAL REPORT SESSION 3
 **Completed**: 2026-06-15T17:30+05:30  
 **Total Project Duration**: 3 sessions (Sessions 1, 2, 3)
 
@@ -6,7 +6,7 @@
 
 ## Project Summary
 
-NeuroHire is a fully autonomous AI job application copilot built across 3 engineering sessions. It consists of a Chrome Extension, a Cloudflare Worker edge proxy, a LangGraph multi-agent backend, 5 Model Context Protocol (MCP) servers, a CrewAI A2A sub-service, Mem0 memory, Supabase tracking, and Langfuse observability — all connected end-to-end.
+HireHawk is a fully autonomous AI job application copilot built across 3 engineering sessions. It consists of a Chrome Extension, a Cloudflare Worker edge proxy, a LangGraph multi-agent backend, 5 Model Context Protocol (MCP) servers, a CrewAI A2A sub-service, Mem0 memory, Supabase tracking, and Langfuse observability — all connected end-to-end.
 
 ---
 
@@ -37,7 +37,7 @@ NeuroHire is a fully autonomous AI job application copilot built across 3 engine
 | Cloudflare Worker (`vitest`) | 21 | ✅ All passing |
 | **Total** | **29** | ✅ |
 
-> Note: MCP shared layer tests (self_healing, routing) add additional coverage — run via `cd neurohire && python -m pytest mcp_servers/shared/`
+> Note: MCP shared layer tests (self_healing, routing) add additional coverage — run via `cd hirehawk && python -m pytest mcp_servers/shared/`
 
 ---
 
@@ -46,7 +46,7 @@ NeuroHire is a fully autonomous AI job application copilot built across 3 engine
 Ran `demo_runner.py --mock` against 3 real jobs:
 
 ```
-=[ NEUROHIRE DEMO PIPELINE ]=
+=[ HIREHAWK DEMO PIPELINE ]=
 Running 3 job(s) through the full agentic pipeline
 Mock mode: MCP=true | Gemini=true
 
@@ -80,9 +80,9 @@ Mock mode: MCP=true | Gemini=true
 
 | Component | Platform | Config |
 |---|---|---|
-| LangGraph backend (FastAPI) | Render | `render.yaml` → `neurohire-agent` service |
-| CrewAI A2A service | Render | `render.yaml` → `neurohire-crew` service |
-| Cloudflare Worker | Cloudflare Workers | `npx wrangler deploy` from `neurohire-copilot/worker` |
+| LangGraph backend (FastAPI) | Render | `render.yaml` → `hirehawk-agent` service |
+| CrewAI A2A service | Render | `render.yaml` → `hirehawk-crew` service |
+| Cloudflare Worker | Cloudflare Workers | `npx wrangler deploy` from `hirehawk-copilot/worker` |
 | 5 MCP servers | Azure Functions | `.\deploy_azure_mcp.ps1` |
 
 ### Wiring (post-deploy steps)
@@ -104,10 +104,10 @@ Mock mode: MCP=true | Gemini=true
 | `demo/demo_runner.py` | End-to-end pipeline demo script with claims trace output |
 | `demo/README.md` | Interview demo script with talking points and Q&A |
 | `README.md` | Polished root README with architecture diagram, badges, full stack table |
-| `neurohire-agent/conftest.py` | Updated to force mock mode in all tests regardless of .env |
-| `neurohire-agent/api/server.py` | Added `/health` endpoint |
-| `neurohire-agent/crew/server.py` | Added `/health` endpoint |
-| `neurohire-copilot/worker/wrangler.jsonc` | Updated with `neurohire-worker` name and vars block |
+| `hirehawk-agent/conftest.py` | Updated to force mock mode in all tests regardless of .env |
+| `hirehawk-agent/api/server.py` | Added `/health` endpoint |
+| `hirehawk-agent/crew/server.py` | Added `/health` endpoint |
+| `hirehawk-copilot/worker/wrangler.jsonc` | Updated with `hirehawk-worker` name and vars block |
 
 ---
 
@@ -118,7 +118,7 @@ Chrome Extension (React + MV3)
     |
     | HTTP / SSE
     v
-Cloudflare Worker (neurohire-worker)
+Cloudflare Worker (hirehawk-worker)
     /extract --> POST /run --> SSE stream back
     /tailor  --> POST /approve/{run_id} --> SSE stream back
     |

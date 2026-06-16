@@ -1,0 +1,33 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "hirehawk-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-06-15",
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true,
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	/**
+	 * Environment Variables (non-secret, used in production)
+	 * Secrets (GEMINI_API_KEY, SUPABASE_KEY) are set via:
+	 *   npx wrangler secret put GEMINI_API_KEY
+	 *   npx wrangler secret put SUPABASE_KEY
+	 */
+	"vars": {
+		"GEMINI_MOCK": "false",
+		"SUPABASE_MOCK": "false"
+	}
+	/**
+	 * To enable agentic backend, set AGENT_BACKEND_URL as a secret:
+	 *   npx wrangler secret put AGENT_BACKEND_URL
+	 * Then set value to your Render URL, e.g.:
+	 *   https://hirehawk-agent.onrender.com
+	 */
+}

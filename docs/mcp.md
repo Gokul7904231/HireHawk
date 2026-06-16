@@ -1,8 +1,8 @@
-# NeuroHire — MCP Server Reference
+# HireHawk — MCP Server Reference
 
 > **Tool:** Google Antigravity (Agy)  
 > **Config location:** `~/.gemini/config/mcp_config.json`  
-> **Workspace rules:** `neurohire/.agent/rules/`  
+> **Workspace rules:** `hirehawk/.agent/rules/`  
 > **All servers:** FastAPI + Python + Azure Functions (free tier)  
 > **Total servers:** 5
 
@@ -11,10 +11,10 @@
 ## Project folder structure
 
 ```
-neurohire/
+hirehawk/
 ├── .agent/
 │   └── rules/
-│       └── neurohire.md          ← Antigravity workspace rule (paste from §0)
+│       └── hirehawk.md          ← Antigravity workspace rule (paste from §0)
 ├── mcp_servers/
 │   ├── resume_mcp/               ← Server 1
 │   ├── jd_parser_mcp/            ← Server 2
@@ -30,10 +30,10 @@ neurohire/
 
 ## §0 — Antigravity workspace rule
 
-Create this file at `neurohire/.agent/rules/neurohire.md` before starting any build:
+Create this file at `hirehawk/.agent/rules/hirehawk.md` before starting any build:
 
 ```markdown
-# NeuroHire workspace rule
+# HireHawk workspace rule
 
 ## Stack
 - Language: Python 3.12
@@ -203,13 +203,13 @@ SIH_ACHIEVEMENT = "Finalist — Smart India Hackathon 2025 (National Level) | Wo
 ### Antigravity build prompt
 
 ```
-Build the resume-mcp MCP server for the NeuroHire project.
+Build the resume-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/resume_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK (pip install mcp[server]), Pydantic v2, python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -272,7 +272,7 @@ Then show me the mcp_config.json entry to add to ~/.gemini/config/mcp_config.jso
 ## §2 — jd-parser-mcp
 
 ### What it does
-Takes a raw JD URL or text. Scrapes it via Firecrawl, parses the content using an LLM, and returns a structured `JDSignals` object. This is the first agent called in every NeuroHire pipeline run.
+Takes a raw JD URL or text. Scrapes it via Firecrawl, parses the content using an LLM, and returns a structured `JDSignals` object. This is the first agent called in every HireHawk pipeline run.
 
 ### Tools
 
@@ -309,13 +309,13 @@ class JDSignals(BaseModel):
 ### Antigravity build prompt
 
 ```
-Build the jd-parser-mcp MCP server for the NeuroHire project.
+Build the jd-parser-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/jd_parser_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, Firecrawl, OpenAI SDK (pointed at GitHub Models), instructor, python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -395,7 +395,7 @@ Then show me the mcp_config.json entry for Antigravity.
 ## §3 — tracker-mcp
 
 ### What it does
-Full CRUD for the NeuroHire application tracker. Backed by Supabase (PostgreSQL free tier). Every application, status update, outreach event, and follow-up reminder goes through this server. The Tracker Agent in LangGraph is the only writer.
+Full CRUD for the HireHawk application tracker. Backed by Supabase (PostgreSQL free tier). Every application, status update, outreach event, and follow-up reminder goes through this server. The Tracker Agent in LangGraph is the only writer.
 
 ### Supabase schema
 
@@ -447,13 +447,13 @@ CREATE TABLE drafts (
 ### Antigravity build prompt
 
 ```
-Build the tracker-mcp MCP server for the NeuroHire project.
+Build the tracker-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/tracker_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, supabase-py, python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BEFORE building: create the Supabase tables by running the SQL from mcp.md §3. Then set SUPABASE_URL and SUPABASE_KEY in .env.
 
@@ -565,13 +565,13 @@ class CompanyIntel(BaseModel):
 ### Antigravity build prompt
 
 ```
-Build the company-intel-mcp MCP server for the NeuroHire project.
+Build the company-intel-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/company_intel_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, Firecrawl, OpenAI SDK (GitHub Models), python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -678,13 +678,13 @@ NO FABRICATION: Never claim experience that is not in the profile from resume-mc
 ### Antigravity build prompt
 
 ```
-Build the outreach-mcp MCP server for the NeuroHire project.
+Build the outreach-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/outreach_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, OpenAI SDK (GitHub Models), python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -891,4 +891,4 @@ GitHub Models is free — just needs your GitHub token. No billing required.
 
 ---
 
-*NeuroHire mcp.md — v1.0 — June 2026*
+*HireHawk mcp.md — v1.0 — June 2026*

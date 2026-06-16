@@ -1,8 +1,8 @@
-# NeuroHire — MCP Server Reference
+# HireHawk — MCP Server Reference
 
 > **Tool:** Google Antigravity (Agy)  
 > **Config location:** `~/.gemini/config/mcp_config.json`  
-> **Workspace rules:** `neurohire/.agent/rules/`  
+> **Workspace rules:** `hirehawk/.agent/rules/`  
 > **All servers:** FastAPI + Python + Azure Functions (free tier)  
 > **Total servers:** 5
 
@@ -11,10 +11,10 @@
 ## Project folder structure
 
 ```
-neurohire/
+hirehawk/
 ├── .agent/
 │   └── rules/
-│       └── neurohire.md          ← Antigravity workspace rule (paste from §0)
+│       └── hirehawk.md          ← Antigravity workspace rule (paste from §0)
 ├── mcp_servers/
 │   ├── resume_mcp/               ← Server 1
 │   ├── jd_parser_mcp/            ← Server 2
@@ -30,10 +30,10 @@ neurohire/
 
 ## §0 — Antigravity workspace rule
 
-Create this file at `neurohire/.agent/rules/neurohire.md` before starting any build:
+Create this file at `hirehawk/.agent/rules/hirehawk.md` before starting any build:
 
 ```markdown
-# NeuroHire workspace rule
+# HireHawk workspace rule
 
 ## Stack
 - Language: Python 3.12
@@ -203,13 +203,13 @@ SIH_ACHIEVEMENT = "Finalist — Smart India Hackathon 2025 (National Level) | Wo
 ### Antigravity build prompt
 
 ```
-Build the resume-mcp MCP server for the NeuroHire project.
+Build the resume-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/resume_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK (pip install mcp[server]), Pydantic v2, python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -272,7 +272,7 @@ Then show me the mcp_config.json entry to add to ~/.gemini/config/mcp_config.jso
 ## §2 — jd-parser-mcp
 
 ### What it does
-Takes a raw JD URL or text. Scrapes it via Firecrawl, parses the content using an LLM, and returns a structured `JDSignals` object. This is the first agent called in every NeuroHire pipeline run.
+Takes a raw JD URL or text. Scrapes it via Firecrawl, parses the content using an LLM, and returns a structured `JDSignals` object. This is the first agent called in every HireHawk pipeline run.
 
 ### Tools
 
@@ -309,13 +309,13 @@ class JDSignals(BaseModel):
 ### Antigravity build prompt
 
 ```
-Build the jd-parser-mcp MCP server for the NeuroHire project.
+Build the jd-parser-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/jd_parser_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, Firecrawl, OpenAI SDK (pointed at GitHub Models), instructor, python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -395,7 +395,7 @@ Then show me the mcp_config.json entry for Antigravity.
 ## §3 — tracker-mcp
 
 ### What it does
-Full CRUD for the NeuroHire application tracker. Backed by Supabase (PostgreSQL free tier). Every application, status update, outreach event, and follow-up reminder goes through this server. The Tracker Agent in LangGraph is the only writer.
+Full CRUD for the HireHawk application tracker. Backed by Supabase (PostgreSQL free tier). Every application, status update, outreach event, and follow-up reminder goes through this server. The Tracker Agent in LangGraph is the only writer.
 
 ### Supabase schema
 
@@ -447,13 +447,13 @@ CREATE TABLE drafts (
 ### Antigravity build prompt
 
 ```
-Build the tracker-mcp MCP server for the NeuroHire project.
+Build the tracker-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/tracker_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, supabase-py, python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BEFORE building: create the Supabase tables by running the SQL from mcp.md §3. Then set SUPABASE_URL and SUPABASE_KEY in .env.
 
@@ -565,13 +565,13 @@ class CompanyIntel(BaseModel):
 ### Antigravity build prompt
 
 ```
-Build the company-intel-mcp MCP server for the NeuroHire project.
+Build the company-intel-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/company_intel_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, Firecrawl, OpenAI SDK (GitHub Models), python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -678,13 +678,13 @@ NO FABRICATION: Never claim experience that is not in the profile from resume-mc
 ### Antigravity build prompt
 
 ```
-Build the outreach-mcp MCP server for the NeuroHire project.
+Build the outreach-mcp MCP server for the HireHawk project.
 
 LOCATION: mcp_servers/outreach_mcp/
 
 STACK: Python 3.12, FastAPI, mcp[server] SDK, Pydantic v2, OpenAI SDK (GitHub Models), python-dotenv
 
-FOLLOW the workspace rule in .agent/rules/neurohire.md exactly.
+FOLLOW the workspace rule in .agent/rules/hirehawk.md exactly.
 
 BUILD these files:
 
@@ -918,7 +918,7 @@ from enum import Enum
 from typing import Any, Callable, Optional
 from functools import wraps
 
-logger = logging.getLogger("neurohire.self_healing")
+logger = logging.getLogger("hirehawk.self_healing")
 
 class FailureType(Enum):
     F1_HALLUCINATION = "hallucination"
@@ -1225,7 +1225,7 @@ async def add_application(company: str, role: str, jd_url: str = None,
 ### Antigravity build prompt — self-healing layer
 
 ```
-Add the self-healing layer to all 5 NeuroHire MCP servers.
+Add the self-healing layer to all 5 HireHawk MCP servers.
 
 STEP 1: Create mcp_servers/shared/__init__.py (empty)
 STEP 2: Create mcp_servers/shared/self_healing.py with the full SelfHealingError, classify_error, self_healing decorator, and CircuitBreaker class exactly as defined in mcp.md §9.
@@ -1518,7 +1518,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from .tool_registry import TOOL_REGISTRY
 
-COLLECTION_NAME = "neurohire_tool_index"
+COLLECTION_NAME = "hirehawk_tool_index"
 EMBEDDING_MODEL = "text-embedding-3-small"
 VECTOR_DIM = 1536
 
@@ -1699,7 +1699,7 @@ try:
 except ImportError:
     REDISVL_AVAILABLE = False
 
-class NeuroHireSemanticCache:
+class HireHawkSemanticCache:
     """
     Semantic cache for company intel and JD parsing results.
     Cache hit: returns in <10ms. Cache miss: runs full pipeline.
@@ -1715,7 +1715,7 @@ class NeuroHireSemanticCache:
         
         if REDISVL_AVAILABLE:
             self._cache = SemanticCache(
-                name="neurohire_cache",
+                name="hirehawk_cache",
                 redis_url=redis_url,
                 distance_threshold=0.1,  # Tight threshold — only very similar queries hit
                 ttl=86400  # 24-hour TTL for company intel
@@ -1791,14 +1791,14 @@ This section gives Antigravity context for when the agents are built in Week 2:
 ```python
 # agents/supervisor.py (Week 2 build — preview only)
 from mcp_servers.shared.semantic_router import get_router
-from mcp_servers.shared.semantic_cache import NeuroHireSemanticCache
+from mcp_servers.shared.semantic_cache import HireHawkSemanticCache
 
 # At supervisor startup
 router = get_router(QDRANT_URL, GITHUB_TOKEN, GITHUB_MODELS_ENDPOINT)
 await router.index_all_tools()
 
 # Before every agent node call, inject only relevant tools
-async def supervisor_node(state: NeuroHireState) -> NeuroHireState:
+async def supervisor_node(state: HireHawkState) -> HireHawkState:
     task = state["current_task"]  # e.g. "write a cold email for Breathe ESG AI Engineer role"
     
     # Semantic routing: get top-3 tools only
@@ -1806,7 +1806,7 @@ async def supervisor_node(state: NeuroHireState) -> NeuroHireState:
     
     # Inject into LLM context — NOT the full 25-tool list
     response = await llm.invoke([
-        SystemMessage(content=f"You are the NeuroHire supervisor.\n\n{tool_context}"),
+        SystemMessage(content=f"You are the HireHawk supervisor.\n\n{tool_context}"),
         HumanMessage(content=task)
     ])
     
@@ -1816,7 +1816,7 @@ async def supervisor_node(state: NeuroHireState) -> NeuroHireState:
 ### Antigravity build prompt — semantic routing + caching layer
 
 ```
-Add the semantic tool routing and caching layer to NeuroHire.
+Add the semantic tool routing and caching layer to HireHawk.
 
 STEP 1: Create mcp_servers/shared/tool_registry.py
 Copy the full TOOL_REGISTRY list from mcp.md §10 exactly.
@@ -1827,11 +1827,11 @@ Copy the SemanticToolRouter class from mcp.md §10 exactly.
 Add error handling: if Qdrant is unreachable, fall back to returning ALL tools (graceful degradation).
 
 STEP 3: Create mcp_servers/shared/semantic_cache.py
-Copy the NeuroHireSemanticCache class from mcp.md §10 exactly.
+Copy the HireHawkSemanticCache class from mcp.md §10 exactly.
 If redisvl is not installed, cache silently does nothing (no-op fallback).
 
 STEP 4: Update company_intel_mcp/main.py
-- Import NeuroHireSemanticCache
+- Import HireHawkSemanticCache
 - Instantiate cache at startup using UPSTASH_REDIS_URL from .env
 - Wrap get_company_intel with @cache.cache_company_intel decorator
 
@@ -1864,10 +1864,10 @@ The scores should all be above 0.75 for correct routing.
 ## §11 — Updated folder structure (post §9 + §10)
 
 ```
-neurohire/
+hirehawk/
 ├── .agent/
 │   └── rules/
-│       └── neurohire.md
+│       └── hirehawk.md
 ├── mcp_servers/
 │   ├── shared/                        ← NEW
 │   │   ├── __init__.py
@@ -1932,4 +1932,4 @@ neurohire/
 
 ---
 
-*NeuroHire mcp.md — v2.0 — June 2026 — Added §9 Self-Healing + §10 Semantic Routing*
+*HireHawk mcp.md — v2.0 — June 2026 — Added §9 Self-Healing + §10 Semantic Routing*

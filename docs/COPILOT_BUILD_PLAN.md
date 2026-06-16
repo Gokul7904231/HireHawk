@@ -1,4 +1,4 @@
-# NeuroHire Copilot — Chrome Extension Build Plan (Antigravity)
+# HireHawk Copilot — Chrome Extension Build Plan (Antigravity)
 
 > **Paste this whole document as your first message to Antigravity.**
 > Reference `mcp.md` in the same workspace — it's still needed for profile data, prompts, and the self-healing pattern (now ported to TypeScript).
@@ -50,7 +50,7 @@ same tables Gokul already created)
 Two packages, one repo:
 
 ```
-neurohire-copilot/
+hirehawk-copilot/
 ├── extension/                       # Chrome Extension, Manifest V3, WXT framework
 │   ├── wxt.config.ts
 │   ├── entrypoints/
@@ -357,7 +357,7 @@ export async function queryWikidata(companyName: string) {
       SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
     } LIMIT 1`;
   const url = `https://query.wikidata.org/sparql?query=${encodeURIComponent(sparql)}&format=json`;
-  const res = await fetch(url, { headers: { "User-Agent": "NeuroHireCopilot/1.0" } });
+  const res = await fetch(url, { headers: { "User-Agent": "HireHawkCopilot/1.0" } });
   if (!res.ok) throw new Error(`Wikidata error ${res.status}`);
   const data = await res.json();
   return data.results.bindings[0] ?? null; // null = no match, NOT an error
@@ -545,7 +545,7 @@ export async function injectResumeFile(input: HTMLInputElement, pdfBlob: Blob, f
 
 - Shows: captured JD summary, company-intel card (logo, founding year, HQ — or "limited data available" if `data_availability !== "full"`), tailored bullets, claims verification list (green check / red flag per claim — this is the fact-check trace made visible, a genuinely good UI feature), cover letter, cold email, referral message
 - Buttons: "Fill form" (calls `autofillForm`), "Download resume" (calls `resume-render`), "Log application" (calls `/tracker/add_application`)
-- HITL framing: NO auto-submit button. Footer text: *"NeuroHire Copilot fills the form — you review and submit."*
+- HITL framing: NO auto-submit button. Footer text: *"HireHawk Copilot fills the form — you review and submit."*
 
 ### `extension/tests/e2e/extension.spec.ts` — Playwright
 
@@ -572,7 +572,7 @@ export async function injectResumeFile(input: HTMLInputElement, pdfBlob: Blob, f
 - [ ] `FINAL_REPORT.md`:
 
 ```markdown
-# NeuroHire Copilot — Build Report
+# HireHawk Copilot — Build Report
 
 ## Session summary
 - Phases completed: X / 9
@@ -605,7 +605,7 @@ export async function injectResumeFile(input: HTMLInputElement, pdfBlob: Blob, f
   testing against real LinkedIn/Naukri would itself look like automation)
 
 ## v3 roadmap (talking points, not built)
-- A2A/CrewAI/AG-UI multi-agent orchestration — original NeuroHire design,
+- A2A/CrewAI/AG-UI multi-agent orchestration — original HireHawk design,
   kept as a separate "AI/ML agentic systems" portfolio piece (see mcp.md)
 - Chrome Web Store publication
 - Voice interface (Pipecat)
@@ -646,4 +646,4 @@ No GitHub token or Firecrawl key needed for this build — they remain useful on
 
 ---
 
-*NeuroHire Copilot Build Plan — v1.0 — Path B — June 2026*
+*HireHawk Copilot Build Plan — v1.0 — Path B — June 2026*

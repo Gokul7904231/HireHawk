@@ -1,9 +1,9 @@
 services:
   # ── FastAPI LangGraph Backend (port 8000) ────────────────────────────────────
   - type: web
-    name: neurohire-agent
+    name: hirehawk-agent
     runtime: python
-    rootDir: neurohire-agent
+    rootDir: hirehawk-agent
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn api.server:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
@@ -52,15 +52,15 @@ services:
       # CrewAI A2A service URL (internal Render service)
       - key: CREW_BASE_URL
         fromService:
-          name: neurohire-crew
+          name: hirehawk-crew
           type: web
           property: host
 
   # ── CrewAI A2A Resume Tailor (port 8001) ─────────────────────────────────────
   - type: web
-    name: neurohire-crew
+    name: hirehawk-crew
     runtime: python
-    rootDir: neurohire-agent
+    rootDir: hirehawk-agent
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn crew.server:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health

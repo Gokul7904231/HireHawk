@@ -1,4 +1,4 @@
-# NeuroHire — Master Autonomous Build Plan (Antigravity)
+# HireHawk — Master Autonomous Build Plan (Antigravity)
 
 > **Purpose:** Paste this ENTIRE document as your first message to Antigravity, then walk away.
 > Designed to run 2–3 hours unsupervised, building all 5 MCP servers + shared layer.
@@ -17,7 +17,7 @@
 
 ---
 
-## 📦 MOCK_MODE convention — add this to `.agent/rules/neurohire.md`
+## 📦 MOCK_MODE convention — add this to `.agent/rules/hirehawk.md`
 
 Append this section to the workspace rule (§0 from mcp.md) before starting Phase 0:
 
@@ -53,7 +53,7 @@ to MOCK_MODE behavior for that specific tool and log a warning.
 ## Phase 0 — Project scaffold (~10 min)
 
 - [ ] Create the full folder structure from mcp.md §11
-- [ ] Create `.agent/rules/neurohire.md` = §0 workspace rule + MOCK_MODE section above
+- [ ] Create `.agent/rules/hirehawk.md` = §0 workspace rule + MOCK_MODE section above
 - [ ] Create `fixtures/` directory at project root with 3 files:
   - `sample_jd_signals.json` — a realistic JDSignals for a "AI Engineer Intern @ Breathe ESG" role (use the structure from mcp.md §2, fill with plausible values matching Gokul's actual target roles)
   - `sample_company_intel.json` — a realistic CompanyIntel for "Breathe ESG" (Series A, ESG SaaS, ~40 employees, tech stack: Django/React/PostgreSQL)
@@ -91,7 +91,7 @@ Build `mcp_servers/shared/`:
       return [{"tool_id": t["tool_id"], "server": t["server"], "port": t["port"],
                "description": t["description"], "score": float(s)} for s, t in scored[:k]]
   ```
-- [ ] `semantic_cache.py` — NeuroHireSemanticCache from mcp.md §10, with MOCK_MODE no-op already built in (per mcp.md spec)
+- [ ] `semantic_cache.py` — HireHawkSemanticCache from mcp.md §10, with MOCK_MODE no-op already built in (per mcp.md spec)
 - [ ] `config.py` — shared MOCK_MODE loader: `MOCK_MODE = os.getenv("MOCK_MODE", "true").lower() == "true"`
 - [ ] `requirements.txt`
 - [ ] `.env.example` with `MOCK_MODE=true` plus all optional keys commented out
@@ -218,7 +218,7 @@ Build `mcp_servers/shared/`:
 - [ ] Generate `FINAL_REPORT.md`:
 
 ```markdown
-# NeuroHire — Build Report (Autonomous Session)
+# HireHawk — Build Report (Autonomous Session)
 
 ## Session summary
 - Duration: <actual time taken>
@@ -253,7 +253,7 @@ Build `mcp_servers/shared/`:
 - Build LangGraph supervisor + agent nodes (agents/)
 - A2A delegation to CrewAI resume tailor agent
 - AG-UI event streaming setup
-- See mcp.md and NeuroHire_TDD.docx for full specs
+- See mcp.md and HireHawk_TDD.docx for full specs
 ```
 
 - [ ] Final commit: "Phase 8: docs + FINAL_REPORT.md — session complete"
@@ -287,4 +287,4 @@ If running short on time, Phases 4–6 can run with reduced test coverage (1 tes
 
 ---
 
-*NeuroHire Master Build Plan — v1.0 — for Antigravity unsupervised session — June 2026*
+*HireHawk Master Build Plan — v1.0 — for Antigravity unsupervised session — June 2026*

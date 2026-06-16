@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-demo_runner.py — Run the full NeuroHire pipeline against demo sample jobs
+demo_runner.py — Run the full HireHawk pipeline against demo sample jobs
 and print the claims adjudication trace output.
 
 Usage:
@@ -21,8 +21,8 @@ if sys.platform == "win32":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
 # Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "neurohire-agent"))
-os.chdir(str(Path(__file__).parent.parent / "neurohire-agent"))
+sys.path.insert(0, str(Path(__file__).parent.parent / "hirehawk-agent"))
+os.chdir(str(Path(__file__).parent.parent / "hirehawk-agent"))
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -37,13 +37,13 @@ MOCK_CANDIDATE_PROFILE = {
     "experience_summary": (
         "AI Engineer and Full Stack Developer with experience building LLM-powered tools, "
         "FastAPI microservices, React dashboards, and Chrome Extensions. "
-        "Contributed to open-source projects and built NeuroHire - a multi-agent job application "
+        "Contributed to open-source projects and built HireHawk - a multi-agent job application "
         "copilot using LangGraph, Cloudflare Workers, and Model Context Protocol servers. "
         "Completed internships focused on ML pipeline development and data engineering."
     ),
     "projects": [
         {
-            "name": "NeuroHire",
+            "name": "HireHawk",
             "description": "Autonomous job copilot: Chrome Extension + LangGraph + 5 MCP servers + CrewAI",
             "tech": ["LangGraph", "CrewAI", "Python", "TypeScript", "Cloudflare Workers", "Supabase"]
         },
@@ -151,7 +151,7 @@ async def run_pipeline_for_job(job: dict):
     return fv
 
 async def main():
-    parser = argparse.ArgumentParser(description="NeuroHire demo pipeline runner")
+    parser = argparse.ArgumentParser(description="HireHawk demo pipeline runner")
     parser.add_argument("--job", type=int, default=None, help="Run specific job index (0-2)")
     parser.add_argument("--mock", action="store_true", help="Force mock mode")
     args = parser.parse_args()
@@ -168,7 +168,7 @@ async def main():
     if args.job is not None:
         jobs = [jobs[args.job]]
 
-    print_separator("NEUROHIRE DEMO PIPELINE", "═", 70)
+    print_separator("HIREHAWK DEMO PIPELINE", "═", 70)
     print(f"  Running {len(jobs)} job(s) through the full agentic pipeline")
     print(f"  Mock mode: MCP={os.getenv('MCP_MOCK','?')} | Gemini={os.getenv('GEMINI_MOCK','?')}")
 

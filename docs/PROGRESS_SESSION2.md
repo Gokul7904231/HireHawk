@@ -1,17 +1,17 @@
-# NeuroHire Agentic Backend Session 2 Progress Log
+# HireHawk Agentic Backend Session 2 Progress Log
 
 ## Phase 1 — Project scaffold
 - **Started**: 2026-06-15T14:52:00+05:30
 - **Completed**: 2026-06-15T15:02:00+05:30
 - **Tests**: N/A
-- **Status**: Scaffolding created under neurohire-agent/, environment files (.env, .env.example) and requirements.txt initialized, and python virtual environment set up with all dependencies installed.
+- **Status**: Scaffolding created under hirehawk-agent/, environment files (.env, .env.example) and requirements.txt initialized, and python virtual environment set up with all dependencies installed.
 - **Blockers**: None
 
 ## Phase 2 — State definition
 - **Started**: 2026-06-15T15:02:00+05:30
 - **Completed**: 2026-06-15T15:05:00+05:30
 - **Tests**: N/A
-- **Status**: NeuroHireState TypedDict defined in graph/state.py, tracking elements like jd_signals, tailored_bullets, company_intel, outreach_draft, and hitl_approved.
+- **Status**: HireHawkState TypedDict defined in graph/state.py, tracking elements like jd_signals, tailored_bullets, company_intel, outreach_draft, and hitl_approved.
 - **Blockers**: None
 
 ## Phase 3 — Supervisor
@@ -74,7 +74,7 @@
 - **Started**: 2026-06-15T16:20:00+05:30
 - **Completed**: 2026-06-15T16:28:00+05:30
 - **Tests**: 12/12 Vitest Worker tests passed — no regressions
-- **Status**: MODIFIED (not replaced) the existing `neurohire-copilot/worker/src/routes/extract.ts` and `tailor.ts`. When `AGENT_BACKEND_URL` env var is set: extract POSTs to FastAPI `/run` then pipes `/stream/{run_id}` SSE back; tailor POSTs to `/approve/{run_id}` then pipes resuming SSE stream. Backward-compatible — original Gemini path used when env var absent. Added `AGENT_BACKEND_URL?: string` to `Env` interface in `types.ts`.
+- **Status**: MODIFIED (not replaced) the existing `hirehawk-copilot/worker/src/routes/extract.ts` and `tailor.ts`. When `AGENT_BACKEND_URL` env var is set: extract POSTs to FastAPI `/run` then pipes `/stream/{run_id}` SSE back; tailor POSTs to `/approve/{run_id}` then pipes resuming SSE stream. Backward-compatible — original Gemini path used when env var absent. Added `AGENT_BACKEND_URL?: string` to `Env` interface in `types.ts`.
 - **Blockers**: None — FastAPI (8000) and CrewAI (8001) confirmed on separate ports, no conflict.
 
 ## Phase 12 — Documentation & Final Report

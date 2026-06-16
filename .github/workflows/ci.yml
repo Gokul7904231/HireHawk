@@ -1,4 +1,4 @@
-name: NeuroHire CI
+name: HireHawk CI
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
 jobs:
   # ── Python Backend Tests (pytest) ─────────────────────────────────────────
   pytest:
-    name: pytest (neurohire-agent)
+    name: pytest (hirehawk-agent)
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: neurohire-agent
+        working-directory: hirehawk-agent
 
     steps:
       - uses: actions/checkout@v4
@@ -44,11 +44,11 @@ jobs:
 
   # ── Python MCP Server Tests (pytest) ──────────────────────────────────────
   pytest-mcp:
-    name: pytest (neurohire MCP servers)
+    name: pytest (hirehawk MCP servers)
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: neurohire
+        working-directory: hirehawk
 
     steps:
       - uses: actions/checkout@v4
@@ -71,11 +71,11 @@ jobs:
 
   # ── TypeScript Worker Tests (Vitest) ──────────────────────────────────────
   vitest:
-    name: vitest (neurohire-copilot worker)
+    name: vitest (hirehawk-copilot worker)
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: neurohire-copilot/worker
+        working-directory: hirehawk-copilot/worker
 
     steps:
       - uses: actions/checkout@v4
@@ -85,7 +85,7 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: neurohire-copilot/worker/package-lock.json
+          cache-dependency-path: hirehawk-copilot/worker/package-lock.json
 
       - name: Install dependencies
         run: npm ci

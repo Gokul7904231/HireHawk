@@ -1,4 +1,4 @@
-# NeuroHire Session 2 — Final Report
+# HireHawk Session 2 — Final Report
 **Completed**: 2026-06-15T16:30+05:30
 
 ---
@@ -40,11 +40,11 @@ Cloudflare Worker (8787)          ← Session 1 (21 Vitest tests ✅)
 
 ---
 
-## Packages Built (neurohire-agent/)
+## Packages Built (hirehawk-agent/)
 
 | Component | File(s) | Purpose |
 |-----------|---------|---------|
-| State | `graph/state.py` | `NeuroHireState` TypedDict with Annotated reducers for parallel fan-out |
+| State | `graph/state.py` | `HireHawkState` TypedDict with Annotated reducers for parallel fan-out |
 | Supervisor | `graph/supervisor.py` | StateGraph, MemorySaver, `interrupt_before=["track_application"]` |
 | Nodes | `graph/nodes/*.py` (6 files) | jd_parser, resume_tailor, company_intel, fit_scorer, outreach, tracker |
 | MCP Clients | `mcp_clients/*.py` + `fixtures.py` | Mock-capable wrappers for all 5 MCP servers |
@@ -58,7 +58,7 @@ Cloudflare Worker (8787)          ← Session 1 (21 Vitest tests ✅)
 
 ## Test Results
 
-### Python Backend (neurohire-agent)
+### Python Backend (hirehawk-agent)
 ```
 8 passed in 4.56s
   tests/test_graph.py::test_full_graph_flow_and_breakpoint   PASSED
@@ -71,7 +71,7 @@ Cloudflare Worker (8787)          ← Session 1 (21 Vitest tests ✅)
   tests/test_nodes.py::test_track_application_node           PASSED
 ```
 
-### Cloudflare Worker (neurohire-copilot/worker)
+### Cloudflare Worker (hirehawk-copilot/worker)
 ```
 12 passed (12 tests) — Vitest — no regressions
 ```
@@ -80,7 +80,7 @@ Cloudflare Worker (8787)          ← Session 1 (21 Vitest tests ✅)
 
 ## Worker Update (Phase 11) — [MODIFIED] index.ts confirmed intact
 
-The **existing** `neurohire-copilot/worker/src/index.ts` was **not replaced** — only the route handlers were updated:
+The **existing** `hirehawk-copilot/worker/src/index.ts` was **not replaced** — only the route handlers were updated:
 
 | File | Change |
 |------|--------|
@@ -97,9 +97,9 @@ The **existing** `neurohire-copilot/worker/src/index.ts` was **not replaced** �
 
 | Service | Port | Process |
 |---------|------|---------|
-| Cloudflare Worker (wrangler dev) | 8787 | `neurohire-copilot/worker` |
-| FastAPI LangGraph backend | **8000** | `neurohire-agent/main.py` |
-| CrewAI A2A resume tailor | **8001** | `neurohire-agent/crew/server.py` |
+| Cloudflare Worker (wrangler dev) | 8787 | `hirehawk-copilot/worker` |
+| FastAPI LangGraph backend | **8000** | `hirehawk-agent/main.py` |
+| CrewAI A2A resume tailor | **8001** | `hirehawk-agent/crew/server.py` |
 
 ---
 
@@ -119,15 +119,15 @@ The **existing** `neurohire-copilot/worker/src/index.ts` was **not replaced** �
 
 ```bash
 # Terminal 1 — FastAPI backend
-cd neurohire-agent
+cd hirehawk-agent
 .venv\Scripts\uvicorn main:app --port 8000 --reload
 
 # Terminal 2 — CrewAI A2A (only needed for live A2A_MOCK=false)
-cd neurohire-agent
+cd hirehawk-agent
 .venv\Scripts\uvicorn crew.server:app --port 8001
 
 # Terminal 3 — Cloudflare Worker
-cd neurohire-copilot/worker
+cd hirehawk-copilot/worker
 npx wrangler dev --port 8787
 
 # Enable agentic path in worker: uncomment in .dev.vars:

@@ -1,4 +1,4 @@
-# NeuroHire Recruiter Workspace (Session 4 Final Report)
+# HireHawk Recruiter Workspace (Session 4 Final Report)
 
 A standalone, responsive, dark-themed React recruitment portal demonstrating real-time recruiter agent executions, candidate profile configurations, and automated claims adjudication validation.
 
@@ -6,7 +6,7 @@ A standalone, responsive, dark-themed React recruitment portal demonstrating rea
 
 ## What Was Built
 
-### 1. Standalone React Dashboard (`neurohire-dashboard`)
+### 1. Standalone React Dashboard (`hirehawk-dashboard`)
 Created a high-fidelity dashboard built using React 18, Vite, TypeScript, and Tailwind CSS. The workspace includes three primary views managed via client state routing:
 - **Workspace Home (`/`)**: Displays candidate pipeline counters and stats, a searchable and sortable table of all applications, and a live agent console.
 - **Application Details (`/app/:id`)**: Shows tailored cold outreach materials (email, cover letter, referral), side-by-side tailored resume bullet comparisons, and a claims validation list.
@@ -34,7 +34,7 @@ Comprehensive unit tests were written to verify card summaries, table filters, s
 ```bash
 > vitest run
 
- RUN  v1.6.1 C:/Users/ASUS/OneDrive/Desktop/123/Hirepros/neurohire-dashboard
+ RUN  v1.6.1 C:/Users/ASUS/OneDrive/Desktop/123/Hirepros/hirehawk-dashboard
 
  ✓ tests/MetricCards.test.tsx  (1 test) 139ms
  ✓ tests/AppTable.test.tsx  (1 test) 502ms

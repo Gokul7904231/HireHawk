@@ -1,4 +1,4 @@
-# NeuroHire — Demo Script
+# HireHawk — Demo Script
 
 This document is the step-by-step demo script for interviews, portfolio reviews, and live demos.
 
@@ -6,7 +6,7 @@ This document is the step-by-step demo script for interviews, portfolio reviews,
 
 ## 🎯 What You're Showing
 
-NeuroHire is a **multi-agent AI job application copilot** built entirely from scratch across 3 sessions:
+HireHawk is a **multi-agent AI job application copilot** built entirely from scratch across 3 sessions:
 
 | Layer | Technology | Purpose |
 |---|---|---|
@@ -27,19 +27,19 @@ NeuroHire is a **multi-agent AI job application copilot** built entirely from sc
 
 ```powershell
 # Terminal 1 — MCP servers
-cd neurohire
+cd hirehawk
 .\run_all_mock.ps1 start
 
 # Terminal 2 — FastAPI LangGraph backend
-cd neurohire-agent
+cd hirehawk-agent
 .venv\Scripts\uvicorn main:app --port 8000 --reload
 
 # Terminal 3 — CrewAI A2A
-cd neurohire-agent
+cd hirehawk-agent
 .venv\Scripts\uvicorn crew.server:app --port 8001
 
 # Terminal 4 — Cloudflare Worker
-cd neurohire-copilot/worker
+cd hirehawk-copilot/worker
 npx wrangler dev --port 8787
 ```
 
@@ -47,13 +47,13 @@ npx wrangler dev --port 8787
 
 ```powershell
 # From project root — runs all 3 demo jobs in mock mode
-cd neurohire-agent
+cd hirehawk-agent
 .venv\Scripts\python ..\demo\demo_runner.py --mock
 ```
 
 **What you'll see:**
 ```
-══════════════════════[ NEUROHIRE DEMO PIPELINE ]══════════════════════
+══════════════════════[ HIREHAWK DEMO PIPELINE ]══════════════════════
   Running 3 job(s) through the full agentic pipeline
   Mock mode: MCP=true | Gemini=true
 
@@ -82,9 +82,9 @@ cd neurohire-agent
 ### Step 3 — Show the Chrome Extension
 
 1. Open Chrome → go to `chrome://extensions/`
-2. Enable Developer Mode → **Load Unpacked** → select `neurohire-copilot/extension/dist/`
+2. Enable Developer Mode → **Load Unpacked** → select `hirehawk-copilot/extension/dist/`
 3. Navigate to any job posting (LinkedIn, Greenhouse, Lever)
-4. Click the NeuroHire icon in the toolbar
+4. Click the HireHawk icon in the toolbar
 5. Click **Extract JD** — watch the SSE stream events appear live
 6. Review the tailored bullets and outreach draft
 7. Click **Save Application** — the HITL approval dialog appears

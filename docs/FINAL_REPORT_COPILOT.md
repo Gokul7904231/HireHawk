@@ -1,10 +1,10 @@
-# NeuroHire Copilot Final Integration Report
+# HireHawk Copilot Final Integration Report
 
-This report summarizes the final architecture, verification results, mocking strategies, and production readiness requirements for the NeuroHire Copilot system.
+This report summarizes the final architecture, verification results, mocking strategies, and production readiness requirements for the HireHawk Copilot system.
 
 ## 1. System Architecture & Components
 
-The NeuroHire Copilot comprises two core components under `neurohire-copilot/`:
+The HireHawk Copilot comprises two core components under `hirehawk-copilot/`:
 
 1. **Cloudflare Worker Backend (`worker/`)**:
    - `/extract` [POST]: Calls Gemini 1.5 Flash using structured output schemas to extract key job signals (`JDSignals`) from job posting markdown.

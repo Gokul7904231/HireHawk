@@ -1,15 +1,15 @@
-# NeuroHire — Autonomous AI Job Application Copilot
+# HireHawk — Autonomous AI Job Application Copilot
 
 [![CI](https://github.com/gokulbalagopal/hirepros/actions/workflows/ci.yml/badge.svg)](https://github.com/gokulbalagopal/hirepros/actions)
 [![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.2+-green)](https://github.com/langchain-ai/langgraph)
 [![MCP](https://img.shields.io/badge/MCP-FastMCP-purple)](https://github.com/jlowin/fastmcp)
-[![Chrome Extension](https://img.shields.io/badge/Chrome-MV3%20Extension-yellow?logo=googlechrome)](neurohire-copilot/extension)
+[![Chrome Extension](https://img.shields.io/badge/Chrome-MV3%20Extension-yellow?logo=googlechrome)](hirehawk-copilot/extension)
 [![Deployed on Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?logo=render)](https://render.com)
 [![Azure Functions](https://img.shields.io/badge/MCP%20on-Azure%20Functions-0078D4?logo=microsoftazure)](https://azure.microsoft.com/en-us/products/functions)
 
-> **NeuroHire** turns any job posting into a full application package in seconds — tailored bullets, verified outreach, company intelligence, and a fit score — all streamed live to a Chrome Extension via a multi-agent LangGraph pipeline.
+> **HireHawk** turns any job posting into a full application package in seconds — tailored bullets, verified outreach, company intelligence, and a fit score — all streamed live to a Chrome Extension via a multi-agent LangGraph pipeline.
 
 ---
 
@@ -18,17 +18,17 @@
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                        Chrome Extension (MV3)                       │
-│          React + TypeScript + WXT · neurohire-copilot/extension     │
+│          React + TypeScript + WXT · hirehawk-copilot/extension     │
 └──────────────────────────┬──────────────────────────────────────────┘
                            │ HTTP / SSE
 ┌──────────────────────────▼──────────────────────────────────────────┐
-│              Cloudflare Worker · neurohire-copilot/worker           │
+│              Cloudflare Worker · hirehawk-copilot/worker           │
 │    /extract → POST /run → pipe /stream SSE back to extension        │
 │    /tailor  → POST /approve → pipe resuming SSE stream              │
 └──────────────────────────┬──────────────────────────────────────────┘
                            │ HTTP / SSE
 ┌──────────────────────────▼──────────────────────────────────────────┐
-│         FastAPI LangGraph Backend (port 8000) · neurohire-agent     │
+│         FastAPI LangGraph Backend (port 8000) · hirehawk-agent     │
 │                                                                     │
 │   parse_jd ─┬─► tailor_resume  (CrewAI A2A :8001)                  │
 │             ├─► get_company_intel                                   │
@@ -41,7 +41,7 @@
 └──────────┬──────────────────────────────────────────────────────────┘
            │ HTTP (MCP protocol)
 ┌──────────▼──────────────────────────────────────────────────────────┐
-│              5 MCP Servers · neurohire/mcp_servers                  │
+│              5 MCP Servers · hirehawk/mcp_servers                  │
 │   resume-mcp :8001 · jd-parser-mcp :8002 · tracker-mcp :8003       │
 │   company-intel-mcp :8004 · outreach-mcp :8005                     │
 │   Each: FastAPI + FastMCP + circuit breakers + semantic cache       │
@@ -54,21 +54,21 @@
 
 | Layer | Component | Technology | Location |
 |---|---|---|---|
-| **UI** | Chrome Extension | React, TypeScript, WXT (MV3) | `neurohire-copilot/extension/` |
-| **Edge** | Cloudflare Worker | TypeScript, Hono | `neurohire-copilot/worker/` |
-| **Orchestration** | LangGraph Backend | Python, FastAPI, LangGraph | `neurohire-agent/` |
-| **Agents** | 6 node StateGraph | LangGraph, MemorySaver | `neurohire-agent/graph/` |
-| **A2A** | CrewAI Tailor | CrewAI, FastAPI | `neurohire-agent/crew/` |
-| **Memory** | Candidate context | Mem0 (4D-scoped) | `neurohire-agent/memory/` |
-| **Observability** | Trace + eval | Langfuse, DeepEval | `neurohire-agent/observability/` |
-| **Tools** | JD Parser MCP | Python, FastMCP | `neurohire/mcp_servers/jd_parser_mcp/` |
-| **Tools** | Resume MCP | Python, FastMCP | `neurohire/mcp_servers/resume_mcp/` |
-| **Tools** | Company Intel MCP | Python, FastMCP | `neurohire/mcp_servers/company_intel_mcp/` |
-| **Tools** | Outreach MCP | Python, FastMCP | `neurohire/mcp_servers/outreach_mcp/` |
-| **Tools** | Tracker MCP | Python, FastMCP | `neurohire/mcp_servers/tracker_mcp/` |
+| **UI** | Chrome Extension | React, TypeScript, WXT (MV3) | `hirehawk-copilot/extension/` |
+| **Edge** | Cloudflare Worker | TypeScript, Hono | `hirehawk-copilot/worker/` |
+| **Orchestration** | LangGraph Backend | Python, FastAPI, LangGraph | `hirehawk-agent/` |
+| **Agents** | 6 node StateGraph | LangGraph, MemorySaver | `hirehawk-agent/graph/` |
+| **A2A** | CrewAI Tailor | CrewAI, FastAPI | `hirehawk-agent/crew/` |
+| **Memory** | Candidate context | Mem0 (4D-scoped) | `hirehawk-agent/memory/` |
+| **Observability** | Trace + eval | Langfuse, DeepEval | `hirehawk-agent/observability/` |
+| **Tools** | JD Parser MCP | Python, FastMCP | `hirehawk/mcp_servers/jd_parser_mcp/` |
+| **Tools** | Resume MCP | Python, FastMCP | `hirehawk/mcp_servers/resume_mcp/` |
+| **Tools** | Company Intel MCP | Python, FastMCP | `hirehawk/mcp_servers/company_intel_mcp/` |
+| **Tools** | Outreach MCP | Python, FastMCP | `hirehawk/mcp_servers/outreach_mcp/` |
+| **Tools** | Tracker MCP | Python, FastMCP | `hirehawk/mcp_servers/tracker_mcp/` |
 | **Database** | Application tracker | Supabase (PostgreSQL) | Cloud |
 | **Deployment** | Backend | Render | `render.yaml` |
-| **Deployment** | Worker | Cloudflare Workers | `neurohire-copilot/worker/wrangler.jsonc` |
+| **Deployment** | Worker | Cloudflare Workers | `hirehawk-copilot/worker/wrangler.jsonc` |
 | **Deployment** | MCP servers | Azure Functions | `deploy_azure_mcp.ps1` |
 
 ---
@@ -77,9 +77,9 @@
 
 | Suite | Count | Command |
 |---|---|---|
-| Python backend (pytest) | 8 | `cd neurohire-agent && python -m pytest -v` |
-| Cloudflare Worker (Vitest) | 21 | `cd neurohire-copilot/worker && npx vitest run` |
-| MCP shared layer (pytest) | varies | `cd neurohire && python -m pytest mcp_servers/shared/` |
+| Python backend (pytest) | 8 | `cd hirehawk-agent && python -m pytest -v` |
+| Cloudflare Worker (Vitest) | 21 | `cd hirehawk-copilot/worker && npx vitest run` |
+| MCP shared layer (pytest) | varies | `cd hirehawk && python -m pytest mcp_servers/shared/` |
 
 All tests run in **mock mode** — no API keys required.
 
@@ -96,13 +96,13 @@ All tests run in **mock mode** — no API keys required.
 
 ```bash
 # MCP servers
-cd neurohire
+cd hirehawk
 python -m venv venv
 .\venv\Scripts\Activate.ps1   # Windows
 pip install -r mcp_servers/shared/requirements.txt
 
 # LangGraph backend
-cd neurohire-agent
+cd hirehawk-agent
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -111,7 +111,7 @@ pip install -r requirements.txt
 ### 2. Set up Worker
 
 ```bash
-cd neurohire-copilot/worker
+cd hirehawk-copilot/worker
 npm install
 cp .dev.vars.example .dev.vars
 # Edit .dev.vars with your keys
@@ -121,22 +121,22 @@ cp .dev.vars.example .dev.vars
 
 ```powershell
 # Terminal 1 — MCP servers
-cd neurohire && .\run_all_mock.ps1 start
+cd hirehawk && .\run_all_mock.ps1 start
 
 # Terminal 2 — LangGraph backend
-cd neurohire-agent && .venv\Scripts\uvicorn main:app --port 8000 --reload
+cd hirehawk-agent && .venv\Scripts\uvicorn main:app --port 8000 --reload
 
 # Terminal 3 — CrewAI A2A
-cd neurohire-agent && .venv\Scripts\uvicorn crew.server:app --port 8001
+cd hirehawk-agent && .venv\Scripts\uvicorn crew.server:app --port 8001
 
 # Terminal 4 — Worker
-cd neurohire-copilot/worker && npx wrangler dev --port 8787
+cd hirehawk-copilot/worker && npx wrangler dev --port 8787
 ```
 
 ### 4. Run the demo
 
 ```powershell
-cd neurohire-agent
+cd hirehawk-agent
 .venv\Scripts\python ..\demo\demo_runner.py --mock
 ```
 
@@ -146,9 +146,9 @@ cd neurohire-agent
 
 | Target | Command |
 |---|---|
-| Cloudflare Worker | `cd neurohire-copilot/worker && npx wrangler deploy` |
+| Cloudflare Worker | `cd hirehawk-copilot/worker && npx wrangler deploy` |
 | Render (FastAPI + CrewAI) | Push to `master` — Render auto-deploys from `render.yaml` |
-| Azure Functions (5 MCPs) | `.\deploy_azure_mcp.ps1 -ResourceGroup neurohire-rg -StorageAccount neurohirestorage` |
+| Azure Functions (5 MCPs) | `.\deploy_azure_mcp.ps1 -ResourceGroup hirehawk-rg -StorageAccount hirehawkstorage` |
 
 After deploying:
 1. Set `AGENT_BACKEND_URL` Cloudflare secret to your Render URL
@@ -168,7 +168,7 @@ After deploying:
 | `GEMINI_MOCK` | `true` to use fixture data |
 | `SUPABASE_MOCK` | `true` to use in-memory store |
 
-### Backend (`neurohire-agent/.env`)
+### Backend (`hirehawk-agent/.env`)
 | Variable | Description |
 |---|---|
 | `MCP_MOCK` | `true` to use fixture data |
@@ -194,4 +194,4 @@ After deploying:
 ## 👤 Author
 
 **Gokul Balagopal** — AI Engineer & Full Stack Developer  
-Built NeuroHire across 3 sessions as a portfolio project demonstrating end-to-end AI systems engineering.
+Built HireHawk across 3 sessions as a portfolio project demonstrating end-to-end AI systems engineering.

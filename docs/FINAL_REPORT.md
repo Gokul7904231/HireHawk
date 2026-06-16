@@ -1,4 +1,4 @@
-# NeuroHire — Build Report (Autonomous Session)
+# HireHawk — Build Report (Autonomous Session)
 
 ## Session summary
 - Duration: 2.5 hours
@@ -34,4 +34,4 @@ None.
 - Build LangGraph supervisor + agent nodes (agents/)
 - A2A delegation to CrewAI resume tailor agent
 - AG-UI event streaming setup
-- See mcp.md and NeuroHire_TDD.docx for full specs
+- See mcp.md and HireHawk_TDD.docx for full specs

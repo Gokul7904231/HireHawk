@@ -1,8 +1,8 @@
-# deploy_azure_mcp.ps1 — Deploy all 5 NeuroHire MCP servers to Azure Functions
-# Usage: .\deploy_azure_mcp.ps1 [-ResourceGroup "neurohire-rg"] [-StorageAccount "neurohirestorage"]
+# deploy_azure_mcp.ps1 — Deploy all 5 HireHawk MCP servers to Azure Functions
+# Usage: .\deploy_azure_mcp.ps1 [-ResourceGroup "hirehawk-rg"] [-StorageAccount "hirehawkstorage"]
 param(
-    [string]$ResourceGroup = "neurohire-rg",
-    [string]$StorageAccount = "neurohirestorage",
+    [string]$ResourceGroup = "hirehawk-rg",
+    [string]$StorageAccount = "hirehawkstorage",
     [string]$Location = "eastus"
 )
 
@@ -16,7 +16,7 @@ $McpServers = @(
     @{ Dir = "tracker_mcp";       App = "tracker-mcp";        Port = 8003 }
 )
 
-Write-Host "=== NeuroHire MCP Azure Functions Deployment ===" -ForegroundColor Cyan
+Write-Host "=== HireHawk MCP Azure Functions Deployment ===" -ForegroundColor Cyan
 Write-Host "Resource group : $ResourceGroup"
 Write-Host "Storage account: $StorageAccount"
 Write-Host "Location       : $Location`n"
@@ -41,8 +41,8 @@ $LiveUrls = @{}
 # 3. Deploy each MCP server
 foreach ($mcp in $McpServers) {
     Write-Host "`n--- Deploying $($mcp.App) ---" -ForegroundColor Cyan
-    $AppName = "neurohire-$($mcp.App)"
-    $McpDir = "neurohire\mcp_servers\$($mcp.Dir)"
+    $AppName = "hirehawk-$($mcp.App)"
+    $McpDir = "hirehawk\mcp_servers\$($mcp.Dir)"
 
     # Create Function App
     az functionapp create `
