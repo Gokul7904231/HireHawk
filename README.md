@@ -181,17 +181,7 @@ After deploying:
 
 ---
 
-## 📚 Documentation
-
-- [Demo Script](demo/README.md) — step-by-step interview demo guide
-- [Session 2 Final Report](docs/FINAL_REPORT_SESSION2.md) — LangGraph backend architecture
-- [Session 3 Final Report](docs/FINAL_REPORT_SESSION3.md) — deployment & live integration
-- [MCP Architecture](docs/mcp.md) — full MCP server specs
-- [Build Plan](docs/COPILOT_BUILD_PLAN.md) — original design document
-
----
-
 ## 👤 Author
 
-**Gokul Balagopal** — AI Engineer & Full Stack Developer  
-Built HireHawk across 3 sessions as a portfolio project demonstrating end-to-end AI systems engineering.
+**Gokul A** — AI Engineer & Full Stack Developer  
+Built HireHawk across demonstrating end-to-end AI systems engineering.
