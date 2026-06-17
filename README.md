@@ -11,6 +11,7 @@
 
 > **HireHawk** turns any job posting into a full application package in seconds — tailored bullets, verified outreach, company intelligence, and a fit score — all streamed live to a Chrome Extension via a multi-agent LangGraph pipeline.
 
+Live : https://hirehawk-dashboard.pages.dev/
 ---
 
 ## 🏗️ Architecture
