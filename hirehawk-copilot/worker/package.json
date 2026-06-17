@@ -17,6 +17,7 @@
     "wrangler": "^4.100.0"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.108.2"
+    "@supabase/supabase-js": "^2.108.2",
+    "pdfjs-dist": "^6.0.227"
   }
 }

@@ -51,7 +51,7 @@ export async function handleExtract(request: Request, env: Env): Promise<Respons
 
       const { run_id } = (await runRes.json()) as { run_id: string };
 
-      // 2. Pipe SSE stream from FastAPI back to the extension client
+      // 2. Read SSE stream from FastAPI and extract jd_signals
       const streamRes = await fetch(`${backendUrl}/stream/${run_id}`);
       if (!streamRes.ok || !streamRes.body) {
         return new Response(JSON.stringify({ error: "Backend /stream failed" }), {
@@ -60,12 +60,53 @@ export async function handleExtract(request: Request, env: Env): Promise<Respons
         });
       }
 
-      // Forward as Server-Sent Events so the extension popup can consume events live
-      return new Response(streamRes.body, {
+      const reader = streamRes.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let jdSignals: any = null;
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            try {
+              const parsed = JSON.parse(line.slice(6));
+              if (parsed.event === "node_complete" && parsed.node === "parse_jd") {
+                jdSignals = parsed.data.jd_signals;
+              }
+              if (parsed.event === "hitl_paused" || parsed.event === "graph_complete") {
+                break;
+              }
+            } catch (e) {
+              // Ignore partial JSON
+            }
+          }
+        }
+        if (jdSignals) {
+          try {
+            await reader.cancel();
+          } catch (e) {}
+          break;
+        }
+      }
+
+      if (!jdSignals) {
+        return new Response(JSON.stringify({ error: "Failed to extract signals from backend stream" }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      return new Response(JSON.stringify(jdSignals), {
         status: 200,
         headers: {
-          "Content-Type": "text/event-stream",
-          "Cache-Control": "no-cache",
+          "Content-Type": "application/json",
           "X-Run-Id": run_id
         }
       });

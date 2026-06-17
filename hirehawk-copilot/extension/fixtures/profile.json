@@ -8,16 +8,40 @@
       "name": "Sentixcare",
       "description": "Multi-agent RAG workflow for analyzing medical and clinical records using FastAPI, LangChain, and Qdrant. Deployed on HuggingFace.",
       "live_url": "https://huggingface.co/spaces/Gokul7904231/sentixcare",
-      "tags": ["FastAPI", "LangChain", "Qdrant", "Python", "RAG", "AI"]
+      "tags": [
+        "FastAPI",
+        "LangChain",
+        "Qdrant",
+        "Python",
+        "RAG",
+        "AI"
+      ]
     },
     {
       "name": "Meeting Intelligence Service",
       "description": "Enterprise microservice parsing transcipts and drawing action items, with fallback error correction self-healing layers.",
       "live_url": "https://github.com/Gokul7904231/meeting-intel",
-      "tags": ["TypeScript", "Node.js", "FastAPI", "Supabase", "AI"]
+      "tags": [
+        "TypeScript",
+        "Node.js",
+        "FastAPI",
+        "Supabase",
+        "AI"
+      ]
     }
   ],
-  "top_skills": ["Python", "Django", "FastAPI", "React", "TypeScript", "LangChain", "Qdrant", "PostgreSQL", "Docker", "Git"],
+  "top_skills": [
+    "Python",
+    "Django",
+    "FastAPI",
+    "React",
+    "TypeScript",
+    "LangChain",
+    "Qdrant",
+    "PostgreSQL",
+    "Docker",
+    "Git"
+  ],
   "experience_summary": "AI/ML Intern at Infosys, Full Stack Intern at Zidio, specialized in agentic workflows and React frontend dashboards.",
   "experience": [
     {

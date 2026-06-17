@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HawkHire | Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Geist:wght@400;600;700&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "surface": "#fcf9f8",
+                    "on-surface-variant": "#4a4455",
+                    "on-primary-container": "#ede0ff",
+                    "surface-variant": "#e5e2e1",
+                    "secondary": "#5b598c",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "tertiary-fixed": "#ffdea6",
+                    "outline-variant": "#ccc3d8",
+                    "background": "#fcf9f8",
+                    "surface-tint": "#732ee4",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#fcf9f8",
+                    "on-tertiary-container": "#ffe2b2",
+                    "secondary-container": "#c7c3fe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1c1b1b",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-dim": "#dcd9d9",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#271900",
+                    "on-background": "#1c1b1b",
+                    "surface-container-high": "#ebe7e7",
+                    "on-secondary-container": "#514f81",
+                    "surface-container-low": "#f6f3f2",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "inverse-primary": "#d2bbff",
+                    "tertiary": "#674900",
+                    "primary-fixed": "#eaddff",
+                    "primary": "#630ed4",
+                    "surface-container": "#f0edec",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#444173",
+                    "tertiary-fixed-dim": "#f7bd48",
+                    "on-primary-fixed": "#25005a",
+                    "surface-container-highest": "#e5e2e1",
+                    "secondary-fixed": "#e3dfff",
+                    "outline": "#7b7487",
+                    "inverse-surface": "#313030",
+                    "tertiary-container": "#866000",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-secondary-fixed": "#181445",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-lg": "24px",
+                    "container-max-width": "1440px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "body-sm": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "headline-md": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .agent-dashed-border {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%234A4455' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #7c3aed 0%, #630ed4 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e5e2e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface overflow-hidden">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="w-[240px] h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-stack-lg px-stack-md z-30">
+<div class="mb-10 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg primary-gradient flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">hail</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">HawkHire</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Recruitment Workspace</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 py-3 px-4 rounded-lg text-primary font-bold border-r-2 border-primary hover:bg-surface-container transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body-md">Applications</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-surface-container-low rounded-xl border border-outline-variant">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">JD</div>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">Jane Recruiter</p>
+<p class="text-[10px] text-on-surface-variant">Pro Plan</p>
+</div>
+</div>
+<button class="w-full py-2 text-xs font-bold text-primary hover:underline flex items-center justify-center gap-1">
+                Upgrade <span class="material-symbols-outlined text-[14px]">bolt</span>
+</button>
+</div>
+</aside>
+<!-- TopAppBar (Authority Source: JSON) -->
+<header class="fixed top-0 left-[240px] right-0 h-16 bg-surface border-b border-outline-variant shadow-sm flex items-center justify-between px-margin-desktop z-20">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="Search talent, jobs, or agents..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<img alt="Recruiter Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional portrait of a confident female HR recruiter in a modern office setting. She has a warm, approachable smile and is wearing smart-casual business attire. The lighting is bright and natural, reflecting a clean, high-end SaaS professional environment with soft bokeh in the background emphasizing a premium corporate atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnPWrBdopfk7xMae9umIOgHIUDxdNFjdSykk08qPGTEYXgzVQqvZ_rIZIWsfy5z5E-IMg4EZZUTC3xtbvltnx1n7UaKsjkGbZ1XNmpwUeTgtF1LD5UhdCy2aevsiLVUsyJMHGST3-qGmKWJecNdmh8rLLwE5IdUAJg343mDUSHHw5_u7lvu5kial8kw-SKxva0nkZyJAk52Eu4k7Hoo0VZo5jzO_4XLFSDDvTbsdap8-jvyMPbLm7XphqMDlpPOS4B36-p-dOpg8o"/>
+<span class="font-label-md text-label-md text-on-surface-variant">Jane Doe</span>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[240px] mr-[320px] mt-16 p-margin-desktop h-[calc(100vh-64px)] flex flex-col items-center justify-center relative">
+<!-- Background Atmosphere -->
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[100px]"></div>
+</div>
+<div class="max-w-2xl w-full text-center z-10">
+<!-- Asymmetric Illustration Area -->
+<div class="mb-12 relative flex justify-center">
+<div class="relative w-64 h-64">
+<div class="absolute inset-0 bg-white border border-outline-variant rounded-[32px] shadow-sm transform -rotate-3 transition-transform hover:rotate-0 duration-500"></div>
+<div class="absolute inset-0 bg-surface-container-low border border-outline-variant rounded-[32px] shadow-md transform rotate-3 flex items-center justify-center overflow-hidden transition-transform hover:rotate-0 duration-500">
+<img class="w-full h-full object-cover opacity-80" data-alt="A creative minimalist photograph of an empty, bright modern conference room with high ceilings and large windows. The aesthetic is clean and organized, symbolizing potential and readiness. Soft morning light fills the space, highlighting sleek furniture and polished floors. The composition is airy and professional, reflecting the premium minimalist branding of the recruitment platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI0ZbTcOjzTI1NKxYQIKBTF5lm7ZXCbn543OXtXtsba3wVeo2QcZWWx0R3CrKOhlxBqokm0cApP3n7tHOkkDo9LWoRpOFoQxeXLNwzzEIf3bDfX-yXRPxUkBZxUA44K_D_ErolwFo-6o5Ki1hkwgoLSTkZm53T15pr9nXvXRWtuRytHigZalwE9C668rQvsUtOpu1lf2Zdf-PQh6NzLENyDWSo7XfG7Ogi5sac4KlvUd2Ajqtuc5aWiIOtCsZGM87SQ6JMA-4o4Cg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6 text-left">
+<div class="w-12 h-1 w-full bg-primary/20 rounded-full mb-2"></div>
+<div class="w-8 h-1 w-2/3 bg-primary/10 rounded-full"></div>
+</div>
+</div>
+<!-- Floating Badge -->
+<div class="absolute -top-4 -right-4 bg-white border border-outline-variant p-3 rounded-2xl shadow-lg animate-bounce">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">work</span>
+</div>
+</div>
+</div>
+<!-- Empty State Text -->
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Your Talent Pipeline Awaits</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg mx-auto">
+                Ready to find your next star hire? Start by defining your role and let our agentic engine scout the best matches for you.
+            </p>
+<!-- CTA -->
+<div class="flex items-center justify-center gap-4">
+<button class="primary-gradient text-white px-8 py-4 rounded-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                    Create Your First Job
+                </button>
+<button class="bg-white border border-outline-variant text-on-surface px-8 py-4 rounded-lg font-bold hover:bg-surface-container-low transition-all active:scale-95">
+                    View Templates
+                </button>
+</div>
+<!-- Bento Mini-Guides -->
+<div class="mt-20 grid grid-cols-3 gap-6 text-left">
+<div class="p-5 border border-outline-variant rounded-xl bg-white hover:border-primary/30 transition-colors group">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center mb-4 group-hover:bg-primary/5">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">auto_awesome</span>
+</div>
+<h3 class="font-bold text-sm mb-1">AI Scout</h3>
+<p class="text-xs text-on-surface-variant">Let HawkHire find candidates while you sleep.</p>
+</div>
+<div class="p-5 border border-outline-variant rounded-xl bg-white hover:border-primary/30 transition-colors group">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center mb-4 group-hover:bg-primary/5">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">hub</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Pipeline Sync</h3>
+<p class="text-xs text-on-surface-variant">Connect your ATS or sync directly from LinkedIn.</p>
+</div>
+<div class="p-5 border border-outline-variant rounded-xl bg-white hover:border-primary/30 transition-colors group">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center mb-4 group-hover:bg-primary/5">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">query_stats</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Smart Analytics</h3>
+<p class="text-xs text-on-surface-variant">Predictive hiring insights for better decision making.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Agent Panel (Dashed/Idle State) -->
+<aside class="fixed right-0 top-0 w-[320px] h-screen bg-[#1E1B4B] z-10 p-stack-md flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-gray-500"></span>
+<span class="text-white font-bold text-sm">Agent Workspace</span>
+</div>
+<span class="text-[10px] text-gray-400 bg-white/5 px-2 py-1 rounded border border-white/10 uppercase tracking-widest">Idle</span>
+</div>
+<div class="flex-1 agent-dashed-border rounded-xl flex flex-col items-center justify-center p-8 text-center">
+<div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 relative">
+<span class="material-symbols-outlined text-gray-400 text-3xl">smart_toy</span>
+<!-- Orbiting dots animation -->
+<div class="absolute inset-0 animate-spin" style="animation-duration: 8s;">
+<div class="absolute -top-1 left-1/2 w-1.5 h-1.5 bg-indigo-400 rounded-full"></div>
+</div>
+</div>
+<h4 class="text-white font-headline-sm text-headline-sm mb-2">Awaiting Mission</h4>
+<p class="text-gray-400 text-sm mb-8">Create a job posting to activate your autonomous recruitment agents.</p>
+<div class="space-y-3 w-full">
+<div class="p-3 bg-white/5 rounded-lg border border-white/10 flex items-center gap-3 text-left">
+<span class="material-symbols-outlined text-indigo-400 text-sm">info</span>
+<p class="text-[11px] text-gray-300 leading-tight">Agents can screen resumes, schedule interviews, and draft feedback.</p>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest mb-4">Capabilities</p>
+<div class="space-y-4">
+<div class="flex items-center gap-3 opacity-40">
+<span class="material-symbols-outlined text-white text-lg">search_check</span>
+<span class="text-xs text-white">Automated Sourcing</span>
+</div>
+<div class="flex items-center gap-3 opacity-40">
+<span class="material-symbols-outlined text-white text-lg">forum</span>
+<span class="text-xs text-white">Candidate Outreach</span>
+</div>
+<div class="flex items-center gap-3 opacity-40">
+<span class="material-symbols-outlined text-white text-lg">grading</span>
+<span class="text-xs text-white">Skill Verification</span>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-6 border-t border-white/10">
+<button class="w-full py-3 bg-white/10 hover:bg-white/20 transition-colors text-white rounded-lg text-sm font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                Quick Activation
+            </button>
+</div>
+</aside>
+<!-- Floating Action Button (Contextual) -->
+<button class="fixed bottom-margin-desktop right-[340px] w-14 h-14 primary-gradient text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40 group">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform duration-300">add</span>
+<!-- Tooltip -->
+<span class="absolute right-16 bg-inverse-surface text-inverse-on-surface px-3 py-1 rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            New Job Posting
+        </span>
+</button>
+<script>
+        // Simple micro-interaction for the agent "pulse"
+        document.addEventListener('DOMContentLoaded', () => {
+            const agentIcon = document.querySelector('.agent-workspace-pulse');
+            if(agentIcon) {
+                setInterval(() => {
+                    agentIcon.classList.toggle('scale-105');
+                }, 2000);
+            }
+        });
+    </script>
+</body></html>

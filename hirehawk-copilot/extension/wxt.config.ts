@@ -4,7 +4,7 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   modules: ['@wxt-dev/module-react'],
   manifest: {
-    permissions: ['sidePanel', 'activeTab', 'scripting'],
+    permissions: ['sidePanel', 'activeTab', 'scripting', 'storage'],
     side_panel: {
       default_path: 'entrypoints/sidepanel/index.html'
     }

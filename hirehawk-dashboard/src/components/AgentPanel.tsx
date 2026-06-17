@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Play, CheckCircle2, Loader2, AlertTriangle, HelpCircle, RefreshCw } from 'lucide-react';
 import { useAgentStream } from '../hooks/useAgentStream';
 
-export default function AgentPanel() {
+interface AgentPanelProps {
+  onApproveSuccess?: (appId: string) => void;
+}
+
+export default function AgentPanel({ onApproveSuccess }: AgentPanelProps) {
   const [jdText, setJdText] = useState(
     "We are looking for an AI Engineer Intern at Breathe ESG to help build carbon ingestion pipelines and LLM-powered ESG reporting agents. Tech stack includes Python, Django, React, and LangChain."
   );
@@ -27,7 +30,7 @@ export default function AgentPanel() {
       : await startRealRun();
 
     if (newRunId) {
-      startStream(newRunId);
+      startStream(newRunId, jdText);
     }
   };
 
@@ -55,33 +58,31 @@ export default function AgentPanel() {
   };
 
   return (
-    <div className="space-y-6 text-white">
+    <div className="flex flex-col h-full justify-between text-white space-y-5">
       {/* Top action block / input JD */}
-      <div className="rounded-card border border-white/10 bg-black/25 p-5 space-y-4 shadow-lg">
-        <div>
-          <h2 className="text-xs font-bold text-gray-300 uppercase tracking-wider">Execute Recruiter Agent</h2>
-          <p className="text-[10px] text-gray-400 mt-1 font-semibold leading-relaxed uppercase">
-            RAW JOB DESCRIPTION CONTEXT
-          </p>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
+            Job Description / Prompt Context
+          </label>
+          <textarea
+            id="jd-input"
+            value={jdText}
+            onChange={e => setJdText(e.target.value)}
+            disabled={isStreaming}
+            rows={4}
+            className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-xs text-gray-200 placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-primary-container disabled:opacity-60 disabled:cursor-not-allowed transition-all leading-relaxed resize-none custom-scrollbar"
+            placeholder="Paste job description here or type a sourcing prompt..."
+          />
         </div>
-
-        <textarea
-          id="jd-input"
-          value={jdText}
-          onChange={e => setJdText(e.target.value)}
-          disabled={isStreaming}
-          rows={3}
-          className="w-full p-3 bg-black/30 border border-white/10 rounded-lg text-xs text-gray-200 placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-primary-container disabled:opacity-60 disabled:cursor-not-allowed transition-all leading-relaxed resize-none custom-scrollbar"
-          placeholder="Paste job description here..."
-        />
 
         <div className="flex gap-3 justify-end">
           {(isComplete || error) && (
             <button
               onClick={reset}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-btn border border-white/10 bg-black/20 text-xs font-semibold text-gray-300 hover:text-white hover:bg-black/40 transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/10 border border-white/10 text-xs font-semibold text-gray-300 hover:text-white hover:bg-white/20 transition-all cursor-pointer"
             >
-              <RefreshCw size={13} />
+              <span className="material-symbols-outlined text-sm leading-none">refresh</span>
               <span>Reset Panel</span>
             </button>
           )}
@@ -89,32 +90,33 @@ export default function AgentPanel() {
             id="start-agent-btn"
             onClick={handleStart}
             disabled={isStreaming || !jdText.trim()}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-btn bg-primary-container text-xs font-bold text-white shadow-md shadow-primary/20 hover:bg-primary disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="w-full py-3 bg-primary-container text-white font-bold rounded-lg hover:bg-primary disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20 group overflow-hidden relative cursor-pointer"
           >
             {isStreaming ? (
-              <>
-                <Loader2 className="animate-spin" size={13} />
+              <span className="relative z-10 flex items-center gap-2">
+                <span className="material-symbols-outlined text-base animate-spin">autorenew</span>
                 <span>Running Agent...</span>
-              </>
+              </span>
             ) : (
-              <>
-                <Play size={13} />
+              <span className="relative z-10 flex items-center gap-2">
+                <span className="material-symbols-outlined text-base">play_arrow</span>
                 <span>Trigger Agent Flow</span>
-              </>
+              </span>
             )}
+            <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
           </button>
         </div>
       </div>
 
       {/* Stream execution results */}
-      <div className="space-y-4">
+      <div className="space-y-4 flex-1">
         {/* HITL Awaiting manual approval Banner */}
         {hitlState && (
-          <div id="hitl-banner" className="rounded-card border border-primary-container/40 bg-primary-container/10 overflow-hidden shadow-lg animate-slide-in">
-            <div className="flex flex-col p-4 gap-4 bg-black/20 border-b border-white/5">
+          <div id="hitl-banner" className="rounded-xl border border-primary-container/40 bg-primary-container/10 overflow-hidden shadow-lg animate-slide-in">
+            <div className="flex flex-col p-4 gap-3.5 bg-black/20 border-b border-white/5">
               <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-primary-container/20 text-on-primary-container shadow">
-                  <HelpCircle size={18} />
+                <div className="p-2 rounded-lg bg-primary-container/20 text-white shadow flex items-center justify-center">
+                  <span className="material-symbols-outlined text-lg">help</span>
                 </div>
                 <div>
                   <h3 className="text-xs font-bold text-gray-200">Awaiting your approval</h3>
@@ -127,14 +129,19 @@ export default function AgentPanel() {
                 <button
                   id="reject-btn"
                   onClick={reject}
-                  className="px-3 py-1.5 rounded-btn border border-white/10 text-xs font-semibold text-gray-300 hover:text-white hover:bg-error/20 hover:border-error/30 transition-all focus:outline-none"
+                  className="px-3 py-1.5 rounded border border-white/10 text-xs font-semibold text-gray-300 hover:text-white hover:bg-error/20 hover:border-error/30 transition-all focus:outline-none cursor-pointer"
                 >
                   Reject
                 </button>
                 <button
                   id="approve-btn"
-                  onClick={approve}
-                  className="px-3.5 py-1.5 rounded-btn bg-primary-container text-xs font-bold text-white shadow-md shadow-primary/20 hover:bg-primary transition-all focus:outline-none"
+                  onClick={async () => {
+                    const appId = await approve();
+                    if (appId) {
+                      onApproveSuccess?.(appId);
+                    }
+                  }}
+                  className="px-3.5 py-1.5 rounded bg-primary-container text-xs font-bold text-white shadow-md shadow-primary/20 hover:bg-primary transition-all focus:outline-none cursor-pointer"
                 >
                   Approve & Log
                 </button>
@@ -145,75 +152,64 @@ export default function AgentPanel() {
 
         {/* Error Banner */}
         {error && (
-          <div className="flex items-center gap-3 p-4 rounded-card border border-error-container/30 bg-error-container/5 animate-slide-in">
-            <AlertTriangle className="text-error shrink-0" size={18} />
-            <div className="text-xs font-semibold text-error-container">{error}</div>
+          <div className="flex items-center gap-3 p-4 rounded-xl border border-rose-500/30 bg-rose-950/20 text-rose-300 animate-slide-in">
+            <span className="material-symbols-outlined text-rose-400">warning</span>
+            <div className="text-xs font-semibold">{error}</div>
           </div>
         )}
 
         {/* Vertical Timeline Steps list */}
         <div className="space-y-3">
-          <span className="text-[10px] font-mono tracking-wider text-gray-400 uppercase block">Execution Nodes</span>
-          <div className="relative border-l-2 border-white/10 ml-3 pl-6 space-y-4">
+          <span className="text-[10px] font-mono tracking-wider text-gray-400 uppercase block">Execution Log</span>
+          <div className="relative border-l border-white/10 ml-3 pl-6 space-y-4">
             {steps.map((step, idx) => {
               const duration = formatDuration(step.duration);
               
-              let cardStyle = 'border-white/5 bg-white/5 opacity-60';
+              let cardStyle = 'border-white/5 bg-white/5 opacity-50';
               let statusLabel = 'Pending';
-              let statusIndicator = <div className="w-1.5 h-1.5 rounded-full bg-gray-600" />;
-              let dotIndicator = (
-                <div className="absolute -left-[29px] top-[18px] w-2.5 h-2.5 rounded-full bg-[#1E1B4B] border-2 border-gray-600" />
-              );
+              let statusColor = 'text-gray-400';
+              let dotClass = 'border-gray-600 bg-[#050814]';
+              let activeDotContent = null;
 
               if (step.status === 'running') {
-                cardStyle = 'border-primary-container/40 bg-white/10 opacity-100 ring-1 ring-primary-container/20';
+                cardStyle = 'border-primary-container/45 bg-white/10 opacity-100 ring-1 ring-primary-container/20';
                 statusLabel = step.name === 'HITL' ? 'Awaiting Approval' : 'Processing';
-                statusIndicator = <Loader2 className="animate-spin text-primary-container" size={13} />;
-                dotIndicator = (
-                  <div className="absolute -left-[32px] top-[15px] w-4 h-4 rounded-full bg-[#1E1B4B] border-2 border-primary-container shadow-[0_0_8px_rgba(124,58,237,0.6)] flex items-center justify-center animate-pulse">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary-container" />
-                  </div>
-                );
+                statusColor = 'text-primary-container';
+                dotClass = 'border-primary-container bg-[#050814] shadow-[0_0_8px_rgba(124,58,237,0.6)] animate-pulse';
+                activeDotContent = <div className="w-1.5 h-1.5 rounded-full bg-primary-container" />;
               } else if (step.status === 'done') {
                 cardStyle = 'border-emerald-500/20 bg-white/5 opacity-100';
                 statusLabel = 'Completed';
-                statusIndicator = <CheckCircle2 className="text-emerald-400" size={13} />;
-                dotIndicator = (
-                  <div className="absolute -left-[32px] top-[15px] w-4 h-4 rounded-full bg-[#1E1B4B] border-2 border-emerald-500 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  </div>
-                );
+                statusColor = 'text-emerald-400';
+                dotClass = 'border-emerald-500 bg-[#050814]';
+                activeDotContent = <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />;
               } else if (step.status === 'error') {
                 cardStyle = 'border-rose-500/20 bg-white/5 opacity-100';
                 statusLabel = 'Failed';
-                statusIndicator = <AlertTriangle className="text-rose-400" size={13} />;
-                dotIndicator = (
-                  <div className="absolute -left-[32px] top-[15px] w-4 h-4 rounded-full bg-[#1E1B4B] border-2 border-rose-500 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                  </div>
-                );
+                statusColor = 'text-rose-400';
+                dotClass = 'border-rose-500 bg-[#050814]';
+                activeDotContent = <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />;
               }
 
               return (
                 <div
                   key={idx}
-                  className={`relative flex flex-col justify-between p-4 rounded-card border transition-all duration-300 ${cardStyle}`}
+                  className={`relative flex flex-col justify-between p-4 rounded-xl border transition-all duration-300 ${cardStyle}`}
                 >
                   {/* Timeline connecting dot */}
-                  {dotIndicator}
+                  <div className={`absolute -left-[29px] top-[18px] w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center ${dotClass}`}>
+                    {activeDotContent}
+                  </div>
 
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="text-[9px] text-gray-400 font-semibold uppercase tracking-wider">{step.mcpServer}</span>
+                      <span className="text-[9px] text-gray-500 font-bold uppercase tracking-wider block">{step.mcpServer}</span>
                       <h4 className="text-xs font-bold text-gray-200 mt-0.5">{step.agentName}</h4>
                     </div>
-                    <div className="flex items-center gap-2">
-                      {duration && <span className="text-[10px] font-mono font-medium text-gray-400">{duration}</span>}
-                      {statusIndicator}
-                    </div>
+                    {duration && <span className="text-[10px] font-mono font-medium text-gray-400">{duration}</span>}
                   </div>
                   <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-2">
-                    <span className="text-[9px] text-gray-400 font-semibold tracking-wider uppercase">{statusLabel}</span>
+                    <span className={`text-[9px] font-bold tracking-wider uppercase ${statusColor}`}>{statusLabel}</span>
                     <span className="text-[9px] text-gray-500 font-mono">Phase {idx + 1}</span>
                   </div>
                 </div>

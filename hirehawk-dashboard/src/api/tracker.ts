@@ -166,18 +166,20 @@ export async function updateStatus(app_id: string, status: string): Promise<{ su
 export async function getApplicationDetail(id: string): Promise<ApplicationDetail> {
   if (MOCK_MODE) {
     const app = mockApplications.find(a => a.id === id) || mockApplications[0];
-    
-    // Custom claims verification details matching Breathe ESG
+    const company = app.company;
+    const role = app.role;
+
+    // Custom claims verification details matching Breathe ESG or newly parsed values
     const claims: Claim[] = [
       {
-        claim: "Built carbon emissions analysis models using Python, FastAPI, and LangChain in Sentixcare project",
-        supported_by_baseline: false,
-        reasoning: "Fabricated claim. The baseline Sentixcare project is focused on clinical records RAG, not carbon emissions models. Caught by claims checker and rewritten."
+        claim: `Implemented clinical / document indexing and RAG pipelines using Python, FastAPI, and LangChain matching ${company}'s core stack.`,
+        supported_by_baseline: true,
+        reasoning: `Supported by baseline ground truth which lists Python, FastAPI, and LangChain skills, as well as the Sentixcare Space deployment.`
       },
       {
-        claim: "Led the entire engineering architecture of the Breathe ESG SaaS platform",
+        claim: `Led the entire cloud orchestration and DevOps infrastructure team at ${company}.`,
         supported_by_baseline: false,
-        reasoning: "Fabricated claim. Baseline only lists internship details and academic projects. Caught by checker."
+        reasoning: "Fabricated claim. Baseline profile only lists software engineering internship experience and personal AI RAG prototypes. Caught by claims checker."
       },
       {
         claim: "Integrated backend services using Django and React",
@@ -187,22 +189,22 @@ export async function getApplicationDetail(id: string): Promise<ApplicationDetai
     ];
 
     const company_intel: CompanyIntel = {
-      company_name: app.company,
-      founding_year: 2020,
-      hq_location: app.company === "Breathe ESG" ? "Bangalore, India" : "San Francisco, CA",
-      industry: app.company === "Breathe ESG" ? "Sustainability SaaS" : "Artificial Intelligence",
-      website: `https://${app.company.toLowerCase().replace(/\s/g, '')}.com`,
+      company_name: company,
+      founding_year: 2018 + Math.floor(Math.random() * 5),
+      hq_location: company === "Breathe ESG" ? "Bangalore, India" : "San Francisco, CA",
+      industry: company === "Breathe ESG" ? "Sustainability SaaS" : "Information Technology & Services",
+      website: `https://${company.toLowerCase().replace(/\s/g, '')}.com`,
       recent_news: [
         {
-          title: `${app.company} raises Series A to expand carbon accounting tools`,
-          summary: `${app.company} secured new financing to expand enterprise scope-3 emission automation.`,
-          date: "2026-03-15",
+          title: `${company} raises new venture capital round to expand AI analytics tools`,
+          summary: `${company} secured new financing to expand enterprise automation.`,
+          date: new Date().toISOString().split('T')[0],
           source: "TechCrunch"
         },
         {
-          title: `${app.company} launches generative AI reporting agents`,
-          summary: `New tools allow users to ask conversational questions about greenhouse gas profiles.`,
-          date: "2026-05-10",
+          title: `${company} launches generative AI reporting agents`,
+          summary: `New tools allow users to ask conversational questions about operations.`,
+          date: new Date().toISOString().split('T')[0],
           source: "ESG Today"
         }
       ],
@@ -211,25 +213,25 @@ export async function getApplicationDetail(id: string): Promise<ApplicationDetai
 
     const outreach_draft = {
       cold_email: {
-        subject: `AI / RAG Developer projects for ${app.company}`,
-        body: `Hi team,\n\nI saw ${app.company} is expanding its AI engineering and RAG automation pipelines. I recently built Sentixcare, a Python/FastAPI/LangChain project hosted live on HuggingFace, and completed a Full Stack Intern role at Zidio building React interfaces.\n\nI'd love to learn if you're open to an intern to help construct carbon ingestion parsing tools. Are you free for a 10-minute chat next week?\n\nBest,\nGokul`
+        subject: `AI / RAG Developer interest for ${role} at ${company}`,
+        body: `Hi team,\n\nI saw ${company} is expanding its AI engineering and RAG automation pipelines. I recently built Sentixcare, a Python/FastAPI/LangChain project hosted live on HuggingFace, and completed a Full Stack Intern role at Zidio building React interfaces.\n\nI'd love to learn if you're open to an intern to help construct client-facing pipelines for ${company}. Are you free for a 10-minute chat next week?\n\nBest,\nGokul`
       },
       cover_letter_paragraphs: [
-        `Dear Hiring Manager,\n\nYour recent work automating sustainability analytics at ${app.company} caught my eye. I recently shipped Sentixcare, a Python/FastAPI/LangChain project hosted live on HuggingFace, and completed a Full Stack Intern role at Zidio building React interfaces. I believe my background in building LangChain and FastAPI microservices aligns perfectly with your goals.`,
+        `Dear Hiring Manager,\n\nYour recent work automating sustainability analytics at ${company} caught my eye. I recently shipped Sentixcare, a Python/FastAPI/LangChain project hosted live on HuggingFace, and completed a Full Stack Intern role at Zidio building React interfaces. I believe my background in building LangChain and FastAPI microservices aligns perfectly with your goals for the ${role} role.`,
         `During my Full Stack Internship at Zidio, I developed responsive frontend dashboards in React and connected them to Django/PostgreSQL databases. In addition, my personal project Sentixcare involved training multi-modal classifiers and building semantic routing engines in Python, giving me strong fundamentals in pipeline integration.`,
-        `I would love to bring my programming skills and fast learning pace to ${app.company}. Thank you for your time, and I look forward to the opportunity to discuss my qualifications.`
+        `I would love to bring my programming skills and fast learning pace to ${company}. Thank you for your time, and I look forward to the opportunity to discuss my qualifications.`
       ],
-      referral_message: `Hi! I saw you work at ${app.company}. I'm an AI engineer intern looking at the open developer listing. I specialize in FastAPI, LangChain, and React (check out my HuggingFace Sentixcare app!). Would you be open to forwarding my details to the recruitment lead? Thanks!`
+      referral_message: `Hi! I saw you work at ${company}. I'm an AI engineer intern looking at the open developer listing for ${role}. I specialize in FastAPI, LangChain, and React (check out my HuggingFace Sentixcare app!). Would you be open to forwarding my details to the recruitment lead? Thanks!`
     };
 
     const tailored_bullets = [
       {
         project_or_role: "Sentixcare (AI/ML Project)",
-        bullet: "Developed a multi-agent RAG workflow using Python, FastAPI, and LangChain to parse and analyze clinical records stored in a Qdrant database."
+        bullet: `Developed a multi-agent RAG workflow using Python, FastAPI, and LangChain to parse and analyze clinical records for ${company}.`
       },
       {
         project_or_role: "Full Stack Intern at Zidio",
-        bullet: "Built responsive frontend UI widgets in React and integrated backend services using Django and PostgreSQL, achieving 30% faster data parsing speeds."
+        bullet: `Built responsive frontend UI widgets in React and integrated backend services using Django and PostgreSQL for ${company}.`
       }
     ];
 
@@ -321,16 +323,129 @@ export async function getMcpStatus(): Promise<Record<string, 'healthy' | 'unheal
   }
 }
 
-export async function triggerApproveRun(run_id: string, approved: boolean): Promise<boolean> {
+export async function triggerApproveRun(run_id: string, approved: boolean): Promise<{ success: boolean; appId?: string }> {
   if (MOCK_MODE) {
     console.log(`[Mock Approve] Run ID: ${run_id} approved: ${approved}`);
-    return true;
+    return { success: true, appId: run_id };
   }
 
-  const res = await fetch(`${FASTAPI_URL}/approve/${run_id}`, {
+  try {
+    const res = await fetch(`${FASTAPI_URL}/approve/${run_id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ approved })
+    });
+    if (!res.ok) return { success: false };
+    const data = await res.json();
+    return { success: true, appId: data.app_id || run_id };
+  } catch {
+    return { success: false };
+  }
+}
+
+function parseJobDescription(jdText: string): { company: string; role: string } {
+  let company = "Unknown Company";
+  let role = "AI Engineer";
+
+  // Regex patterns
+  const atMatch = jdText.match(/(?:looking for|seeking|hiring|role of|position of)?\s*(?:an?|the)?\s*([^,.\n]+?)\s+at\s+([^,.\n]+)/i);
+  if (atMatch) {
+    role = atMatch[1].trim();
+    company = atMatch[2].trim();
+  } else {
+    const isLookingMatch = jdText.match(/([^,.\n]+?)\s+(?:is looking for|is hiring for|seeks|is seeking)\s+(?:an?|the)?\s*([^,.\n]+)/i);
+    if (isLookingMatch) {
+      company = isLookingMatch[1].trim();
+      role = isLookingMatch[2].trim();
+    }
+  }
+
+  // Cleaning
+  company = company.replace(/^(we are|we're|our team|we|are hiring)\s+/i, '').trim();
+  role = role.replace(/^(an?|the|a|to hire a)\s+/i, '').trim();
+
+  // Strip trailing descriptors
+  role = role.replace(/\s+to\s+.*$/i, '').trim();
+  company = company.replace(/\s+to\s+.*$/i, '').trim();
+
+  if (company.length > 40) company = company.substring(0, 40);
+  if (role.length > 50) role = role.substring(0, 50);
+
+  // Capitalize words helper
+  const capitalize = (str: string) => str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  return { company: capitalize(company), role: capitalize(role) };
+}
+
+export function logNewMockApplication(jdText: string): string {
+  const { company, role } = parseJobDescription(jdText);
+  const newId = `mock-app-${Math.random().toString(36).substring(2, 15)}`;
+
+  // Fit score logic
+  let fit = 70;
+  const jdLower = jdText.toLowerCase();
+  if (jdLower.includes('python')) fit += 5;
+  if (jdLower.includes('react')) fit += 5;
+  if (jdLower.includes('django')) fit += 5;
+  if (jdLower.includes('fastapi')) fit += 6;
+  if (jdLower.includes('langchain')) fit += 7;
+  if (fit > 98) fit = 98;
+
+  const newApp: Application = {
+    id: newId,
+    company,
+    role,
+    status: "applied",
+    fit_score: fit,
+    applied_at: new Date().toISOString(),
+    last_activity: new Date().toISOString(),
+    jd_url: `https://${company.toLowerCase().replace(/\s/g, '')}.com/careers`,
+    resume_version: "v1_tailored",
+    notes: "Auto-logged from Live Agent stream"
+  };
+
+  mockApplications.push(newApp);
+  return newId;
+}
+
+export async function loginUser(email: string, password: string): Promise<{ token: string; user: { email: string; name: string; role: string } }> {
+  const res = await fetch(`${WORKER_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ approved })
+    body: JSON.stringify({ email, password })
   });
-  return res.ok;
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || 'Failed to login');
+  }
+  return res.json();
+}
+
+export async function signupUser(payload: { email: string; password: string; name: string; role: string }): Promise<{ token: string; user: { email: string; name: string; role: string } }> {
+  const res = await fetch(`${WORKER_URL}/auth/signup`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || 'Failed to sign up');
+  }
+  return res.json();
+}
+
+export async function validateSession(token: string): Promise<{ valid: boolean; user: { email: string; name: string; role: string } }> {
+  const res = await fetch(`${WORKER_URL}/auth/validate?token=${encodeURIComponent(token)}`);
+  if (!res.ok) {
+    throw new Error('Session is invalid or expired');
+  }
+  return res.json();
+}
+
+export async function logoutUser(token: string): Promise<{ success: boolean }> {
+  const res = await fetch(`${WORKER_URL}/auth/logout`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error('Logout failed');
+  return res.json();
 }

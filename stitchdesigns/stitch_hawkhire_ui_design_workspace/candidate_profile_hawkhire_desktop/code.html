@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HawkHire - Candidate Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "surface": "#fcf9f8",
+                    "on-surface-variant": "#4a4455",
+                    "on-primary-container": "#ede0ff",
+                    "surface-variant": "#e5e2e1",
+                    "secondary": "#5b598c",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "tertiary-fixed": "#ffdea6",
+                    "outline-variant": "#ccc3d8",
+                    "background": "#fcf9f8",
+                    "surface-tint": "#732ee4",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#fcf9f8",
+                    "on-tertiary-container": "#ffe2b2",
+                    "secondary-container": "#c7c3fe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1c1b1b",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-dim": "#dcd9d9",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#271900",
+                    "on-background": "#1c1b1b",
+                    "surface-container-high": "#ebe7e7",
+                    "on-secondary-container": "#514f81",
+                    "surface-container-low": "#f6f3f2",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "inverse-primary": "#d2bbff",
+                    "tertiary": "#674900",
+                    "primary-fixed": "#eaddff",
+                    "primary": "#630ed4",
+                    "surface-container": "#f0edec",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#444173",
+                    "tertiary-fixed-dim": "#f7bd48",
+                    "on-primary-fixed": "#25005a",
+                    "surface-container-highest": "#e5e2e1",
+                    "secondary-fixed": "#e3dfff",
+                    "outline": "#7b7487",
+                    "inverse-surface": "#313030",
+                    "tertiary-container": "#866000",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-secondary-fixed": "#181445",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-lg": "24px",
+                    "container-max-width": "1440px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "body-sm": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "headline-md": ["Geist"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .json-editor-line::before {
+            content: attr(data-line);
+            display: inline-block;
+            width: 2rem;
+            margin-right: 1rem;
+            text-align: right;
+            color: #9CA3AF;
+            user-select: none;
+        }
+        .code-string { color: #059669; }
+        .code-key { color: #7C3AED; }
+        .code-number { color: #D97706; }
+        .code-bracket { color: #4B5563; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="w-[240px] h-screen fixed left-0 top-0 bg-surface dark:bg-surface-dim border-r border-outline-variant dark:border-outline flex flex-col py-stack-lg px-stack-md z-50">
+<div class="mb-stack-lg px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">HawkHire</h1>
+<p class="font-label-md text-on-surface-variant text-[12px] opacity-70">Recruitment Workspace</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active State: Candidates -->
+<a class="flex items-center gap-3 px-3 py-2 transition-colors hover:bg-surface-container dark:hover:bg-surface-container-high active:scale-95 duration-150 text-on-surface-variant dark:text-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 transition-colors hover:bg-surface-container dark:hover:bg-surface-container-high active:scale-95 duration-150 text-on-surface-variant dark:text-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body-md">Applications</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 transition-colors text-primary dark:text-primary-fixed-dim font-bold border-r-2 border-primary bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 transition-colors hover:bg-surface-container dark:hover:bg-surface-container-high active:scale-95 duration-150 text-on-surface-variant dark:text-surface-variant rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-stack-lg border-t border-outline-variant">
+<div class="flex items-center gap-3 px-2">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-xs">JD</div>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">John Doe</p>
+<p class="text-[10px] text-on-surface-variant truncate">Lead Recruiter</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopAppBar (Shared Component) -->
+<header class="fixed top-0 left-[240px] right-0 h-16 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm flex items-center justify-between px-margin-desktop z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search candidate pool..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all cursor-pointer">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all cursor-pointer">help_outline</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a recruitment manager in a minimalist office setting with soft indigo backlighting and a clean, high-contrast modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwLH-l6nS2KYDo4HLROdYPjt__bvvKUSYgoqmdFd2Ql6E7cQ1nGoviL6wQyuKJveKv0li2PMM9MYITpJa_X6wy3tkpsUedSACfHwUjscAozrijkFlOCHSkQWkBTayNQ45z8xCgOe2mnRCaWqCBGF5RQ_o1l_ma1UjTGbA8WE-_PsfRVkY8dT0GqCVge5LIiq2ptcyTw57Gu17EXOWt831O5BDqQ6OUCLU0T4BmTYg37BP45TrOTkP3rJqDM6I73tOWfmBJScQBJSQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[240px] mt-16 p-stack-lg">
+<div class="max-w-[1440px] mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-on-surface-variant font-label-md text-[12px] mb-stack-lg uppercase tracking-wider">
+<a class="hover:text-primary" href="#">Candidates</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface">Profile Editor</span>
+</nav>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left: Candidate Baseline Profile JSON Editor -->
+<div class="col-span-8 flex flex-col gap-stack-md">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-[calc(100vh-220px)]">
+<div class="bg-surface-container flex items-center justify-between px-stack-md py-stack-sm border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">data_object</span>
+<h2 class="font-headline-sm text-headline-sm">Candidate Baseline Profile</h2>
+<span class="text-xs bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded font-code-sm">v4.2.0-stable</span>
+</div>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-surface-container-highest rounded transition-colors material-symbols-outlined text-sm">content_copy</button>
+<button class="p-1 hover:bg-surface-container-highest rounded transition-colors material-symbols-outlined text-sm">history</button>
+</div>
+</div>
+<!-- Editor Canvas -->
+<div class="flex-1 bg-surface-container-lowest font-code-sm text-code-sm p-stack-md overflow-y-auto">
+<div class="json-editor-line" data-line="1"><span class="code-bracket">{</span></div>
+<div class="json-editor-line pl-8" data-line="2"><span class="code-key">"id"</span>: <span class="code-string">"cand_7x92_alpha"</span>,</div>
+<div class="json-editor-line pl-8" data-line="3"><span class="code-key">"identity"</span>: <span class="code-bracket">{</span></div>
+<div class="json-editor-line pl-16" data-line="4"><span class="code-key">"fullName"</span>: <span class="code-string">"Sarah Chen"</span>,</div>
+<div class="json-editor-line pl-16" data-line="5"><span class="code-key">"primaryRole"</span>: <span class="code-string">"Principal Systems Engineer"</span>,</div>
+<div class="json-editor-line pl-16" data-line="6"><span class="code-key">"location"</span>: <span class="code-string">"San Francisco, CA"</span></div>
+<div class="json-editor-line pl-8" data-line="7"><span class="code-bracket">}</span>,</div>
+<div class="json-editor-line pl-8" data-line="8"><span class="code-key">"intelligence_metrics"</span>: <span class="code-bracket">{</span></div>
+<div class="json-editor-line pl-16" data-line="9"><span class="code-key">"agentic_trust_score"</span>: <span class="code-number">0.982</span>,</div>
+<div class="json-editor-line pl-16" data-line="10"><span class="code-key">"technical_baseline"</span>: <span class="code-bracket">[</span><span class="code-string">"Rust"</span>, <span class="code-string">"Kubernetes"</span>, <span class="code-string">"Wasm"</span><span class="code-bracket">]</span>,</div>
+<div class="json-editor-line pl-16" data-line="11"><span class="code-key">"fit_index"</span>: <span class="code-number">94</span></div>
+<div class="json-editor-line pl-8" data-line="12"><span class="code-bracket">}</span>,</div>
+<div class="json-editor-line pl-8" data-line="13"><span class="code-key">"raw_source_node"</span>: <span class="code-string">"s3://hawkhire-ingest/raw/sarah-chen-resume.pdf"</span>,</div>
+<div class="json-editor-line pl-8" data-line="14"><span class="code-key">"last_validated"</span>: <span class="code-string">"2023-11-24T14:22:01Z"</span>,</div>
+<div class="json-editor-line pl-8" data-line="15"><span class="code-key">"cluster_ready"</span>: <span class="code-number">true</span></div>
+<div class="json-editor-line" data-line="16"><span class="code-bracket">}</span></div>
+</div>
+<div class="bg-surface-container-low px-stack-md py-stack-md flex justify-between items-center border-t border-outline-variant">
+<span class="text-xs text-on-surface-variant font-code-sm">UTF-8 | JSON | Line 10, Col 12</span>
+<div class="flex gap-stack-sm">
+<button class="px-4 py-2 border border-outline-variant bg-surface rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all active:scale-95">Cancel</button>
+<button class="px-6 py-2 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-lg font-label-md text-label-md shadow-sm hover:shadow-md transition-all active:scale-95">Save Changes</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: MCP Server Cluster -->
+<div class="col-span-4 flex flex-col gap-stack-lg">
+<div class="bg-[#1E1B4B] rounded-xl border border-white/10 p-stack-md shadow-lg">
+<div class="flex items-center justify-between mb-stack-md">
+<h3 class="text-white font-headline-sm text-headline-sm">MCP Server Cluster</h3>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+</div>
+<div class="space-y-stack-sm">
+<!-- MCP Item -->
+<div class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white/50 text-xl">description</span>
+<div>
+<p class="text-white text-sm font-medium">resume-mcp</p>
+<p class="text-white/40 text-[10px] font-code-sm">ping: 12ms</p>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20 rounded-full uppercase tracking-tighter">Healthy</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white/50 text-xl">data_exploration</span>
+<div>
+<p class="text-white text-sm font-medium">jd-parser-mcp</p>
+<p class="text-white/40 text-[10px] font-code-sm">ping: 48ms</p>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20 rounded-full uppercase tracking-tighter">Healthy</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white/50 text-xl">monitoring</span>
+<div>
+<p class="text-white text-sm font-medium">tracker-mcp</p>
+<p class="text-white/40 text-[10px] font-code-sm">ping: 21ms</p>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20 rounded-full uppercase tracking-tighter">Healthy</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white/50 text-xl">psychology</span>
+<div>
+<p class="text-white text-sm font-medium">sentiment-analyzer</p>
+<p class="text-white/40 text-[10px] font-code-sm">ping: 104ms</p>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20 rounded-full uppercase tracking-tighter">Healthy</span>
+</div>
+</div>
+<button class="w-full mt-stack-md py-2 border border-white/10 text-white/70 text-xs rounded hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">refresh</span>
+                            Re-sync Cluster
+                        </button>
+</div>
+<!-- Agent Context Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md">
+<h4 class="font-label-md text-label-md text-on-surface-variant mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span>
+                            AGENTIC INSIGHT
+                        </h4>
+<p class="text-sm text-on-surface leading-relaxed mb-stack-md">
+                            The candidate's technical profile was last verified against the <strong class="text-primary">System-B</strong> JD cluster. Recommendations suggest a focus on <span class="text-secondary font-bold">Wasm runtime performance</span> during the next evaluation stage.
+                        </p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container text-on-surface-variant text-[11px] px-2 py-1 rounded border border-outline-variant">Score: 9.8/10</span>
+<span class="bg-surface-container text-on-surface-variant text-[11px] px-2 py-1 rounded border border-outline-variant">Tier: Alpha</span>
+</div>
+</div>
+<!-- Visualization -->
+<div class="h-48 rounded-xl bg-surface-container relative overflow-hidden group">
+
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent flex items-end p-stack-md">
+<span class="text-[10px] font-code-sm text-on-surface-variant uppercase tracking-widest">Real-time Ingestion Stream</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interaction for the editor lines
+        document.querySelectorAll('.json-editor-line').forEach(line => {
+            line.addEventListener('mouseenter', () => {
+                line.style.backgroundColor = 'rgba(124, 58, 237, 0.05)';
+            });
+            line.addEventListener('mouseleave', () => {
+                line.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Toggle focus state for "Save" button
+        const saveBtn = document.querySelector('button.bg-gradient-to-r');
+        saveBtn.addEventListener('click', () => {
+            saveBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">sync</span> Processing...';
+            setTimeout(() => {
+                saveBtn.innerHTML = 'Save Changes';
+            }, 1500);
+        });
+    </script>
+</body></html>

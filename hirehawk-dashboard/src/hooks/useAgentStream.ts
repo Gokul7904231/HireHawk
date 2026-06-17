@@ -1,7 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { AgentStep, StepStatus } from '../types';
 import { subscribeToAgentRun, simulateMockApproval } from '../api/stream';
-import { triggerApproveRun } from '../api/tracker';
+import { triggerApproveRun, logNewMockApplication } from '../api/tracker';
 
 const INITIAL_STEPS: AgentStep[] = [
   { name: 'parse_jd', agentName: 'JD Analyzer', mcpServer: 'jd-parser-mcp', status: 'idle' },
@@ -13,6 +14,7 @@ const INITIAL_STEPS: AgentStep[] = [
 ];
 
 export function useAgentStream() {
+  const queryClient = useQueryClient();
   const [steps, setSteps] = useState<AgentStep[]>(INITIAL_STEPS);
   const [isStreaming, setIsStreaming] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -24,6 +26,7 @@ export function useAgentStream() {
   const unsubscribeRef = useRef<(() => void) | null>(null);
   const timersRef = useRef<Record<string, number>>({});
   const durationsRef = useRef<Record<string, number>>({});
+  const jdTextRef = useRef<string>('');
 
   // Active duration polling effect
   useEffect(() => {
@@ -68,13 +71,17 @@ export function useAgentStream() {
     activeRunIdRef.current = null;
     timersRef.current = {};
     durationsRef.current = {};
+    jdTextRef.current = '';
   }, []);
 
-  const startStream = useCallback((id: string) => {
+  const startStream = useCallback((id: string, jdText?: string) => {
     reset();
     setRunId(id);
     activeRunIdRef.current = id;
     setIsStreaming(true);
+    if (jdText) {
+      jdTextRef.current = jdText;
+    }
 
     // Initial step is running
     const firstStepName = INITIAL_STEPS[0].name;
@@ -149,12 +156,25 @@ export function useAgentStream() {
   }, [reset]);
 
   const approve = useCallback(async () => {
-    if (!runId) return;
+    if (!runId) return null;
 
     // Call approve endpoint
-    const success = await triggerApproveRun(runId, true);
-    if (success) {
+    const result = await triggerApproveRun(runId, true);
+    if (result.success) {
       setHitlState(false);
+
+      let finalAppId = result.appId || runId;
+
+      // Invalidate queries to refresh applications tracker table and stats
+      queryClient.invalidateQueries({ queryKey: ['tracker'] });
+
+      // If mock, trigger the simulation completion
+      if (import.meta.env.VITE_MOCK === 'true') {
+        simulateMockApproval(runId);
+        if (jdTextRef.current) {
+          finalAppId = logNewMockApplication(jdTextRef.current);
+        }
+      }
       
       // Update HITL status to done
       setSteps(prev => 
@@ -171,14 +191,12 @@ export function useAgentStream() {
         })
       );
 
-      // If mock, trigger the simulation completion
-      if (import.meta.env.VITE_MOCK === 'true') {
-        simulateMockApproval(runId);
-      }
+      return finalAppId;
     } else {
       setError("Failed to submit manual approval.");
+      return null;
     }
-  }, [runId]);
+  }, [runId, queryClient]);
 
   const reject = useCallback(async () => {
     if (!runId) return;

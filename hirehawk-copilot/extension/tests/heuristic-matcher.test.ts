@@ -21,8 +21,8 @@ describe("Heuristic ATS Naming Natcher", () => {
     expect(matchField(genericInput)).toBe("first_name");
   });
 
-  it("resolves correct field values based on candidate profile", () => {
-    const mockProfile = getProfile();
+  it("resolves correct field values based on candidate profile", async () => {
+    const mockProfile = await getProfile();
     const mockTailor = {
       tailored_bullets: [],
       cover_letter_paragraphs: ["Para 1", "Para 2", "Para 3"],
@@ -37,7 +37,7 @@ describe("Heuristic ATS Naming Natcher", () => {
     expect(resolveFieldValue("cover_letter", mockProfile, mockTailor)).toBe("Para 1\n\nPara 2\n\nPara 3");
   });
 
-  it("autofills forms successfully in JSDOM document", () => {
+  it("autofills forms successfully in JSDOM document", async () => {
     const container = document.createElement("div");
     
     const emailInput = document.createElement("input");
@@ -48,7 +48,7 @@ describe("Heuristic ATS Naming Natcher", () => {
     letterArea.name = "cover_letter";
     container.appendChild(letterArea);
 
-    const mockProfile = getProfile();
+    const mockProfile = await getProfile();
     const mockTailor = {
       tailored_bullets: [],
       cover_letter_paragraphs: ["p1", "p2", "p3"],

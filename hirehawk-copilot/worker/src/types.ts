@@ -36,4 +36,25 @@ export interface Env {
   SUPABASE_MOCK?: string;
   /** LangGraph FastAPI backend base URL, e.g. http://localhost:8000 */
   AGENT_BACKEND_URL?: string;
+  AZURE_DOC_INTEL_ENDPOINT?: string;
+  AZURE_DOC_INTEL_KEY?: string;
+  /** D1 Database for authentication */
+  DB: D1Database;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: 'recruiter' | 'manager' | 'candidate';
+  password_hash: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Session {
+  id: string;
+  user_id: string;
+  expires_at: string;
+  created_at: string;
 }

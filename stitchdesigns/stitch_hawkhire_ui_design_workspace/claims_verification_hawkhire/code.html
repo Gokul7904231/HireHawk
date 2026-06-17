@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NeuroHire | Claim Verification Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Geist:wght@600;700;800;900&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#ffe2b2",
+                    "inverse-surface": "#313030",
+                    "outline": "#7b7487",
+                    "error": "#ba1a1a",
+                    "primary-container": "#7c3aed",
+                    "surface-bright": "#fcf9f8",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#e3dfff",
+                    "secondary": "#5b598c",
+                    "on-secondary-fixed-variant": "#444173",
+                    "on-background": "#1c1b1b",
+                    "surface": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "on-surface-variant": "#4a4455",
+                    "tertiary-container": "#866000",
+                    "secondary-container": "#c7c3fe",
+                    "surface-container-low": "#f6f3f2",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "tertiary": "#674900",
+                    "surface-dim": "#dcd9d9",
+                    "primary-fixed": "#eaddff",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "on-tertiary-fixed": "#271900",
+                    "on-secondary-container": "#514f81",
+                    "surface-container": "#f0edec",
+                    "outline-variant": "#ccc3d8",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-variant": "#e5e2e1",
+                    "inverse-primary": "#d2bbff",
+                    "on-primary-fixed": "#25005a",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "tertiary-fixed": "#ffdea6",
+                    "on-secondary-fixed": "#181445",
+                    "on-primary-container": "#ede0ff",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-tint": "#732ee4",
+                    "on-primary": "#ffffff",
+                    "primary": "#630ed4",
+                    "on-surface": "#1c1b1b",
+                    "tertiary-fixed-dim": "#f7bd48",
+                    "surface-container-high": "#ebe7e7",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "margin-desktop": "40px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "stack-lg": "24px",
+                    "gutter": "24px",
+                    "container-max-width": "1440px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Geist"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "body-md": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-sm": ["Inter"],
+                    "display-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .soft-shadow {
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .modal-overlay {
+            background-color: rgba(28, 27, 27, 0.4);
+            backdrop-filter: blur(4px);
+        }
+        .violet-gradient {
+            background: linear-gradient(135deg, #7c3aed 0%, #630ed4 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Main Background Content (A Dashboard View for Context) -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<header class="bg-surface border-b border-outline-variant h-16 flex items-center px-margin-desktop justify-between">
+<div class="flex items-center gap-stack-md">
+<div class="w-8 h-8 violet-gradient rounded-lg flex items-center justify-center text-white font-black">NH</div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">NeuroHire</h1>
+</div>
+<div class="flex items-center gap-stack-lg">
+<div class="h-8 w-32 bg-surface-container rounded animate-pulse"></div>
+<div class="h-8 w-8 bg-surface-container rounded-full animate-pulse"></div>
+</div>
+</header>
+<main class="p-margin-desktop grid grid-cols-12 gap-gutter max-w-container-max-width mx-auto">
+<div class="col-span-8 space-y-stack-lg">
+<div class="h-64 w-full bg-white border border-outline-variant rounded-xl soft-shadow"></div>
+<div class="h-96 w-full bg-white border border-outline-variant rounded-xl soft-shadow"></div>
+</div>
+<div class="col-span-4 h-[600px] bg-secondary-container rounded-xl soft-shadow opacity-50"></div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-margin-mobile modal-overlay transition-opacity duration-300" id="claimsModal">
+<!-- Modal Container -->
+<div class="bg-surface-container-lowest w-full max-w-2xl max-h-[795px] rounded-xl soft-shadow border border-outline-variant flex flex-col relative overflow-hidden transform transition-all duration-300 scale-100 shadow-2xl">
+<!-- Modal Header -->
+<header class="px-stack-lg py-stack-md flex justify-between items-center border-b border-outline-variant bg-white">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Claim Verification Report</h2>
+</div>
+<button class="p-unit rounded-lg hover:bg-surface-container transition-colors text-on-surface-variant" onclick="document.getElementById('claimsModal').style.display='none'">
+<span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<!-- Summary Banner -->
+<div class="bg-emerald-50 px-stack-lg py-stack-md flex items-center gap-stack-md">
+<div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<p class="font-label-md text-emerald-800">Verification Success</p>
+<p class="font-body-sm text-emerald-700">any_unsupported_claims: <span class="font-code-sm">false</span> — All submitted professional credentials match external database records.</p>
+</div>
+</div>
+<!-- Modal Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-stack-lg space-y-stack-md bg-surface-bright">
+<!-- Claim Card 1 -->
+<div class="bg-white border border-outline-variant rounded-lg p-stack-md soft-shadow">
+<div class="flex justify-between items-start mb-unit">
+<p class="font-body-md text-on-surface flex-1 pr-stack-lg">"Led a cross-functional team of 15 engineers to deploy a multi-region Kubernetes cluster at GlobalTech."</p>
+<span class="px-stack-sm py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-label-md text-xs border border-emerald-200">Supported</span>
+</div>
+<p class="font-body-sm italic text-on-surface-variant mt-stack-sm border-l-2 border-outline-variant pl-stack-sm">
+                        Verified via LinkedIn API and GlobalTech corporate directory. Roles and team size match employment history between 2021-2023.
+                    </p>
+</div>
+<!-- Claim Card 2 -->
+<div class="bg-white border border-outline-variant rounded-lg p-stack-md soft-shadow">
+<div class="flex justify-between items-start mb-unit">
+<p class="font-body-md text-on-surface flex-1 pr-stack-lg">"Achieved AWS Certified Solutions Architect – Professional (SAP-C02) in early 2024."</p>
+<span class="px-stack-sm py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-label-md text-xs border border-emerald-200">Supported</span>
+</div>
+<p class="font-body-sm italic text-on-surface-variant mt-stack-sm border-l-2 border-outline-variant pl-stack-sm">
+                        Certification ID: 8XJ4L9M2K verified through Credly/AWS validation portal. Active until March 2027.
+                    </p>
+</div>
+<!-- Claim Card 3 (Neutral/Supported Example) -->
+<div class="bg-white border border-outline-variant rounded-lg p-stack-md soft-shadow">
+<div class="flex justify-between items-start mb-unit">
+<p class="font-body-md text-on-surface flex-1 pr-stack-lg">"Contributed over 50 commits to the Apache Spark open-source repository."</p>
+<span class="px-stack-sm py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-label-md text-xs border border-emerald-200">Supported</span>
+</div>
+<p class="font-body-sm italic text-on-surface-variant mt-stack-sm border-l-2 border-outline-variant pl-stack-sm">
+                        GitHub contribution graph analysis confirms 58 merged commits across three major sub-modules within the Apache foundation ecosystem.
+                    </p>
+</div>
+<!-- Fabricated Claim Example (Hidden or shown based on report state) -->
+<!-- 
+                <div class="bg-white border border-error-container rounded-lg p-stack-md soft-shadow">
+                    <div class="flex justify-between items-start mb-unit">
+                        <p class="font-body-md text-on-surface flex-1 pr-stack-lg">"Directly managed a budget of $5M USD for the AI Infrastructure project."</p>
+                        <span class="px-stack-sm py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-xs border border-error">Fabricated</span>
+                    </div>
+                    <p class="font-body-sm italic text-on-surface-variant mt-stack-sm border-l-2 border-error pl-stack-sm">
+                        Internal audit logs from Project AI indicate management by Sarah Jenkins. Candidate held "Lead Contributor" role with no fiscal sign-off authority.
+                    </p>
+                </div>
+                -->
+</div>
+<!-- Modal Footer -->
+<footer class="px-stack-lg py-stack-md border-t border-outline-variant bg-white flex justify-end gap-stack-md">
+<button class="px-stack-lg py-2 border border-outline-variant rounded-lg font-label-md text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-200" onclick="document.getElementById('claimsModal').style.display='none'">
+                    Close
+                </button>
+<button class="px-stack-lg py-2 violet-gradient text-white rounded-lg font-label-md shadow-sm hover:opacity-90 transition-all active:scale-95 duration-200 flex items-center gap-unit">
+<span class="material-symbols-outlined text-sm">download</span>
+                    Export PDF
+                </button>
+</footer>
+<!-- Atmospheric Subtle Detail -->
+<div class="absolute bottom-0 right-0 p-stack-sm opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+</div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        // Simple entry animation trigger
+        window.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('claimsModal');
+            const container = modal.querySelector('div');
+            
+            // Modal starts invisible
+            modal.classList.add('opacity-0');
+            container.classList.add('scale-95', 'translate-y-4');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                container.classList.remove('scale-95', 'translate-y-4');
+            }, 50);
+        });
+
+        // Close on clicking overlay
+        document.getElementById('claimsModal').addEventListener('click', (e) => {
+            if(e.target.id === 'claimsModal') {
+                document.getElementById('claimsModal').style.display = 'none';
+            }
+        });
+    </script>
+</body></html>

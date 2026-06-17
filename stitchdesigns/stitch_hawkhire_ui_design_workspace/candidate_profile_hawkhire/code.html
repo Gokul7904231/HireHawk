@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Candidate Settings - NeuroHire</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Geist:wght@600;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#ffe2b2",
+                    "inverse-surface": "#313030",
+                    "outline": "#7b7487",
+                    "error": "#ba1a1a",
+                    "primary-container": "#7c3aed",
+                    "surface-bright": "#fcf9f8",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#e3dfff",
+                    "secondary": "#5b598c",
+                    "on-secondary-fixed-variant": "#444173",
+                    "on-background": "#1c1b1b",
+                    "surface": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "on-surface-variant": "#4a4455",
+                    "tertiary-container": "#866000",
+                    "secondary-container": "#c7c3fe",
+                    "surface-container-low": "#f6f3f2",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "tertiary": "#674900",
+                    "surface-dim": "#dcd9d9",
+                    "primary-fixed": "#eaddff",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "on-tertiary-fixed": "#271900",
+                    "on-secondary-container": "#514f81",
+                    "surface-container": "#f0edec",
+                    "outline-variant": "#ccc3d8",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-variant": "#e5e2e1",
+                    "inverse-primary": "#d2bbff",
+                    "on-primary-fixed": "#25005a",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "tertiary-fixed": "#ffdea6",
+                    "on-secondary-fixed": "#181445",
+                    "on-primary-container": "#ede0ff",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-tint": "#732ee4",
+                    "on-primary": "#ffffff",
+                    "primary": "#630ed4",
+                    "on-surface": "#1c1b1b",
+                    "tertiary-fixed-dim": "#f7bd48",
+                    "surface-container-high": "#ebe7e7",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "margin-desktop": "40px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "stack-lg": "24px",
+                    "gutter": "24px",
+                    "container-max-width": "1440px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Geist"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "body-md": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-sm": ["Inter"],
+                    "display-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .json-key { color: #7c3aed; }
+        .json-string { color: #10b981; }
+        .json-number { color: #B8860B; }
+        .gradient-primary { background: linear-gradient(135deg, #7c3aed 0%, #630ed4 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar Navigation Shell -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max-width mx-auto h-16">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center text-white font-bold shadow-md">NH</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-inverse-primary tracking-tight">NeuroHire</h1>
+</div>
+<nav class="hidden md:flex gap-8">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors px-3 py-2 rounded-md font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors px-3 py-2 rounded-md font-label-md text-label-md" href="#">Applications</a>
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary px-3 py-2 font-label-md text-label-md" href="#">Candidates</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="hidden lg:inline-block font-label-md text-label-md text-on-surface-variant">All systems active</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Header Section -->
+<div class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-stack-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Candidate Settings</h2>
+<p class="font-body-md text-on-surface-variant opacity-80">JSON Editor &amp; Microservice Statuses</p>
+</div>
+<div class="flex gap-stack-sm">
+<button class="px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md bg-white hover:bg-surface-container transition-all">Export Baseline</button>
+<button class="px-4 py-2 gradient-primary text-white rounded-lg font-label-md text-label-md shadow-lg shadow-primary-container/20 hover:scale-[1.02] transition-transform">Save Changes</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- CANDIDATE BASELINE PROFILE Section -->
+<section class="lg:col-span-8 flex flex-col gap-stack-md">
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">data_object</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">CANDIDATE BASELINE PROFILE</h3>
+</div>
+<span class="text-code-sm font-code-sm text-on-surface-variant">candidate_id: NH-8829-X</span>
+</div>
+<div class="p-0 bg-[#F8F8F6] relative">
+<!-- JSON Editor Simulation -->
+<div class="font-code-sm text-code-sm p-6 custom-scrollbar overflow-x-auto min-h-[500px] leading-relaxed">
+<div class="flex gap-4">
+<div class="text-outline/40 select-none text-right w-6">
+                                    1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20
+                                </div>
+<div class="flex-1 whitespace-pre">
+{
+  <span class="json-key">"identity"</span>: {
+    <span class="json-key">"full_name"</span>: <span class="json-string">"Alexander Vance"</span>,
+    <span class="json-key">"role_target"</span>: <span class="json-string">"Principal Systems Architect"</span>,
+    <span class="json-key">"fit_score"</span>: <span class="json-number">98.4</span>
+  },
+  <span class="json-key">"agent_parameters"</span>: {
+    <span class="json-key">"autonomy_level"</span>: <span class="json-number">4</span>,
+    <span class="json-key">"voice_synthesis"</span>: <span class="json-string">"neural_deep_v2"</span>,
+    <span class="json-key">"priority_stack"</span>: [
+      <span class="json-string">"technical_prowess"</span>,
+      <span class="json-string">"leadership_history"</span>,
+      <span class="json-string">"cultural_velocity"</span>
+    ]
+  },
+  <span class="json-key">"metadata"</span>: {
+    <span class="json-key">"last_scanned"</span>: <span class="json-string">"2023-10-24T14:22:01Z"</span>,
+    <span class="json-key">"source"</span>: <span class="json-string">"direct_ingest"</span>,
+    <span class="json-key">"version"</span>: <span class="json-number">1.02</span>
+  }
+}</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 bg-white border-t border-outline-variant flex justify-end gap-stack-md">
+<button class="px-5 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors">Cancel</button>
+<button class="px-5 py-2 gradient-primary text-white font-label-md text-label-md rounded-lg shadow-md">Save Changes</button>
+</div>
+</div>
+</section>
+<!-- MCP SERVER CLUSTER Section -->
+<aside class="lg:col-span-4 flex flex-col gap-stack-md">
+<div class="bg-white border border-outline-variant rounded-xl shadow-[0_1px_4px_rgba(0,0,0,0.06)] h-fit">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">hub</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">MCP SERVER CLUSTER</h3>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" id="refresh-mcp">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">refresh</span>
+</button>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Server Row 1 -->
+<div class="px-6 py-4 flex items-center justify-between hover:bg-surface-container-lowest transition-colors">
+<div>
+<p class="font-bold text-on-surface">resume-mcp</p>
+<p class="text-body-sm text-on-surface-variant/70">NLP parsing &amp; entity extraction</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-green-50 text-emerald-700 rounded-full border border-emerald-100">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+</div>
+<!-- Server Row 2 -->
+<div class="px-6 py-4 flex items-center justify-between hover:bg-surface-container-lowest transition-colors">
+<div>
+<p class="font-bold text-on-surface">jd-parser-mcp</p>
+<p class="text-body-sm text-on-surface-variant/70">Requirements vectorization</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-green-50 text-emerald-700 rounded-full border border-emerald-100">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+</div>
+<!-- Server Row 3 -->
+<div class="px-6 py-4 flex items-center justify-between hover:bg-surface-container-lowest transition-colors">
+<div>
+<p class="font-bold text-on-surface">tracker-mcp</p>
+<p class="text-body-sm text-on-surface-variant/70">Real-time pipeline monitoring</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-green-50 text-emerald-700 rounded-full border border-emerald-100">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+</div>
+<!-- Server Row 4 -->
+<div class="px-6 py-4 flex items-center justify-between hover:bg-surface-container-lowest transition-colors">
+<div>
+<p class="font-bold text-on-surface">company-intel-mcp</p>
+<p class="text-body-sm text-on-surface-variant/70">Web-research agents</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-green-50 text-emerald-700 rounded-full border border-emerald-100">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+</div>
+<!-- Server Row 5 -->
+<div class="px-6 py-4 flex items-center justify-between hover:bg-surface-container-lowest transition-colors">
+<div>
+<p class="font-bold text-on-surface">outreach-mcp</p>
+<p class="text-body-sm text-on-surface-variant/70">Automated candidate comms</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-green-50 text-emerald-700 rounded-full border border-emerald-100">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Healthy</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Agent Status Insight (Brand Decoration) -->
+<div class="bg-[#1E1B4B] rounded-xl p-6 text-white overflow-hidden relative group">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary-container">psychology</span>
+<span class="font-label-md text-label-md opacity-70">AGENT INSIGHT</span>
+</div>
+<p class="font-body-md leading-relaxed text-slate-200">
+                            Neural processing for <span class="text-primary-container font-bold">Alexander Vance</span> is stable. Cluster latency is currently <span class="text-emerald-400 font-bold">14ms</span>.
+                        </p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[120px]">api</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-lg flex justify-around items-center px-margin-mobile py-2 z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-md text-[10px] mt-1">Apps</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-[10px] mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple Interaction: Refresh simulation
+        document.getElementById('refresh-mcp').addEventListener('click', function() {
+            const icon = this.querySelector('.material-symbols-outlined');
+            icon.classList.add('animate-spin');
+            setTimeout(() => {
+                icon.classList.remove('animate-spin');
+            }, 1000);
+        });
+
+        // JSON Hover Effect
+        const jsonLines = document.querySelectorAll('.json-key, .json-string, .json-number');
+        jsonLines.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.style.textShadow = '0 0 8px rgba(124, 58, 237, 0.2)';
+                el.style.transition = 'all 0.2s ease';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.textShadow = 'none';
+            });
+        });
+    </script>
+</body></html>

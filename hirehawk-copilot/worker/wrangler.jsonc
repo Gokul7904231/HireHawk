@@ -15,14 +15,24 @@
 		"nodejs_compat"
 	],
 	/**
+	 * D1 Database for user authentication
+	 */
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "hirehawk-auth",
+			"database_id": "4fd3ffdc-3174-42a7-955f-4f3fd23e2368"
+		}
+	],
+	/**
 	 * Environment Variables (non-secret, used in production)
 	 * Secrets (GEMINI_API_KEY, SUPABASE_KEY) are set via:
 	 *   npx wrangler secret put GEMINI_API_KEY
 	 *   npx wrangler secret put SUPABASE_KEY
 	 */
 	"vars": {
-		"GEMINI_MOCK": "false",
-		"SUPABASE_MOCK": "false"
+		"GEMINI_MOCK": "true",
+		"SUPABASE_MOCK": "true"
 	}
 	/**
 	 * To enable agentic backend, set AGENT_BACKEND_URL as a secret:

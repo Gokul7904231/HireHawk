@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, Mail, FileText, Send, Copy, Check, Download, AlertCircle, RefreshCw } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -26,8 +26,39 @@ export default function App() {
   const [currentView, setCurrentView] = useState<'dashboard' | 'app' | 'settings'>('dashboard');
   const [selectedAppId, setSelectedAppId] = useState<string | null>("6503e116-27c3-4647-b013-72c7736b608b");
 
+  // Validate session on mount
+  useEffect(() => {
+    const token = localStorage.getItem('hirehawk_auth_token');
+    if (token) {
+      import('./api/tracker').then(({ validateSession }) => {
+        validateSession(token)
+          .then((res) => {
+            if (res.valid) {
+              localStorage.setItem('hirehawk_user_email', res.user.email);
+              localStorage.setItem('hirehawk_user_name', res.user.name);
+              localStorage.setItem('hirehawk_user_role', res.user.role);
+            } else {
+              handleLogout();
+            }
+          })
+          .catch(() => {
+            handleLogout();
+          });
+      });
+    } else if (isAuthenticated) {
+      handleLogout();
+    }
+  }, []);
+
   const handleLogout = () => {
+    const token = localStorage.getItem('hirehawk_auth_token');
+    if (token) {
+      import('./api/tracker').then(({ logoutUser }) => {
+        logoutUser(token).catch(() => {});
+      });
+    }
     localStorage.removeItem('hirehawk_auth');
+    localStorage.removeItem('hirehawk_auth_token');
     localStorage.removeItem('hirehawk_user_email');
     localStorage.removeItem('hirehawk_user_name');
     localStorage.removeItem('hirehawk_user_role');

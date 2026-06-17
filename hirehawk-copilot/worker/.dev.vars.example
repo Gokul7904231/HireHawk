@@ -4,3 +4,5 @@ SUPABASE_KEY=your_supabase_anon_key_or_service_role_here
 GEMINI_MOCK=false
 SUPABASE_MOCK=false
 LOGO_DEV_TOKEN=optional_logo_dev_api_token
+AZURE_DOC_INTEL_ENDPOINT=https://your-resource.cognitiveservices.azure.com
+AZURE_DOC_INTEL_KEY=your_key_here

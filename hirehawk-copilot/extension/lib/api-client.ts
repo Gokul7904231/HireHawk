@@ -1,4 +1,4 @@
-export const WORKER_BASE_URL = "http://localhost:8787";
+export const WORKER_BASE_URL = "https://hirehawk-worker.hawkhire.workers.dev";
 
 export async function extractJobDescription(jdMarkdown: string): Promise<any> {
   const res = await fetch(`${WORKER_BASE_URL}/extract`, {
@@ -52,5 +52,23 @@ export async function saveTrackerDraft(appId: string, draftType: string, content
     body: JSON.stringify({ app_id: appId, draft_type: draftType, content })
   });
   if (!res.ok) throw new Error(`Tracker save draft error: ${await res.text()}`);
+  return await res.json();
+}
+
+export async function parseResume(resumeFile: File): Promise<any> {
+  const formData = new FormData();
+  formData.append("resume", resumeFile);
+  const res = await fetch(`${WORKER_BASE_URL}/parse-resume`, {
+    method: "POST",
+    body: formData
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    let errJson;
+    try {
+      errJson = JSON.parse(errText);
+    } catch(e) {}
+    throw new Error(errJson?.error || `Parse Resume API error: ${errText}`);
+  }
   return await res.json();
 }

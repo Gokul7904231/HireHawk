@@ -3,6 +3,17 @@ import { describe, test, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import LoginSignup from '../src/components/LoginSignup';
 
+vi.mock('../src/api/tracker', () => ({
+  loginUser: vi.fn().mockResolvedValue({
+    token: 'mock-token',
+    user: { email: 'candidate@hirehawk.ai', name: 'Demo Recruiter', role: 'recruiter' }
+  }),
+  signupUser: vi.fn().mockResolvedValue({
+    token: 'mock-token',
+    user: { email: 'candidate@hirehawk.ai', name: 'Demo Recruiter', role: 'recruiter' }
+  })
+}));
+
 describe('LoginSignup Component Tests', () => {
   test('renders login form by default and can toggle to signup form', () => {
     const handleLoginSuccess = vi.fn();

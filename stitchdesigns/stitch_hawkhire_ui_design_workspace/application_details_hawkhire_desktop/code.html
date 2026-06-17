@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Application Details | HawkHire</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&family=Geist:wght@400;600;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E5E5E5;
+        }
+        .agent-panel-gradient {
+            background: linear-gradient(180deg, #1E1B4B 0%, #111827 100%);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E2E1;
+            border-radius: 10px;
+        }
+        .circular-progress {
+            background: radial-gradient(closest-side, white 79%, transparent 80% 100%),
+                        conic-gradient(#B8860B 88%, #F0EDEC 0);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "surface": "#fcf9f8",
+                        "on-surface-variant": "#4a4455",
+                        "on-primary-container": "#ede0ff",
+                        "surface-variant": "#e5e2e1",
+                        "secondary": "#5b598c",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "tertiary-fixed": "#ffdea6",
+                        "outline-variant": "#ccc3d8",
+                        "background": "#fcf9f8",
+                        "surface-tint": "#732ee4",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fcf9f8",
+                        "on-tertiary-container": "#ffe2b2",
+                        "secondary-container": "#c7c3fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1c1b1b",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#dcd9d9",
+                        "secondary-fixed-dim": "#c4c1fb",
+                        "primary-container": "#7c3aed",
+                        "on-tertiary-fixed": "#271900",
+                        "on-background": "#1c1b1b",
+                        "surface-container-high": "#ebe7e7",
+                        "on-secondary-container": "#514f81",
+                        "surface-container-low": "#f6f3f2",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "inverse-primary": "#d2bbff",
+                        "tertiary": "#674900",
+                        "primary-fixed": "#eaddff",
+                        "primary": "#630ed4",
+                        "surface-container": "#f0edec",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#444173",
+                        "tertiary-fixed-dim": "#f7bd48",
+                        "on-primary-fixed": "#25005a",
+                        "surface-container-highest": "#e5e2e1",
+                        "secondary-fixed": "#e3dfff",
+                        "outline": "#7b7487",
+                        "inverse-surface": "#313030",
+                        "tertiary-container": "#866000",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-secondary-fixed": "#181445",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "container-max-width": "1440px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Geist"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden h-screen flex">
+<!-- SIDEBAR -->
+<aside class="w-[240px] h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-stack-lg px-stack-md z-50">
+<div class="mb-stack-lg px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">HawkHire</h1>
+<p class="font-label-md text-on-surface-variant text-[11px] uppercase tracking-widest mt-1">Recruitment Workspace</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md">Applications</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">group</span>
+<span class="font-label-md">Candidates</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">settings</span>
+<span class="font-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-3 bg-surface-container-low rounded-xl border border-outline-variant/30">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary font-bold">JD</div>
+<div>
+<p class="font-label-md text-xs font-bold">Jane Doe</p>
+<p class="text-[10px] text-on-surface-variant">Senior Recruiter</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-[240px] flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TOP APP BAR -->
+<header class="h-16 flex items-center justify-between px-margin-desktop bg-surface border-b border-outline-variant shadow-sm z-40">
+<div class="flex items-center gap-4">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 font-body-sm focus:ring-1 focus:ring-primary" placeholder="Search applications..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">help_outline</span>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img alt="Recruiter Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOc7uUt7FJ6UWDuFNqLkDOyk0ff8cHjA-aYmTnJKNJ7939bmotirrMLkXP07bD_s1yyQWJwqX_mz9IcIxQJzxiLX1gMNlRjLz5LAtzu8T15fsSP5Z3w2WS1aqjMi7N1PSdf7TD1_V2QvwydENlsFCLcHhQw8tMjVeuENH-PttUSJvvMQgEhYyqv9VYIj2-pdjBnLkAekwho2JNgdySL46VjKPYXxCrEZIKJrbd5LVmWueIAeiiU_llQNKFuWSoE8SwpJAv6kg1Th8"/>
+</div>
+</div>
+</header>
+<!-- CANVAS -->
+<div class="flex-1 overflow-y-auto bg-surface-container-lowest">
+<div class="max-w-[1440px] mx-auto px-margin-desktop py-stack-lg">
+<!-- Page Header -->
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface leading-tight">Stripe, Inc.</h2>
+<p class="font-body-md text-on-surface-variant">Senior Product Designer · San Francisco, CA</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-primary text-on-primary font-label-md px-6 py-2.5 pr-10 rounded-lg border-none cursor-pointer focus:ring-2 focus:ring-primary-fixed hover:brightness-110 transition-all">
+<option>In Review</option>
+<option>Interviewing</option>
+<option>Offer Sent</option>
+<option>Hired</option>
+<option>Rejected</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-primary pointer-events-none">expand_more</span>
+</div>
+<button class="p-2.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-gutter items-start">
+<!-- Left Column: Content -->
+<div class="space-y-gutter">
+<!-- Outreach Materials Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<div class="bg-white p-stack-md rounded-xl border border-outline-variant shadow-sm group hover:border-primary transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">open_in_new</span>
+</div>
+<h3 class="font-label-md text-on-surface mb-1">Cold Email</h3>
+<p class="text-xs text-on-surface-variant line-clamp-2">Optimized for high-open rates with personalized hooks...</p>
+</div>
+<div class="bg-white p-stack-md rounded-xl border border-outline-variant shadow-sm group hover:border-primary transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">open_in_new</span>
+</div>
+<h3 class="font-label-md text-on-surface mb-1">Cover Letter</h3>
+<p class="text-xs text-on-surface-variant line-clamp-2">Tailored narrative focusing on payment infrastructure...</p>
+</div>
+<div class="bg-white p-stack-md rounded-xl border border-outline-variant shadow-sm group hover:border-primary transition-all cursor-pointer">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">open_in_new</span>
+</div>
+<h3 class="font-label-md text-on-surface mb-1">LinkedIn Message</h3>
+<p class="text-xs text-on-surface-variant line-clamp-2">InMail variant targeting the Lead Design Recruiter...</p>
+</div>
+</div>
+<!-- Tailored Resume Bullets -->
+<div class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-stack-lg py-4 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-headline-sm text-on-surface">Tailored Resume Bullets</h3>
+<div class="flex gap-2">
+<span class="text-[10px] px-2 py-0.5 rounded bg-error/10 text-error font-bold uppercase tracking-wider">Original</span>
+<span class="text-[10px] px-2 py-0.5 rounded bg-green-100 text-green-700 font-bold uppercase tracking-wider">Agent Tailored</span>
+</div>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Diff Row -->
+<div class="p-stack-lg grid grid-cols-2 gap-stack-lg">
+<div class="bg-red-50/50 p-3 rounded border-l-4 border-error/20">
+<p class="text-body-sm text-on-surface-variant font-code-sm italic">"Designed UI components for various client projects using Figma and Sketch."</p>
+</div>
+<div class="bg-green-50/50 p-3 rounded border-l-4 border-green-500/20">
+<p class="text-body-sm text-on-surface font-code-sm">"Architected a scalable design system in Figma for high-frequency trading dashboards, increasing developer handoff speed by 40%."</p>
+</div>
+</div>
+<!-- Diff Row -->
+<div class="p-stack-lg grid grid-cols-2 gap-stack-lg">
+<div class="bg-red-50/50 p-3 rounded border-l-4 border-error/20">
+<p class="text-body-sm text-on-surface-variant font-code-sm italic">"Collaborated with engineers to ship new features monthly."</p>
+</div>
+<div class="bg-green-50/50 p-3 rounded border-l-4 border-green-500/20">
+<p class="text-body-sm text-on-surface font-code-sm">"Partnered with cross-functional engineering teams to deploy React-based fintech interfaces serving 1.2M active users."</p>
+</div>
+</div>
+<!-- Diff Row -->
+<div class="p-stack-lg grid grid-cols-2 gap-stack-lg">
+<div class="bg-red-50/50 p-3 rounded border-l-4 border-error/20">
+<p class="text-body-sm text-on-surface-variant font-code-sm italic">"Managed a small team of junior designers."</p>
+</div>
+<div class="bg-green-50/50 p-3 rounded border-l-4 border-green-500/20">
+<p class="text-body-sm text-on-surface font-code-sm">"Mentored 4 junior designers, establishing a rigorous peer-review process that reduced QA visual bugs by 25%."</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar -->
+<div class="space-y-gutter">
+<!-- Fit Score Card -->
+<div class="bg-white p-stack-lg rounded-xl border border-outline-variant shadow-sm text-center">
+<h3 class="font-label-md text-on-surface-variant mb-6 uppercase tracking-widest text-[11px]">AI Fit Score</h3>
+<div class="relative w-32 h-32 mx-auto mb-4">
+<div class="circular-progress w-full h-full rounded-full flex items-center justify-center">
+<div class="text-center">
+<span class="font-headline-lg text-on-surface">88</span>
+<span class="text-on-surface-variant text-sm">%</span>
+</div>
+</div>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(184,134,11,0.1)] text-[#B8860B] font-bold text-xs uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                                Excellent
+                            </div>
+<p class="mt-4 text-xs text-on-surface-variant leading-relaxed px-4">
+                                Matches 92% of core technical requirements and aligns with Stripe's "Design for Complexity" philosophy.
+                            </p>
+</div>
+<!-- Company Profile Card -->
+<div class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="h-24 relative">
+<img class="w-full h-full object-cover" data-alt="A modern office interior with floor-to-ceiling windows overlooking a sleek city skyline. The furniture is minimalist and high-end, utilizing a palette of soft whites and cool greys. Bright, natural light fills the space, creating an atmosphere of professional transparency and technological innovation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABT5ybNMzYC_Nba-9K4DZbHsUBrqNa973KIBV09aafLzs5DbcVoe7eCnti_fcutvLxTwpgwX6FJreP9UsUOF9Z6MPRHsgqzUyhJGtxZuB9WcRkQlhzNPVRgNoN-QgozcFXyD4rWIoztm6QGbGYOht5nLj23p1P1MetdrDjhxNpA36csZczwT7elz3Kn9iI6bELyBT_JSd1WZjZpggRzngmTcRz69QqwMQ06OoslbeOwS-qc9NSoNpRwsKfcPKrd-SsbPQsBtAklu8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-white/80 to-transparent"></div>
+<div class="absolute -bottom-6 left-6 w-12 h-12 bg-white rounded-lg border border-outline-variant p-2 flex items-center justify-center shadow-sm">
+<img alt="Stripe" class="w-full h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbEtqF-YwW_YDjk3FdqepIVArICVJO6C8MR2gJCqfyjyOyXk-3G8F2knUBiBnMEdUuBe9F4o_GcppGc5oBGYe7YVJ_qxTq_1Nqc9wR1S3x0HtFPXHDFeqGwmIWuHq_XssNqDE26E7BdBICWj0E0LSy_eJPsX2gfbT7GsFaGwiQGvz6UX_FoLhabSjLK4dkaxBncuHn6_wYYmKisCSRPARETTQb43KBdlRKa2vjSms8uT4DCu3lnXfaDawFqUvZZNQ-6XXt3NvlZjA"/>
+</div>
+</div>
+<div class="pt-10 px-6 pb-6">
+<h4 class="font-headline-sm text-on-surface mb-4">Stripe</h4>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Funding</p>
+<p class="text-sm font-bold">$9B (Series I)</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Size</p>
+<p class="text-sm font-bold">7,000+ Emp</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Industry</p>
+<p class="text-sm font-bold">Fintech</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">HQ</p>
+<p class="text-sm font-bold">Dublin / SF</p>
+</div>
+</div>
+<hr class="border-outline-variant mb-4"/>
+<h5 class="text-xs font-bold text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">newspaper</span>
+                                    Recent News
+                                </h5>
+<ul class="space-y-3">
+<li class="group cursor-pointer">
+<p class="text-xs text-on-surface group-hover:text-primary transition-colors line-clamp-2">Stripe expands global tax compliance suite for platforms.</p>
+<span class="text-[10px] text-on-surface-variant">2 days ago</span>
+</li>
+<li class="group cursor-pointer">
+<p class="text-xs text-on-surface group-hover:text-primary transition-colors line-clamp-2">New partnership with Amazon expands Stripe usage in EU.</p>
+<span class="text-[10px] text-on-surface-variant">1 week ago</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- AGENT PANEL (RIGHT DRAWER) -->
+<aside class="w-80 h-screen agent-panel-gradient border-l border-outline/30 flex flex-col z-50 transition-transform duration-300 transform translate-x-0">
+<div class="p-stack-lg border-b border-outline/20">
+<div class="flex items-center gap-3 text-white mb-2">
+<span class="material-symbols-outlined text-tertiary-fixed-dim animate-pulse">smart_toy</span>
+<h3 class="font-headline-sm">Hawk AI Agent</h3>
+</div>
+<p class="text-xs text-gray-400">Analyzing application for missing signals...</p>
+</div>
+<div class="flex-1 overflow-y-auto p-stack-lg space-y-6">
+<!-- AI Insight Card -->
+<div class="bg-white/5 border border-white/10 rounded-xl p-4">
+<h4 class="text-white text-xs font-bold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-tertiary-fixed">tips_and_updates</span>
+                    Recommended Next Action
+                </h4>
+<p class="text-gray-300 text-xs leading-relaxed mb-4">
+                    Send the "Design Philosophy" follow-up email. Stripe values "optimism" and "perseverance" in their design leadership.
+                </p>
+<button class="w-full bg-primary-container text-white py-2 rounded-lg text-xs font-bold hover:brightness-110 transition-all">
+                    Generate Draft
+                </button>
+</div>
+<!-- Signal Analysis -->
+<div>
+<h4 class="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-4">Strength Signals</h4>
+<div class="space-y-3">
+<div class="flex items-start gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5"></div>
+<p class="text-xs text-gray-300"><span class="text-white font-bold">Fintech Experience:</span> 4+ years at high-growth Series C startups.</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5"></div>
+<p class="text-xs text-gray-300"><span class="text-white font-bold">Technical Depth:</span> Mentions of React and scalable architecture.</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-yellow-500 mt-1.5"></div>
+<p class="text-xs text-gray-300"><span class="text-white font-bold">Network Signal:</span> 2 mutual connections at Stripe (Product Design).</p>
+</div>
+</div>
+</div>
+<!-- Agent Activity Feed -->
+<div>
+<h4 class="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-4">Agent Timeline</h4>
+<div class="space-y-4 relative before:content-[''] before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1px] before:bg-white/10">
+<div class="relative pl-6">
+<div class="absolute left-0 top-1 w-3.5 h-3.5 rounded-full bg-primary-container border-4 border-[#1E1B4B]"></div>
+<p class="text-[10px] text-gray-400">10:45 AM</p>
+<p class="text-xs text-white">Scanned job description updates.</p>
+</div>
+<div class="relative pl-6">
+<div class="absolute left-0 top-1 w-3.5 h-3.5 rounded-full bg-white/20 border-4 border-[#1E1B4B]"></div>
+<p class="text-[10px] text-gray-400">09:12 AM</p>
+<p class="text-xs text-gray-400">Matched resume keywords to Stripe's values.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-stack-lg mt-auto border-t border-white/10">
+<div class="relative">
+<input class="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-xs text-white focus:ring-1 focus:ring-primary-container pr-10" placeholder="Ask Hawk AI..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">send</span>
+</div>
+</div>
+</aside>
+<script>
+        // Simple micro-interaction for status dropdown
+        document.querySelector('select').addEventListener('change', function(e) {
+            const container = e.target.parentElement;
+            container.style.transform = 'scale(1.05)';
+            setTimeout(() => container.style.transform = 'scale(1)', 150);
+        });
+
+        // Toggle hover effect on bento cards
+        const cards = document.querySelectorAll('.bg-white.p-stack-md');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('shadow-md', '-translate-y-1');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('shadow-md', '-translate-y-1');
+            });
+        });
+    </script>
+</body></html>

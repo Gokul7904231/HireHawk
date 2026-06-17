@@ -1,4 +1,5 @@
 import profileData from "../fixtures/profile.json";
+import { loadProfile } from "./resume-storage";
 
 export interface Project {
   name: string;
@@ -25,6 +26,14 @@ export interface ProfileData {
   experience?: Experience[];
 }
 
-export function getProfile(): ProfileData {
+export async function getProfile(): Promise<any> {
+  try {
+    const profile = await loadProfile();
+    if (profile) {
+      return profile;
+    }
+  } catch (err) {
+    console.warn("Failed to load profile from chrome storage, falling back to fixture:", err);
+  }
   return profileData as ProfileData;
 }

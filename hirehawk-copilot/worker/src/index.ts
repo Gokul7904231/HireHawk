@@ -3,6 +3,8 @@ import { handleExtract } from "./routes/extract";
 import { handleTailor } from "./routes/tailor";
 import { handleCompanyIntel } from "./routes/company-intel";
 import { handleTracker } from "./routes/tracker";
+import { handleParseResume } from "./routes/parse-resume";
+import { handleAuth } from "./routes/auth";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -30,6 +32,10 @@ export default {
       response = await handleCompanyIntel(request, env);
     } else if (path.startsWith("/tracker")) {
       response = await handleTracker(request, env);
+    } else if (path.startsWith("/parse-resume")) {
+      response = await handleParseResume(request, env);
+    } else if (path.startsWith("/auth")) {
+      response = await handleAuth(request, env);
     } else {
       response = new Response(JSON.stringify({ error: "Not found" }), {
         status: 404,

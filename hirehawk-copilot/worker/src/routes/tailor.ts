@@ -58,34 +58,79 @@ export async function handleTailor(request: Request, env: Env): Promise<Response
         run_id = data.run_id;
       }
 
-      // Approve the HITL checkpoint (resume after breakpoint)
-      const approveRes = await fetch(`${backendUrl}/approve/${run_id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ approved: true })
-      });
-      if (!approveRes.ok) {
-        const errText = await approveRes.text();
-        return new Response(JSON.stringify({ error: `Backend /approve failed: ${errText}` }), {
-          status: 502,
-          headers: { "Content-Type": "application/json" }
-        });
-      }
-
-      // Pipe resuming SSE stream back to extension
+      // 2. Read SSE stream from FastAPI and extract tailored results
       const streamRes = await fetch(`${backendUrl}/stream/${run_id}`);
       if (!streamRes.ok || !streamRes.body) {
-        return new Response(JSON.stringify({ error: "Backend /stream failed after approve" }), {
+        return new Response(JSON.stringify({ error: "Backend /stream failed" }), {
           status: 502,
           headers: { "Content-Type": "application/json" }
         });
       }
 
-      return new Response(streamRes.body, {
+      const reader = streamRes.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      
+      let tailoredBullets: any[] = [];
+      let claimsTrace: any[] = [];
+      let outreachDraft: any = null;
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            try {
+              const parsed = JSON.parse(line.slice(6));
+              if (parsed.event === "node_complete" && parsed.node === "tailor_resume") {
+                tailoredBullets = parsed.data.tailored_bullets || [];
+                claimsTrace = parsed.data.claims_trace || parsed.data.claims || [];
+              }
+              if (parsed.event === "node_complete" && parsed.node === "write_outreach") {
+                outreachDraft = parsed.data.outreach_draft;
+              }
+              if (parsed.event === "hitl_paused" || parsed.event === "graph_complete") {
+                break;
+              }
+            } catch (e) {
+              // Ignore partial JSON
+            }
+          }
+        }
+        
+        if (tailoredBullets.length > 0 && outreachDraft) {
+          try {
+            await reader.cancel();
+          } catch(e) {}
+          break;
+        }
+      }
+
+      if (!outreachDraft) {
+        return new Response(JSON.stringify({ error: "Failed to extract tailored drafts from backend stream" }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      const result: TailorOutput = {
+        tailored_bullets: tailoredBullets,
+        cover_letter_paragraphs: outreachDraft.cover_letter_paragraphs || [],
+        cold_email: outreachDraft.cold_email || { subject: "", body: "" },
+        referral_message: outreachDraft.referral_message || "",
+        claims: claimsTrace,
+        any_unsupported_claims: claimsTrace.some((c: any) => !c.supported_by_baseline)
+      };
+
+      return new Response(JSON.stringify(result), {
         status: 200,
         headers: {
-          "Content-Type": "text/event-stream",
-          "Cache-Control": "no-cache",
+          "Content-Type": "application/json",
           "X-Run-Id": run_id
         }
       });

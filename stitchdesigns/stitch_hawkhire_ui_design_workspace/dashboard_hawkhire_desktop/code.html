@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HawkHire | Recruitment Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcf9f8;
+            color: #1c1b1b;
+        }
+        .font-headline { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .agent-gradient {
+            background: linear-gradient(135deg, #1E1B4B 0%, #2D2A6E 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ba1a1a",
+                        "surface": "#fcf9f8",
+                        "on-surface-variant": "#4a4455",
+                        "on-primary-container": "#ede0ff",
+                        "surface-variant": "#e5e2e1",
+                        "secondary": "#5b598c",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "tertiary-fixed": "#ffdea6",
+                        "outline-variant": "#ccc3d8",
+                        "background": "#fcf9f8",
+                        "surface-tint": "#732ee4",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fcf9f8",
+                        "on-tertiary-container": "#ffe2b2",
+                        "secondary-container": "#c7c3fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1c1b1b",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#dcd9d9",
+                        "secondary-fixed-dim": "#c4c1fb",
+                        "primary-container": "#7c3aed",
+                        "on-tertiary-fixed": "#271900",
+                        "on-background": "#1c1b1b",
+                        "surface-container-high": "#ebe7e7",
+                        "on-secondary-container": "#514f81",
+                        "surface-container-low": "#f6f3f2",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "inverse-primary": "#d2bbff",
+                        "tertiary": "#674900",
+                        "primary-fixed": "#eaddff",
+                        "primary": "#630ed4",
+                        "surface-container": "#f0edec",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#444173",
+                        "tertiary-fixed-dim": "#f7bd48",
+                        "on-primary-fixed": "#25005a",
+                        "surface-container-highest": "#e5e2e1",
+                        "secondary-fixed": "#e3dfff",
+                        "outline": "#7b7487",
+                        "inverse-surface": "#313030",
+                        "tertiary-container": "#866000",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-secondary-fixed": "#181445",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "container-max-width": "1440px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "stack-md": "16px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-md": ["Geist"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased overflow-hidden">
+<!-- SideNavBar Anchor -->
+<aside class="w-[240px] h-screen fixed left-0 top-0 bg-surface dark:bg-surface-dim border-r border-outline-variant dark:border-outline flex flex-col py-stack-lg px-stack-md z-50">
+<div class="mb-10 px-2 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">hail</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary leading-tight">HawkHire</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold">Recruitment Workspace</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-150 text-primary dark:text-primary-fixed-dim font-bold border-r-2 border-primary bg-surface-container/50" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-150 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body-md text-body-md">Applications</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-150 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md text-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 transition-colors duration-150 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-container transition-all cursor-pointer">
+<img alt="Recruiter Profile" class="w-10 h-10 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLzpY2TMvvQoXNFJjvVdx3MWFal2qkx5wd-R8Wcly6VecB2WrOvgRJJDYdUWmKsiO2n74bIWj01GI7tF5gZJHJq2_wUjYmOtEUf4jnXt6ZMZGeKTqrjQqZb1zAngw50vXbA4Us_hk1vCDHTuC2O1b2xav_CL5ar8CdqS5HnFV0lFVHHMqoZbEBGqk8I-JoNgUIQVVHEYaD-OHCjpGlbRwomUZLPbTyxXWZQG0_IVqiCaFdtEMHvyypgGc0sHEGUxJNFvTDzJRyS78"/>
+<div class="overflow-hidden">
+<p class="text-sm font-bold truncate">Alex Sterling</p>
+<p class="text-xs text-on-surface-variant truncate">Lead Recruiter</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopAppBar Anchor -->
+<header class="fixed top-0 left-[240px] right-0 h-16 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm flex items-center justify-between px-margin-desktop z-40">
+<div class="flex-1 flex items-center">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Search candidates, roles, or files..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<button class="bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                New Posting
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[240px] mt-16 p-margin-desktop h-[calc(100vh-64px)] overflow-y-auto custom-scrollbar">
+<div class="max-w-[1440px] mx-auto space-y-stack-lg">
+<!-- Header Section -->
+<div class="flex items-end justify-between">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Workspace Dashboard</h2>
+<p class="text-on-surface-variant font-body-md">Good morning, Alex. You have 12 follow-ups today.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 text-sm font-bold border border-outline-variant rounded-lg bg-white hover:bg-surface-container transition-all">Export Report</button>
+<button class="px-4 py-2 text-sm font-bold border border-outline-variant rounded-lg bg-white hover:bg-surface-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+                        Last 30 Days
+                    </button>
+</div>
+</div>
+<!-- Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Total Applications -->
+<div class="p-stack-md bg-white border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<span class="text-xs font-bold text-success flex items-center gap-1 text-green-600">
+<span class="material-symbols-outlined text-sm">trending_up</span> +12%
+                        </span>
+</div>
+<p class="text-on-surface-variant text-label-md font-medium">Total Applications</p>
+<h3 class="text-headline-lg font-headline-lg mt-1">1,284</h3>
+</div>
+<!-- Interviews Scheduled -->
+<div class="p-stack-md bg-white border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center text-green-700">
+<span class="material-symbols-outlined">event_available</span>
+</div>
+<span class="text-xs font-bold text-on-surface-variant">Active</span>
+</div>
+<p class="text-on-surface-variant text-label-md font-medium">Interviews Scheduled</p>
+<h3 class="text-headline-lg font-headline-lg mt-1">42</h3>
+</div>
+<!-- Avg Fit Score -->
+<div class="p-stack-md bg-white border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">stars</span>
+</div>
+<span class="text-xs font-bold text-tertiary">Global Avg</span>
+</div>
+<p class="text-on-surface-variant text-label-md font-medium">Avg Fit Score</p>
+<h3 class="text-headline-lg font-headline-lg mt-1">84%</h3>
+</div>
+<!-- Follow-ups Due -->
+<div class="p-stack-md bg-white border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700">
+<span class="material-symbols-outlined">notification_important</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container text-[10px] font-bold">Urgent</span>
+</div>
+<p class="text-on-surface-variant text-label-md font-medium">Follow-ups Due</p>
+<h3 class="text-headline-lg font-headline-lg mt-1">12</h3>
+</div>
+</div>
+<!-- Split Section: Tracker & Agent -->
+<div class="grid grid-cols-12 gap-gutter items-start">
+<!-- Left: Application Tracker (60%) -->
+<div class="col-span-12 lg:col-span-7 bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-stack-md border-b border-outline-variant flex items-center justify-between bg-surface-container-low/30">
+<h4 class="font-headline-sm text-headline-sm">Application Tracker</h4>
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl">filter_list</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl">sort</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/20">
+<th class="px-stack-md py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Company / Role</th>
+<th class="px-stack-md py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Fit Score</th>
+<th class="px-stack-md py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-stack-md py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Date</th>
+<th class="px-stack-md py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">S</div>
+<div>
+<p class="text-sm font-bold">Stripe</p>
+<p class="text-xs text-on-surface-variant">Senior UX Engineer</p>
+</div>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-24 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[92%] rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-tertiary">92%</span>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold">In Review</span>
+</td>
+<td class="px-stack-md py-4 text-xs text-on-surface-variant">Oct 24, 2023</td>
+<td class="px-stack-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">V</div>
+<div>
+<p class="text-sm font-bold">Vercel</p>
+<p class="text-xs text-on-surface-variant">Product Designer</p>
+</div>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-24 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[78%] rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-tertiary">78%</span>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<span class="px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold">Interview</span>
+</td>
+<td class="px-stack-md py-4 text-xs text-on-surface-variant">Oct 22, 2023</td>
+<td class="px-stack-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">F</div>
+<div>
+<p class="text-sm font-bold">Figma</p>
+<p class="text-xs text-on-surface-variant">Design Advocate</p>
+</div>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-24 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[85%] rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-tertiary">85%</span>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-[11px] font-bold">Applied</span>
+</td>
+<td class="px-stack-md py-4 text-xs text-on-surface-variant">Oct 20, 2023</td>
+<td class="px-stack-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">L</div>
+<div>
+<p class="text-sm font-bold">Linear</p>
+<p class="text-xs text-on-surface-variant">Growth Lead</p>
+</div>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 w-24 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[65%] rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-tertiary">65%</span>
+</div>
+</td>
+<td class="px-stack-md py-4">
+<span class="px-2.5 py-1 rounded-full bg-error-container text-on-error-container text-[11px] font-bold">Dropped</span>
+</td>
+<td class="px-stack-md py-4 text-xs text-on-surface-variant">Oct 18, 2023</td>
+<td class="px-stack-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-low/10">
+<p class="text-xs text-on-surface-variant">Showing 4 of 24 active applications</p>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right: Live Agent Panel (40%) -->
+<div class="col-span-12 lg:col-span-5 agent-gradient rounded-xl shadow-xl overflow-hidden flex flex-col h-full min-h-[600px] border border-white/10 relative">
+<!-- Atmospheric Effect -->
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+
+</div>
+<div class="p-stack-md border-b border-white/10 flex items-center justify-between relative z-10">
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined text-primary-fixed-dim text-2xl" data-weight="fill">smart_toy</span>
+<span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#1E1B4B] animate-pulse"></span>
+</div>
+<h4 class="font-headline-sm text-white">Agentic Sourcing</h4>
+</div>
+<div class="px-2 py-1 bg-white/10 rounded-md">
+<span class="text-[10px] text-primary-fixed-dim font-bold tracking-widest uppercase">Live Process</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col p-stack-md space-y-4 relative z-10">
+<!-- JD Input -->
+<div class="space-y-2">
+<label class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Job Description / Prompt</label>
+<textarea class="w-full h-32 bg-black/30 border border-white/10 rounded-lg p-3 text-sm text-gray-200 placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-primary-fixed-dim/50 resize-none custom-scrollbar" placeholder="Paste the JD here or type a sourcing prompt..."></textarea>
+</div>
+<!-- Run Button -->
+<button class="w-full py-3 bg-primary-container text-white font-bold rounded-lg hover:bg-primary transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20 group overflow-hidden relative" id="agentRunBtn">
+<span class="relative z-10 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" id="runIcon">play_arrow</span>
+<span id="runText">Execute Agent Workflow</span>
+</span>
+<div class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+</button>
+<!-- Execution Log -->
+<div class="flex-1 flex flex-col bg-black/40 border border-white/5 rounded-xl overflow-hidden">
+<div class="px-4 py-2 border-b border-white/5 bg-white/5 flex items-center justify-between">
+<span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Execution Log</span>
+<span class="text-[10px] font-code-sm text-gray-500">v2.4.1-stable</span>
+</div>
+<div class="p-4 flex-1 font-code-sm text-xs space-y-3 overflow-y-auto custom-scrollbar text-gray-400" id="logContent">
+<div class="flex gap-2">
+<span class="text-green-500">[08:42:01]</span>
+<span>System initialized. Waiting for prompt...</span>
+</div>
+<div class="flex gap-2 opacity-50">
+<span class="text-primary-fixed-dim">[--:--:--]</span>
+<span class="animate-pulse">_</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Info -->
+<div class="p-4 bg-black/20 text-center">
+<p class="text-[10px] text-gray-500 font-medium">Agent is connected to LinkedIn, GitHub, and Greenhouse APIs.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        const logContent = document.getElementById('logContent');
+        const runBtn = document.getElementById('agentRunBtn');
+        const runText = document.getElementById('runText');
+        const runIcon = document.getElementById('runIcon');
+
+        const logs = [
+            { time: "09:12:04", text: "Parsing Job Description... 8 key requirements identified.", color: "text-blue-400" },
+            { time: "09:12:06", text: "Initializing multi-channel search (LinkedIn, Indeed, GitHub).", color: "text-blue-400" },
+            { time: "09:12:12", text: "Analyzing 452 initial matches for core skills...", color: "text-amber-400" },
+            { time: "09:12:25", text: "Filtering by seniority and relocation preferences.", color: "text-amber-400" },
+            { time: "09:12:38", text: "Applying fit-score heuristic model v4.0.", color: "text-green-400" },
+            { time: "09:12:45", text: "3 high-probability candidates identified. Exporting to tracker...", color: "text-green-500 font-bold" }
+        ];
+
+        let logIndex = 0;
+        let isRunning = false;
+
+        function addLog(entry) {
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 opacity-0 translate-y-2 transition-all duration-300';
+            div.innerHTML = `
+                <span class="${entry.color}">[${entry.time}]</span>
+                <span class="text-gray-200">${entry.text}</span>
+            `;
+            logContent.appendChild(div);
+            
+            // Auto scroll
+            logContent.scrollTop = logContent.scrollHeight;
+            
+            // Trigger animation
+            setTimeout(() => {
+                div.classList.remove('opacity-0', 'translate-y-2');
+            }, 50);
+        }
+
+        runBtn.addEventListener('click', () => {
+            if (isRunning) return;
+            isRunning = true;
+            
+            runText.innerText = "Agent Running...";
+            runIcon.innerText = "settings_backup_restore";
+            runIcon.classList.add('animate-spin');
+            runBtn.classList.replace('bg-primary-container', 'bg-indigo-900');
+
+            const interval = setInterval(() => {
+                if (logIndex < logs.length) {
+                    addLog(logs[logIndex]);
+                    logIndex++;
+                } else {
+                    clearInterval(interval);
+                    isRunning = false;
+                    runText.innerText = "Workflow Complete";
+                    runIcon.innerText = "check_circle";
+                    runIcon.classList.remove('animate-spin');
+                    runBtn.classList.replace('bg-indigo-900', 'bg-green-600');
+                    
+                    setTimeout(() => {
+                        runText.innerText = "Execute Agent Workflow";
+                        runIcon.innerText = "play_arrow";
+                        runBtn.classList.replace('bg-green-600', 'bg-primary-container');
+                        logIndex = 0;
+                    }, 3000);
+                }
+            }, 1200);
+        });
+    </script>
+</body></html>

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { getProfile, ProfileData } from "../../lib/profile";
+import { useState, useEffect, useRef } from "react";
+import { getProfile } from "../../lib/profile";
 import { cacheGet, cacheSet, TailorOutput } from "../../lib/vector-cache";
 import { extractMarkdown } from "../../lib/dom-extractor";
 import {
@@ -7,8 +7,10 @@ import {
   tailorApplication,
   fetchCompanyIntel,
   addTrackerApplication,
-  saveTrackerDraft
+  saveTrackerDraft,
+  parseResume
 } from "../../lib/api-client";
+import { saveProfile, loadProfileMeta, ProfileMeta } from "../../lib/resume-storage";
 import { autofillForm } from "../../lib/heuristic-matcher";
 import { generateResumeHtml } from "../../lib/resume-render";
 import "./App.css";
@@ -16,10 +18,22 @@ import "./App.css";
 type StatusState = "idle" | "extracting" | "tailoring" | "loading_intel" | "ready" | "error";
 
 function App() {
+  const [view, setView] = useState<"dashboard" | "profile">("dashboard");
   const [status, setStatus] = useState<StatusState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const [profileMeta, setProfileMeta] = useState<ProfileMeta | null>(null);
   
+  // JSON Editor states
+  const [jsonText, setJsonText] = useState("");
+  const [editorError, setEditorError] = useState("");
+  const [editorSuccess, setEditorSuccess] = useState("");
+
+  // Re-upload states
+  const [isReuploading, setIsReuploading] = useState(false);
+  const [reuploadError, setReuploadError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // Data states
   const [jdSignals, setJdSignals] = useState<any>(null);
   const [companyIntel, setCompanyIntel] = useState<any>(null);
@@ -31,12 +45,21 @@ function App() {
 
   useEffect(() => {
     // Load local candidate profile on start
-    try {
-      const p = getProfile();
-      setProfile(p);
-    } catch (err: any) {
-      console.error("Failed to load profile:", err);
-    }
+    const loadData = async () => {
+      try {
+        const p = await getProfile();
+        setProfile(p);
+        if (p) {
+          setJsonText(JSON.stringify(p, null, 2));
+        }
+        
+        const m = await loadProfileMeta();
+        setProfileMeta(m);
+      } catch (err: any) {
+        console.error("Failed to load profile:", err);
+      }
+    };
+    loadData();
   }, []);
 
   const runPipeline = async () => {
@@ -179,11 +202,11 @@ function App() {
                   case "last_name": return prof.name.split(" ")[1] || "Kumar";
                   case "full_name": return prof.name;
                   case "email": return prof.email;
-                  case "phone": return "+91 98765 43210";
-                  case "linkedin": return "https://linkedin.com/in/gokul-developer";
+                  case "phone": return prof.phone || "+91 7904231738";
+                  case "linkedin": return prof.linkedin || "linkedin.com/in/gokul1234";
                   case "github": return prof.github;
                   case "cover_letter": return tail.cover_letter_paragraphs.join("\n\n");
-                  case "location": return "Chennai, India";
+                  case "location": return prof.location || "Chennai, India";
                   case "experience_years": return "2";
                   default: return "";
                 }
@@ -255,208 +278,384 @@ function App() {
     }
   };
 
+  // Profile view functions
+  const handleSaveJson = async () => {
+    setEditorError("");
+    setEditorSuccess("");
+    try {
+      const parsed = JSON.parse(jsonText);
+      if (!parsed.name) {
+        setEditorError("Profile name is required.");
+        return;
+      }
+      
+      const currentMeta = profileMeta || {
+        uploaded_at: new Date().toLocaleDateString(),
+        filename: "manual_edit.json",
+        confidence: "high",
+        missing_fields: []
+      };
+
+      await saveProfile(parsed, currentMeta);
+      setProfile(parsed);
+      setEditorSuccess("Changes saved successfully to storage!");
+    } catch (err: any) {
+      setEditorError("Invalid JSON format: " + err.message);
+    }
+  };
+
+  const handleReuploadTrigger = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleReuploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.type !== "application/pdf") {
+        setReuploadError("Please select a PDF file.");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setReuploadError("PDF exceeds 5MB limit.");
+        return;
+      }
+
+      setIsReuploading(true);
+      setReuploadError("");
+      
+      try {
+        const res = await parseResume(file);
+        
+        const newMeta: ProfileMeta = {
+          uploaded_at: new Date().toLocaleDateString(),
+          filename: file.name,
+          confidence: res.confidence,
+          missing_fields: res.missing_fields
+        };
+
+        await saveProfile(res.parsed_profile, newMeta);
+        
+        setProfile(res.parsed_profile);
+        setProfileMeta(newMeta);
+        setJsonText(JSON.stringify(res.parsed_profile, null, 2));
+        setEditorSuccess("Resume parsed and saved successfully!");
+      } catch (err: any) {
+        setReuploadError(err.message || "Failed to parse resume.");
+      } finally {
+        setIsReuploading(false);
+      }
+    }
+  };
+
+  const handleUploadClick = () => {
+    if (typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create) {
+      chrome.tabs.create({ url: chrome.runtime.getURL("/entrypoints/onboarding/index.html") });
+      window.close();
+    } else {
+      window.location.href = "../onboarding/index.html";
+    }
+  };
+
   return (
     <div className="hirehawk-app">
       <header className="app-header">
-        <h1 className="header-title">HireHawk Copilot</h1>
-        <span className="header-subtitle">Intelligent Candidate Helper</span>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div>
+            <h1 className="header-title">HireHawk Copilot</h1>
+            <span className="header-subtitle">Intelligent Candidate Helper</span>
+          </div>
+          <div className="view-selector-tabs">
+            <button
+              className={`view-tab-btn ${view === "dashboard" ? "active" : ""}`}
+              onClick={() => setView("dashboard")}
+            >
+              Dashboard
+            </button>
+            <button
+              className={`view-tab-btn ${view === "profile" ? "active" : ""}`}
+              onClick={() => setView("profile")}
+            >
+              Profile
+            </button>
+          </div>
+        </div>
       </header>
 
       <main className="app-body">
-        {status === "idle" && (
-          <div className="panel center">
-            <p className="description">
-              Analyze the active job posting page to extract skills, perform semantic matching,
-              adjudicate credentials, and draft tailored communications.
-            </p>
-            <button className="btn btn-primary btn-large" onClick={runPipeline}>
-              Analyze Job Posting
-            </button>
-          </div>
-        )}
-
-        {(status === "extracting" || status === "tailoring" || status === "loading_intel") && (
-          <div className="panel center loader-panel">
-            <div className="spinner"></div>
-            <p className="loader-text">
-              {status === "extracting" && "Scraping page & parsing signals..."}
-              {status === "tailoring" && "Tailoring experience bullets & claims trace..."}
-              {status === "loading_intel" && "Aggregating company intelligence..."}
-            </p>
-          </div>
-        )}
-
-        {status === "error" && (
-          <div className="panel error-panel">
-            <h3>Analysis Failed</h3>
-            <p className="error-msg">{errorMessage}</p>
-            <button className="btn btn-primary" onClick={runPipeline}>
-              Retry Analysis
-            </button>
-          </div>
-        )}
-
-        {status === "ready" && jdSignals && tailorResult && (
-          <div className="results-container">
-            {cacheHit && (
-              <div className="badge badge-cache">
-                ⚡ Semantic Cache Hit (&gt;0.95 similarity)
+        {view === "dashboard" ? (
+          /* Dashboard Job Analyzer View */
+          <div>
+            {status === "idle" && (
+              <div className="panel center">
+                <p className="description">
+                  Analyze the active job posting page to extract skills, perform semantic matching,
+                  adjudicate credentials, and draft tailored communications.
+                </p>
+                <button className="btn btn-primary btn-large" onClick={runPipeline}>
+                  Analyze Job Posting
+                </button>
               </div>
             )}
 
-            {/* Panel 1: Signals & Company Intel */}
-            <div className="panel-row">
-              <div className="panel card-signals">
-                <div className="card-header-row">
-                  {companyIntel?.logo_url && (
-                    <img
-                      src={companyIntel.logo_url}
-                      alt={`${jdSignals.company_name} logo`}
-                      className="company-logo"
-                      onError={(e) => {
-                        (e.target as HTMLElement).style.display = "none";
-                      }}
-                    />
-                  )}
-                  <div>
-                    <h2 className="title-large">{jdSignals.role_title}</h2>
-                    <h3 className="title-medium">{jdSignals.company_name}</h3>
-                  </div>
-                </div>
-
-                <div className="meta-tags">
-                  <span className="tag">Level: {jdSignals.seniority}</span>
-                  <span className="tag">Domain: {jdSignals.domain}</span>
-                  <span className="tag">Workmode: {jdSignals.remote_status}</span>
-                  {jdSignals.location && <span className="tag">HQ: {jdSignals.location}</span>}
-                </div>
-
-                <div className="skills-group">
-                  <div className="skills-label">Required:</div>
-                  <div className="skills-list">
-                    {jdSignals.required_skills.map((s: string, idx: number) => (
-                      <span key={idx} className="skill-badge skill-req">{s}</span>
-                    ))}
-                  </div>
-                </div>
+            {(status === "extracting" || status === "tailoring" || status === "loading_intel") && (
+              <div className="panel center loader-panel">
+                <div className="spinner"></div>
+                <p className="loader-text">
+                  {status === "extracting" && "Scraping page & parsing signals..."}
+                  {status === "tailoring" && "Tailoring experience bullets & claims trace..."}
+                  {status === "loading_intel" && "Aggregating company intelligence..."}
+                </p>
               </div>
+            )}
 
-              {companyIntel && (
-                <div className="panel card-intel">
-                  <h3 className="section-header">Company Intel</h3>
-                  <div className="intel-info">
-                    <p><strong>HQ:</strong> {companyIntel.hq_location || "Unknown"}</p>
-                    <p><strong>Founding Year:</strong> {companyIntel.founding_year || "Unknown"}</p>
-                    <p><strong>Industry:</strong> {companyIntel.industry || "Unknown"}</p>
+            {status === "error" && (
+              <div className="panel error-panel">
+                <h3>Analysis Failed</h3>
+                <p className="error-msg">{errorMessage}</p>
+                <button className="btn btn-primary" onClick={runPipeline}>
+                  Retry Analysis
+                </button>
+              </div>
+            )}
+
+            {status === "ready" && jdSignals && tailorResult && (
+              <div className="results-container">
+                {cacheHit && (
+                  <div className="badge badge-cache">
+                    ⚡ Semantic Cache Hit (&gt;0.95 similarity)
                   </div>
-                  {companyIntel.recent_news?.length > 0 && (
-                    <div className="recent-news-section">
-                      <h4 className="news-header-title">Recent News</h4>
-                      {companyIntel.recent_news.slice(0, 2).map((item: any, idx: number) => (
-                        <div key={idx} className="news-item">
-                          <a href={item.url} target="_blank" className="news-link">{item.title}</a>
-                          <span className="news-source"> — {item.source}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+                )}
 
-            {/* Panel 2: Tailored Bullets */}
-            <div className="panel">
-              <h3 className="section-header">Tailored Resume Bullets</h3>
-              <ul className="tailored-bullets-list">
-                {tailorResult.tailored_bullets.map((b, idx) => (
-                  <li key={idx}>
-                    <strong>{b.project_or_role}:</strong> {b.bullet}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Panel 3: Fact-Check Trace Adjudication Display */}
-            <div className="panel">
-              <h3 className="section-header">Gemini Fact-Check Adjudication Trace</h3>
-              <div className="claims-list">
-                {tailorResult.claims.map((claim, idx) => (
-                  <div key={idx} className={`claim-card ${claim.supported_by_baseline ? "claim-supported" : "claim-unsupported"}`}>
-                    <div className="claim-icon-row">
-                      <span className="claim-icon">
-                        {claim.supported_by_baseline ? "✔️" : "⚠️"}
-                      </span>
+                {/* Panel 1: Signals & Company Intel */}
+                <div className="panel-row">
+                  <div className="panel card-signals">
+                    <div className="card-header-row">
+                      {companyIntel?.logo_url && (
+                        <img
+                          src={companyIntel.logo_url}
+                          alt={`${jdSignals.company_name} logo`}
+                          className="company-logo"
+                          onError={(e) => {
+                            (e.target as HTMLElement).style.display = "none";
+                          }}
+                        />
+                      )}
                       <div>
-                        <p className="claim-text"><strong>Claim:</strong> "{claim.claim}"</p>
-                        <p className="claim-reason"><strong>Reasoning:</strong> {claim.reasoning}</p>
-                        {!claim.supported_by_baseline && (
-                          <span className="badge badge-rewrite">
-                            F1 Hallucination corrected: original bullet rewritten to baseline facts
-                          </span>
-                        )}
+                        <h2 className="title-large">{jdSignals.role_title}</h2>
+                        <h3 className="title-medium">{jdSignals.company_name}</h3>
+                      </div>
+                    </div>
+
+                    <div className="meta-tags">
+                      <span className="tag">Level: {jdSignals.seniority}</span>
+                      <span className="tag">Domain: {jdSignals.domain}</span>
+                      <span className="tag">Workmode: {jdSignals.remote_status}</span>
+                      {jdSignals.location && <span className="tag">HQ: {jdSignals.location}</span>}
+                    </div>
+
+                    <div className="skills-group">
+                      <div className="skills-label">Required:</div>
+                      <div className="skills-list">
+                        {jdSignals.required_skills.map((s: string, idx: number) => (
+                          <span key={idx} className="skill-badge skill-req">{s}</span>
+                        ))}
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Panel 4: Tabbed Outreach drafts */}
-            <div className="panel">
-              <div className="tabs-header">
-                <button
-                  className={`tab-btn ${activeTab === "email" ? "active" : ""}`}
-                  onClick={() => setActiveTab("email")}
-                >
-                  Cold Email
-                </button>
-                <button
-                  className={`tab-btn ${activeTab === "referral" ? "active" : ""}`}
-                  onClick={() => setActiveTab("referral")}
-                >
-                  Referral Message
-                </button>
-                <button
-                  className={`tab-btn ${activeTab === "letter" ? "active" : ""}`}
-                  onClick={() => setActiveTab("letter")}
-                >
-                  Cover Letter
-                </button>
-              </div>
+                  {companyIntel && (
+                    <div className="panel card-intel">
+                      <h3 className="section-header">Company Intel</h3>
+                      <div className="intel-info">
+                        <p><strong>HQ:</strong> {companyIntel.hq_location || "Unknown"}</p>
+                        <p><strong>Founding Year:</strong> {companyIntel.founding_year || "Unknown"}</p>
+                        <p><strong>Industry:</strong> {companyIntel.industry || "Unknown"}</p>
+                      </div>
+                      {companyIntel.recent_news?.length > 0 && (
+                        <div className="recent-news-section">
+                          <h4 className="news-header-title">Recent News</h4>
+                          {companyIntel.recent_news.slice(0, 2).map((item: any, idx: number) => (
+                            <div key={idx} className="news-item">
+                              <a href={item.url} target="_blank" className="news-link">{item.title}</a>
+                              <span className="news-source"> — {item.source}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
-              <div className="tab-content">
-                {activeTab === "email" && (
-                  <div>
-                    <p><strong>Subject:</strong> {tailorResult.cold_email.subject}</p>
-                    <pre className="draft-preview">{tailorResult.cold_email.body}</pre>
-                  </div>
-                )}
-                {activeTab === "referral" && (
-                  <pre className="draft-preview">{tailorResult.referral_message}</pre>
-                )}
-                {activeTab === "letter" && (
-                  <div className="letter-preview">
-                    {tailorResult.cover_letter_paragraphs.map((p, idx) => (
-                      <p key={idx}>{p}</p>
+                {/* Panel 2: Tailored Bullets */}
+                <div className="panel">
+                  <h3 className="section-header">Tailored Resume Bullets</h3>
+                  <ul className="tailored-bullets-list">
+                    {tailorResult.tailored_bullets.map((b, idx) => (
+                      <li key={idx}>
+                        <strong>{b.project_or_role}:</strong> {b.bullet}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Panel 3: Fact-Check Trace Adjudication Display */}
+                <div className="panel">
+                  <h3 className="section-header">Gemini Fact-Check Adjudication Trace</h3>
+                  <div className="claims-list">
+                    {tailorResult.claims.map((claim, idx) => (
+                      <div key={idx} className={`claim-card ${claim.supported_by_baseline ? "claim-supported" : "claim-unsupported"}`}>
+                        <div className="claim-icon-row">
+                          <span className="claim-icon">
+                            {claim.supported_by_baseline ? "✔️" : "⚠️"}
+                          </span>
+                          <div>
+                            <p className="claim-text"><strong>Claim:</strong> "{claim.claim}"</p>
+                            <p className="claim-reason"><strong>Reasoning:</strong> {claim.reasoning}</p>
+                            {!claim.supported_by_baseline && (
+                              <span className="badge badge-rewrite">
+                                F1 Hallucination corrected: original bullet rewritten to baseline facts
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
-                )}
+                </div>
+
+                {/* Panel 4: Tabbed Outreach drafts */}
+                <div className="panel">
+                  <div className="tabs-header">
+                    <button
+                      className={`tab-btn ${activeTab === "email" ? "active" : ""}`}
+                      onClick={() => setActiveTab("email")}
+                    >
+                      Cold Email
+                    </button>
+                    <button
+                      className={`tab-btn ${activeTab === "referral" ? "active" : ""}`}
+                      onClick={() => setActiveTab("referral")}
+                    >
+                      Referral Message
+                    </button>
+                    <button
+                      className={`tab-btn ${activeTab === "letter" ? "active" : ""}`}
+                      onClick={() => setActiveTab("letter")}
+                    >
+                      Cover Letter
+                    </button>
+                  </div>
+
+                  <div className="tab-content">
+                    {activeTab === "email" && (
+                      <div>
+                        <p><strong>Subject:</strong> {tailorResult.cold_email.subject}</p>
+                        <pre className="draft-preview">{tailorResult.cold_email.body}</pre>
+                      </div>
+                    )}
+                    {activeTab === "referral" && (
+                      <pre className="draft-preview">{tailorResult.referral_message}</pre>
+                    )}
+                    {activeTab === "letter" && (
+                      <div className="letter-preview">
+                        {tailorResult.cover_letter_paragraphs.map((p, idx) => (
+                          <p key={idx}>{p}</p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Panel 5: Actions */}
+                <div className="actions-panel">
+                  <button className="btn btn-primary" onClick={handleAutofill}>
+                    Fill Form
+                  </button>
+                  <button className="btn btn-secondary" onClick={handleDownloadResume}>
+                    Download Resume PDF
+                  </button>
+                  <button className="btn btn-secondary" onClick={handleLogApplication} disabled={trackerLogged}>
+                    {trackerLogged ? "Logged ✔️" : "Log Application"}
+                  </button>
+                </div>
+                {trackerStatus && <div className="tracker-status">{trackerStatus}</div>}
               </div>
+            )}
+          </div>
+        ) : (
+          /* Candidate Profile Settings View */
+          <div className="candidate-profile-settings">
+            <h3 className="section-header">Candidate Profile Ground Truth</h3>
+            
+            {/* CURRENT RESUME Section */}
+            <div className="settings-resume-section">
+              {profileMeta ? (
+                <div className="resume-banner resume-banner-green">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div>
+                      <span className="banner-title">✓ Resume uploaded</span>
+                      <div className="banner-meta">
+                        <span className="file-tag">{profileMeta.filename}</span>
+                        <span className="date-tag"> · {profileMeta.uploaded_at}</span>
+                      </div>
+                    </div>
+                    <span className={`confidence-badge conf-${profileMeta.confidence}`}>
+                      Confidence: {profileMeta.confidence}
+                    </span>
+                  </div>
+                  
+                  <div style={{ marginTop: 12 }}>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
+                      accept=".pdf"
+                      onChange={handleReuploadFile}
+                    />
+                    <button
+                      className="btn btn-secondary btn-small"
+                      onClick={handleReuploadTrigger}
+                      disabled={isReuploading}
+                    >
+                      {isReuploading ? "Parsing..." : "Re-upload Resume"}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="resume-banner resume-banner-amber">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span className="banner-title">⚠ No resume uploaded yet</span>
+                    <button className="btn btn-primary btn-small" onClick={handleUploadClick}>
+                      Upload Resume
+                    </button>
+                  </div>
+                </div>
+              )}
+              {reuploadError && <p className="settings-error-msg">{reuploadError}</p>}
             </div>
 
-            {/* Panel 5: Actions */}
-            <div className="actions-panel">
-              <button className="btn btn-primary" onClick={handleAutofill}>
-                Fill Form
-              </button>
-              <button className="btn btn-secondary" onClick={handleDownloadResume}>
-                Download Resume PDF
-              </button>
-              <button className="btn btn-secondary" onClick={handleLogApplication} disabled={trackerLogged}>
-                {trackerLogged ? "Logged ✔️" : "Log Application"}
-              </button>
+            {/* JSON EDITOR Section */}
+            <div className="settings-editor-section" style={{ marginTop: 20 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                <label className="form-label" style={{ fontWeight: 600 }}>Edit Candidate Profile JSON</label>
+                <span className="form-label" style={{ fontSize: 10, opacity: 0.7 }}>Saves to chrome.storage.local</span>
+              </div>
+              <textarea
+                className="json-editor-textarea"
+                value={jsonText}
+                onChange={(e) => setJsonText(e.target.value)}
+                rows={14}
+              />
+              
+              {editorError && <p className="settings-error-msg">{editorError}</p>}
+              {editorSuccess && <p className="settings-success-msg">{editorSuccess}</p>}
+              
+              <div style={{ marginTop: 12 }}>
+                <button className="btn btn-primary" onClick={handleSaveJson}>
+                  Save Changes
+                </button>
+              </div>
             </div>
-            {trackerStatus && <div className="tracker-status">{trackerStatus}</div>}
           </div>
         )}
       </main>

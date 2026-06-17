@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, Eye, EyeOff, Sparkles, AlertCircle, ShieldCheck } from 'lucide-react';
+import { loginUser, signupUser } from '../api/tracker';
 
 interface LoginSignupProps {
   onLoginSuccess: (email: string) => void;
@@ -48,7 +49,7 @@ export default function LoginSignup({ onLoginSuccess }: LoginSignupProps) {
     return true;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -56,22 +57,32 @@ export default function LoginSignup({ onLoginSuccess }: LoginSignupProps) {
 
     setLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      let data;
+      if (isLogin) {
+        data = await loginUser(email, password);
+      } else {
+        data = await signupUser({ email, password, name, role });
+      }
+
       setLoading(false);
       setSuccess(true);
       
-      // Store in localStorage
+      // Store in localStorage for session state persistence
       localStorage.setItem('hirehawk_auth', 'true');
-      localStorage.setItem('hirehawk_user_email', email);
-      localStorage.setItem('hirehawk_user_name', isLogin ? 'Demo Recruiter' : name);
-      localStorage.setItem('hirehawk_user_role', role);
+      localStorage.setItem('hirehawk_auth_token', data.token);
+      localStorage.setItem('hirehawk_user_email', data.user.email);
+      localStorage.setItem('hirehawk_user_name', data.user.name);
+      localStorage.setItem('hirehawk_user_role', data.user.role);
 
       // Trigger login success transition
       setTimeout(() => {
-        onLoginSuccess(email);
+        onLoginSuccess(data.user.email);
       }, 1200);
-    }, 1500);
+    } catch (err: any) {
+      setLoading(false);
+      setError(err.message || 'Authentication failed. Please verify your credentials.');
+    }
   };
 
   const handleSocialLogin = (provider: string) => {

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Application Details | NeuroHire</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Geist:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid #E5E5E5;
+        }
+        .agent-panel-dark {
+            background-color: #1E1B4B;
+        }
+        .violet-gradient {
+            background: linear-gradient(135deg, #7c3aed 0%, #630ed4 100%);
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        @keyframes subtle-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .animate-float {
+            animation: subtle-float 4s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#ffe2b2",
+                      "inverse-surface": "#313030",
+                      "outline": "#7b7487",
+                      "error": "#ba1a1a",
+                      "primary-container": "#7c3aed",
+                      "surface-bright": "#fcf9f8",
+                      "on-error-container": "#93000a",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed": "#e3dfff",
+                      "secondary": "#5b598c",
+                      "on-secondary-fixed-variant": "#444173",
+                      "on-background": "#1c1b1b",
+                      "surface": "#fcf9f8",
+                      "background": "#fcf9f8",
+                      "on-surface-variant": "#4a4455",
+                      "tertiary-container": "#866000",
+                      "secondary-container": "#c7c3fe",
+                      "surface-container-low": "#f6f3f2",
+                      "on-tertiary-fixed-variant": "#5d4200",
+                      "tertiary": "#674900",
+                      "surface-dim": "#dcd9d9",
+                      "primary-fixed": "#eaddff",
+                      "secondary-fixed-dim": "#c4c1fb",
+                      "on-tertiary-fixed": "#271900",
+                      "on-secondary-container": "#514f81",
+                      "surface-container": "#f0edec",
+                      "outline-variant": "#ccc3d8",
+                      "surface-container-highest": "#e5e2e1",
+                      "surface-variant": "#e5e2e1",
+                      "inverse-primary": "#d2bbff",
+                      "on-primary-fixed": "#25005a",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "tertiary-fixed": "#ffdea6",
+                      "on-secondary-fixed": "#181445",
+                      "on-primary-container": "#ede0ff",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#d2bbff",
+                      "surface-tint": "#732ee4",
+                      "on-primary": "#ffffff",
+                      "primary": "#630ed4",
+                      "on-surface": "#1c1b1b",
+                      "tertiary-fixed-dim": "#f7bd48",
+                      "surface-container-high": "#ebe7e7",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "margin-desktop": "40px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "stack-lg": "24px",
+                      "gutter": "24px",
+                      "container-max-width": "1440px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Geist"],
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-sm": ["Geist"],
+                      "body-md": ["Inter"],
+                      "code-sm": ["JetBrains Mono"],
+                      "body-sm": ["Inter"],
+                      "display-lg": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "headline-lg": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm h-16">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max-width mx-auto h-full">
+<div class="flex items-center gap-4">
+<button aria-label="Go Back" class="hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-bold font-headline-sm">NH</div>
+<h1 class="font-headline-lg text-headline-md font-bold text-primary dark:text-inverse-primary leading-none">NeuroHire</h1>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-gutter">
+<span class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    All systems active
+                </span>
+<div class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a recruitment manager in a bright, modern office setting. The lighting is soft and natural, emphasizing a high-end, clean minimalist aesthetic consistent with a premium SaaS platform. The overall mood is intelligent, precise, and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb-ArD8e8W_-2evXWM6aEh3uWjATFHb0pYQkTYnudYucpdyDrpnbrXMaTItD6wOJB1CoIGcti-hTV9_lTm6myjTpY_X4qiR9UdiAYs0YihIhRu7o1w5wLQkJPb9JHUpWMilzu_NX4bxL5KQu_YqUfO34Bo9U1N97e5_9UgRBXluDzFjaw3-4HzcDQv5B1USakAD3YljzPTKHvFKKVBZq8RNDYHhdKLYJ23i7yXrEZ5-7_pVmiTAdGU23i-dv02dua25Tq4McKWX6w"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-20 px-margin-mobile md:px-margin-desktop max-w-container-max-width mx-auto">
+<!-- Header Info & Status -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-stack-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background tracking-tight mb-unit">Stellaris AI</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Senior Machine Learning Engineer (Platform)</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<select class="appearance-none bg-surface border border-outline-variant rounded-lg px-4 py-2 pr-10 font-label-md text-label-md focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer">
+<option>Status: Interviewing</option>
+<option>Status: Applied</option>
+<option>Status: Technical Round</option>
+<option>Status: Offer</option>
+<option>Status: Rejected</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+<button class="violet-gradient text-on-primary font-label-md text-label-md px-6 py-2 rounded-lg shadow-sm hover:opacity-90 transition-opacity">
+                    Edit Application
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Column: Main Content (Left/Center) -->
+<div class="md:col-span-8 space-y-gutter">
+<!-- GENERATED OUTREACH MATERIAL -->
+<section><div class="mb-6">
+<h3 class="text-[16px] font-semibold text-[#0F0F0F]">Generated Outreach Material</h3>
+<p class="text-[13px] text-[#6B7280]">AI-customized copy prepared for candidate cold communications.</p>
+</div>
+<div class="space-y-4">
+<!-- Cold Email Card -->
+<div class="bg-white border border-[#E5E5E5] rounded-[10px] p-4">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#6B7280]">mail</span>
+<span class="font-semibold text-on-surface">Cold Email Pitch</span>
+</div>
+<button class="flex items-center gap-1 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+                Copy Draft
+            </button>
+</div>
+<div class="mb-3">
+<span class="text-[13px] text-[#9CA3AF]">Subject:</span>
+<span class="text-[13px] font-code-sm text-on-surface">Advancing ML Architecture at Stellaris</span>
+</div>
+<div class="text-[14px] font-normal leading-[1.6] text-[#374151] space-y-2">
+<p>Hi Sarah, I've been following Stellaris AI's recent breakthrough in transformer efficiency. Given my background in high-throughput inference pipelines, I was particularly impressed by your team's approach to quantization.</p>
+<p>I've spent the last 4 years architecting scalable ML infrastructure that mirrors the enterprise-grade requirements Stellaris is currently tackling...</p>
+</div>
+<div class="mt-3 flex items-center justify-between">
+<button class="flex items-center gap-1 text-primary text-body-sm font-semibold">
+                Show more
+                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+<span class="bg-surface-container px-2 py-0.5 rounded-full text-[11px] text-[#6B7280]">142 words</span>
+</div>
+</div>
+<!-- Cover Letter Card -->
+<div class="bg-white border border-[#E5E5E5] rounded-[10px] p-4">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#6B7280]">description</span>
+<span class="font-semibold text-on-surface">Cover Letter Paragraphs</span>
+</div>
+<button class="flex items-center gap-1 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+                Copy Draft
+            </button>
+</div>
+<div class="text-[14px] font-normal leading-[1.6] text-[#374151] space-y-2">
+<p>Dear Hiring Manager,</p>
+<p>I am writing to express my enthusiastic interest in the Senior ML Engineer position. My professional journey has been defined by a commitment to optimizing neural engine performance and scaling distributed training frameworks...</p>
+</div>
+<div class="mt-3">
+<button class="flex items-center gap-1 text-primary text-body-sm font-semibold">
+                Show more
+                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- LinkedIn Card -->
+<div class="bg-white border border-[#E5E5E5] rounded-[10px] p-4">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#6B7280]">send</span>
+<span class="font-semibold text-on-surface">LinkedIn / Referral Message</span>
+</div>
+<button class="flex items-center gap-1 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+                Copy Draft
+            </button>
+</div>
+<div class="text-[14px] font-normal leading-[1.6] text-[#374151]">
+<p>Hi James, impressive work on the core engine. I'm applying for the platform role and would love to connect about your team's scaling roadmap.</p>
+</div>
+<div class="mt-3 flex justify-end">
+<span class="bg-surface-container px-2 py-0.5 rounded-full text-[11px] text-[#6B7280]">67 chars</span>
+</div>
+</div>
+</div></section>
+<!-- TAILORED RESUME BULLETS -->
+<section><div class="border-t border-[#E5E5E5] pt-8 mb-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="text-[16px] font-semibold text-[#0F0F0F]">Tailored Resume Bullets</h3>
+<p class="text-[13px] text-[#6B7280]">Tailoring differences matching the baseline profile ground truth.</p>
+</div>
+<button class="violet-gradient text-white px-4 py-2 rounded-lg flex items-center gap-2 font-label-md text-label-md">
+<span class="material-symbols-outlined text-[20px]">download</span>
+            Download PDF
+        </button>
+</div>
+</div>
+<div class="space-y-8">
+<!-- Project 1 -->
+<div>
+<h4 class="text-[14px] font-semibold text-primary mb-3">Neural Engine Optimization</h4>
+<div class="bg-white border border-[#E5E5E5] rounded-[10px] overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-2">
+<!-- Original -->
+<div class="bg-[#FEF2F2] border-l-[3px] border-[#FCA5A5] p-4">
+<span class="text-[10px] font-semibold text-[#DC2626] tracking-widest block mb-2">ORIGINAL</span>
+<p class="text-[13px] font-normal text-[#7F1D1D]">Reduced model latency by 20% using custom quantization techniques across the entire production pipeline.</p>
+</div>
+<!-- Tailored -->
+<div class="bg-[#F0FDF4] border-l-[3px] border-[#86EFAC] p-4">
+<span class="text-[10px] font-semibold text-[#16A34A] tracking-widest block mb-2">TAILORED (ADJUDICATED)</span>
+<p class="text-[13px] font-medium text-[#14532D]">Engineered high-throughput inference pipelines for LLMs, achieving a 20% latency reduction via advanced quantization, directly addressing Stellaris' scale requirements.</p>
+</div>
+</div>
+<div class="bg-green-50 px-4 py-2 border-t border-green-100 flex items-center justify-between">
+<div class="flex items-center gap-2 text-green-600 text-[12px] font-medium">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                    2 claims verified · 0 fabrications detected
+                </div>
+<span class="material-symbols-outlined text-green-600 text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div>
+<h4 class="text-[14px] font-semibold text-primary mb-3">Distributed Training Framework</h4>
+<div class="bg-white border border-[#E5E5E5] rounded-[10px] overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-2">
+<!-- Original -->
+<div class="bg-[#FEF2F2] border-l-[3px] border-[#FCA5A5] p-4">
+<span class="text-[10px] font-semibold text-[#DC2626] tracking-widest block mb-2">ORIGINAL</span>
+<p class="text-[13px] font-normal text-[#7F1D1D]">Led development of a Kubernetes-based training platform for massive datasets.</p>
+</div>
+<!-- Tailored -->
+<div class="bg-[#F0FDF4] border-l-[3px] border-[#86EFAC] p-4">
+<span class="text-[10px] font-semibold text-[#16A34A] tracking-widest block mb-2">TAILORED (ADJUDICATED)</span>
+<p class="text-[13px] font-medium text-[#14532D]">Architected a scalable Kubernetes orchestration layer for multi-node training, mirroring Stellaris' focus on enterprise-grade ML infrastructure.</p>
+</div>
+</div>
+<div class="bg-green-50 px-4 py-2 border-t border-green-100 flex items-center justify-between">
+<div class="flex items-center gap-2 text-green-600 text-[12px] font-medium">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                    2 claims verified · 0 fabrications detected
+                </div>
+<span class="material-symbols-outlined text-green-600 text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+</div></section>
+</div>
+<!-- Column: Sidebar (Right) -->
+<div class="md:col-span-4 space-y-gutter">
+<!-- OVERALL FIT SCORER -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-stack-lg shadow-sm">
+<div class="flex flex-col items-center text-center">
+<div class="mb-2">
+<span class="bg-tertiary/10 text-tertiary px-4 py-1 rounded-full font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                                Excellent
+                            </span>
+</div>
+<div class="relative w-32 h-32 my-stack-md flex items-center justify-center">
+<svg class="w-full h-full">
+<circle class="text-surface-container-high" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary progress-ring-circle" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364.4" stroke-dashoffset="21.8" stroke-width="8"></circle>
+</svg>
+<span class="absolute font-headline-lg text-headline-lg text-primary">94%</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm mb-stack-md">Overall Fit Score</h4>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span class="font-body-sm text-body-sm">Stack Matched (PyTorch, Go, K8s)</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span class="font-body-sm text-body-sm">Culture Match (High Autonomy)</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span class="font-body-sm text-body-sm">Projects Aligned (Distributed Systems)</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span class="font-body-sm text-body-sm">Experience Match (7+ Years)</span>
+</div>
+</div>
+</section>
+<!-- COMPANY PROFILE -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden shadow-sm">
+<div class="p-stack-lg border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm mb-4">Company Profile</h3>
+<div class="grid grid-cols-2 gap-y-4">
+<div>
+<p class="text-[10px] font-bold text-outline tracking-wider">INDUSTRY</p>
+<p class="font-label-md text-label-md">Artificial Intelligence</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline tracking-wider">FOUNDED</p>
+<p class="font-label-md text-label-md">2019</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline tracking-wider">HQ</p>
+<p class="font-label-md text-label-md">San Francisco, CA</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline tracking-wider">WEBSITE</p>
+<a class="font-label-md text-label-md text-primary" href="#">stellaris.ai</a>
+</div>
+</div>
+</div>
+<div class="p-stack-lg">
+<h4 class="font-label-md text-label-md mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">rss_feed</span>
+                            Recent News Feed
+                        </h4>
+<div class="space-y-4">
+<div class="group cursor-pointer">
+<div class="flex items-center justify-between text-[11px] text-outline mb-1">
+<span>TechCrunch • 2d ago</span>
+</div>
+<p class="font-body-sm text-body-sm font-semibold group-hover:text-primary transition-colors">Stellaris AI Raises $120M Series C for Efficiency Research</p>
+</div>
+<div class="group cursor-pointer">
+<div class="flex items-center justify-between text-[11px] text-outline mb-1">
+<span>VentureBeat • 1w ago</span>
+</div>
+<p class="font-body-sm text-body-sm font-semibold group-hover:text-primary transition-colors">Why Custom Quantization is the Next AI Frontier</p>
+</div>
+<div class="group cursor-pointer">
+<div class="flex items-center justify-between text-[11px] text-outline mb-1">
+<span>Company Blog • 2w ago</span>
+</div>
+<p class="font-body-sm text-body-sm font-semibold group-hover:text-primary transition-colors">Our Roadmap: Scaling Neural Compute to the Edge</p>
+</div>
+</div>
+</div>
+</section>
+<!-- AGENT PANEL (AI INSIGHT) -->
+<section class="agent-panel-dark rounded-2xl p-stack-lg text-white relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-stack-md">
+<span class="material-symbols-outlined text-inverse-primary" data-weight="fill">smart_toy</span>
+<h3 class="font-label-md text-label-md text-inverse-primary">AI Insight</h3>
+</div>
+<p class="font-body-sm text-body-sm text-gray-300 leading-relaxed">
+                            "The hiring manager, James Miller, previously worked at your former company (NextGen) between 2017-2019. Consider mentioning the 'Project Phoenix' architecture in your technical interview."
+                        </p>
+<div class="mt-4 pt-4 border-t border-white/10">
+<button class="w-full text-center font-label-md text-label-md py-2 border border-white/20 rounded-lg hover:bg-white/5 transition-colors">
+                                Review Network Map
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-lg z-50">
+<div class="flex justify-around items-center px-margin-mobile py-3">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-md text-[10px]">Apps</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-[10px]">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interactions and effects
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+                setTimeout(() => button.classList.remove('scale-95'), 150);
+            });
+        });
+
+        // Simulating the progress ring animation on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const circle = document.querySelector('.progress-ring-circle');
+            if(circle) {
+                const radius = circle.r.baseVal.value;
+                const circumference = radius * 2 * Math.PI;
+                circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                
+                // Set to 94%
+                const offset = circumference - (94 / 100 * circumference);
+                setTimeout(() => {
+                    circle.style.strokeDashoffset = offset;
+                }, 300);
+            }
+        });
+    </script>
+</body></html>

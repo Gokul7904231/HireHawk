@@ -1,5 +1,4 @@
 import React from 'react';
-import { LayoutDashboard, Settings, Briefcase, Activity, LogOut } from 'lucide-react';
 import { useMcpStatusQuery } from '../hooks/useTracker';
 
 interface SidebarProps {
@@ -16,14 +15,23 @@ export default function Sidebar({ currentView, onNavigate, selectedId, onLogout 
     ? Object.values(mcpStatus).every(status => status === 'healthy')
     : false;
 
+  const userName = localStorage.getItem('hirehawk_user_name') || 'Alex Sterling';
+  const userRole = localStorage.getItem('hirehawk_user_role') || 'Lead Recruiter';
+  const userInitials = userName
+    .split(' ')
+    .map((n: string) => n[0])
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
+
   return (
-    <aside className="w-[240px] h-screen sticky top-0 border-r border-outline-variant bg-surface flex flex-col py-stack-lg px-stack-md justify-between z-50 shrink-0">
+    <aside className="w-[240px] h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-stack-lg px-stack-md z-50 justify-between">
       <div className="flex flex-col h-full justify-between">
         <div className="flex flex-col">
           {/* Brand Header */}
-          <div className="mb-stack-lg px-2 py-4">
-            <h1 className="font-headline text-lg font-bold text-primary leading-tight">HawkHire</h1>
-            <p className="font-sans text-on-surface-variant text-[10px] uppercase tracking-widest mt-1 font-semibold">
+          <div className="mb-8 px-2">
+            <h1 className="font-headline text-xl font-extrabold tracking-wider bg-gradient-to-r from-primary via-indigo-400 to-cyan-400 bg-clip-text text-transparent leading-tight">HawkHire</h1>
+            <p className="font-sans text-on-surface-variant text-[9px] uppercase tracking-widest mt-1 font-semibold">
               Recruitment Workspace
             </p>
           </div>
@@ -33,27 +41,27 @@ export default function Sidebar({ currentView, onNavigate, selectedId, onLogout 
             <button
               id="nav-dashboard"
               onClick={() => onNavigate('dashboard')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-left font-sans text-sm ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left font-sans text-sm ${
                 currentView === 'dashboard'
-                  ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low'
-                  : 'text-on-surface-variant hover:bg-surface-container'
+                  ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low/80'
+                  : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low/40'
               }`}
             >
-              <LayoutDashboard size={18} className={currentView === 'dashboard' ? 'text-primary' : 'text-on-surface-variant'} />
+              <span className={`material-symbols-outlined text-lg ${currentView === 'dashboard' ? 'text-primary' : 'text-on-surface-variant'}`}>dashboard</span>
               <span>Dashboard</span>
             </button>
 
             <button
               id="nav-detail"
               onClick={() => onNavigate('app', selectedId || undefined)}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors text-left font-sans text-sm ${
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all text-left font-sans text-sm ${
                 currentView === 'app'
-                  ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low'
-                  : 'text-on-surface-variant hover:bg-surface-container'
+                  ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low/80'
+                  : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low/40'
               }`}
             >
               <div className="flex items-center gap-3">
-                <Briefcase size={18} className={currentView === 'app' ? 'text-primary' : 'text-on-surface-variant'} />
+                <span className={`material-symbols-outlined text-lg ${currentView === 'app' ? 'text-primary' : 'text-on-surface-variant'}`}>description</span>
                 <span>Applications</span>
               </div>
               {selectedId && (
@@ -66,13 +74,13 @@ export default function Sidebar({ currentView, onNavigate, selectedId, onLogout 
             <button
               id="nav-settings"
               onClick={() => onNavigate('settings')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-left font-sans text-sm ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left font-sans text-sm ${
                 currentView === 'settings'
-                  ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low'
-                  : 'text-on-surface-variant hover:bg-surface-container'
+                  ? 'text-primary font-bold border-r-2 border-primary bg-surface-container-low/80'
+                  : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low/40'
               }`}
             >
-              <Settings size={18} className={currentView === 'settings' ? 'text-primary' : 'text-on-surface-variant'} />
+              <span className={`material-symbols-outlined text-lg ${currentView === 'settings' ? 'text-primary' : 'text-on-surface-variant'}`}>settings</span>
               <span>Settings</span>
             </button>
           </nav>
@@ -85,31 +93,31 @@ export default function Sidebar({ currentView, onNavigate, selectedId, onLogout 
               onClick={onLogout}
               className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-error hover:bg-error-container/20 transition-all focus:outline-none"
             >
-              <LogOut size={16} />
+              <span className="material-symbols-outlined text-base text-error">logout</span>
               <span>Sign Out</span>
             </button>
           )}
 
-          {/* User Profile Card */}
+          {/* User Profile Monogram Card */}
           <div className="p-3 bg-surface-container-low rounded-xl border border-outline-variant/30">
             <div className="flex items-center gap-3">
-              <img
-                alt="Recruiter Profile"
-                className="w-8 h-8 rounded-full border border-outline-variant"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLzpY2TMvvQoXNFJjvVdx3MWFal2qkx5wd-R8Wcly6VecB2WrOvgRJJDYdUWmKsiO2n74bIWj01GI7tF5gZJHJq2_wUjYmOtEUf4jnXt6ZMZGeKTqrjQqZb1zAngw50vXbA4Us_hk1vCDHTuC2O1b2xav_CL5ar8CdqS5HnFV0lFVHHMqoZbEBGqk8I-JoNgUIQVVHEYaD-OHCjpGlbRwomUZLPbTyxXWZQG0_IVqiCaFdtEMHvyypgGc0sHEGUxJNFvTDzJRyS78"
-              />
+              <div className="w-8 h-8 rounded-full bg-primary-container/20 text-primary flex items-center justify-center font-bold text-xs">
+                {userInitials}
+              </div>
               <div className="overflow-hidden">
-                <p className="text-xs font-bold text-on-surface truncate">Alex Sterling</p>
-                <p className="text-[10px] text-on-surface-variant truncate">Lead Recruiter</p>
+                <p className="text-xs font-bold text-on-surface truncate">{userName}</p>
+                <p className="text-[10px] text-on-surface-variant truncate">{userRole}</p>
               </div>
             </div>
           </div>
 
           {/* MCP status info box */}
-          <div className="p-3 rounded-xl bg-white border border-outline-variant/50">
+          <div className="p-3 rounded-xl bg-surface-container-low/40 border border-outline-variant/50 backdrop-blur-sm">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <Activity className={isMcpHealthy ? "text-emerald-500" : "text-amber-500 animate-pulse"} size={14} />
+                <span className={`material-symbols-outlined text-base ${isMcpHealthy ? "text-emerald-400" : "text-amber-400 animate-pulse"}`}>
+                  dns
+                </span>
                 <div className="overflow-hidden">
                   <div className="text-[10px] font-bold text-on-surface truncate">MCP Cluster</div>
                   <div className="text-[8px] text-on-surface-variant truncate">

@@ -4,26 +4,26 @@
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid #E5E5E5;
+    background: rgba(12, 17, 34, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .glow-purple {
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.15);
   }
 
   .glow-green {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
   }
 
   .agent-gradient {
-    background: linear-gradient(135deg, #1E1B4B 0%, #2D2A6E 100%);
+    background: linear-gradient(135deg, #0f162d 0%, #080c18 100%);
   }
 
   .agent-panel-gradient {
-    background: linear-gradient(180deg, #1E1B4B 0%, #111827 100%);
+    background: linear-gradient(180deg, #0e1328 0%, #050814 100%);
   }
 }
 
@@ -38,12 +38,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E5E2E1;
+  background: #1e293b;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7c3aed;
+  background: #8b5cf6;
 }
 
 /* Custom Scrollbars for Agent Panel */
@@ -51,10 +51,10 @@
   width: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
 
@@ -78,7 +78,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #fcf9f8;
-  color: #1c1b1b;
+  background-color: #050814;
+  color: #f8fafc;
   font-family: 'Inter', sans-serif;
 }

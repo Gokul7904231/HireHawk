@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NeuroHire Dashboard - Getting Started</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Geist:wght@400;600;700;900&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .agent-gradient {
+            background: linear-gradient(135deg, #630ed4 0%, #1e1b4b 100%);
+        }
+        .dashed-border {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='6' ry='6' stroke='%234A4455' stroke-width='2' stroke-dasharray='8%2c 8' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#ffe2b2",
+                    "inverse-surface": "#313030",
+                    "outline": "#7b7487",
+                    "error": "#ba1a1a",
+                    "primary-container": "#7c3aed",
+                    "surface-bright": "#fcf9f8",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#e3dfff",
+                    "secondary": "#5b598c",
+                    "on-secondary-fixed-variant": "#444173",
+                    "on-background": "#1c1b1b",
+                    "surface": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "on-surface-variant": "#4a4455",
+                    "tertiary-container": "#866000",
+                    "secondary-container": "#c7c3fe",
+                    "surface-container-low": "#f6f3f2",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "tertiary": "#674900",
+                    "surface-dim": "#dcd9d9",
+                    "primary-fixed": "#eaddff",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "on-tertiary-fixed": "#271900",
+                    "on-secondary-container": "#514f81",
+                    "surface-container": "#f0edec",
+                    "outline-variant": "#ccc3d8",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-variant": "#e5e2e1",
+                    "inverse-primary": "#d2bbff",
+                    "on-primary-fixed": "#25005a",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "tertiary-fixed": "#ffdea6",
+                    "on-secondary-fixed": "#181445",
+                    "on-primary-container": "#ede0ff",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-tint": "#732ee4",
+                    "on-primary": "#ffffff",
+                    "primary": "#630ed4",
+                    "on-surface": "#1c1b1b",
+                    "tertiary-fixed-dim": "#f7bd48",
+                    "surface-container-high": "#ebe7e7",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "margin-desktop": "40px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "stack-lg": "24px",
+                    "gutter": "24px",
+                    "container-max-width": "1440px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-desktop": ["Geist"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Geist"],
+                    "body-md": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-sm": ["Inter"],
+                    "display-lg": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- NavigationDrawer (Sidebar) -->
+<aside class="hidden md:flex flex-col h-full w-64 fixed left-0 top-0 bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline py-stack-lg z-30">
+<div class="px-6 mb-10">
+<span class="font-headline-md text-headline-md font-black text-primary dark:text-inverse-primary tracking-tight">HawkHire</span>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 py-3 px-4 bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-lg mx-2 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Applications</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low mx-2 rounded-lg transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Candidates</span>
+</a>
+</nav>
+<div class="px-6 py-4 border-t border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">NH</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold">Admin</span>
+<span class="text-[10px] text-on-surface-variant">Systems Active</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen relative overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm docked full-width top-0 z-20">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max-width mx-auto h-16">
+<div class="flex items-center gap-3">
+<div class="md:hidden w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">NH</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">NeuroHire</h1>
+</div>
+<div class="hidden md:flex items-center gap-2 px-3 py-1 bg-surface-container rounded-full">
+<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+<span class="font-label-md text-label-md text-on-surface-variant">All systems active</span>
+</div>
+<div class="flex md:hidden">
+<button class="p-2"><span class="material-symbols-outlined">menu</span></button>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 flex flex-col md:flex-row max-w-container-max-width w-full mx-auto relative">
+<!-- Left Side: Empty State Main Canvas -->
+<section class="flex-1 flex flex-col items-center justify-center p-8 md:p-16 text-center">
+<div class="relative mb-8 group">
+<div class="absolute -inset-4 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all duration-700"></div>
+<img alt="Empty state illustration" class="w-64 h-64 md:w-80 md:h-80 object-contain relative z-10" data-alt="A minimal, high-end 3D digital illustration of a clean workspace with an abstract floating robotic hand hovering over a glowing digital scroll. The style is ultra-modern and clinical, using a soft white and deep indigo color palette with subtle violet light leaks. The lighting is bright and airy, representing a blank slate for a recruiter to begin their process. High-quality render with soft shadows and a sense of calm efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGwBIQBvx9FW-98PwyPYGTyakMInGn-I85iBpFPGqGCxzka8HDbBdJSaC88OukSQbVg0gzffd3uh665SxNZdtzqqUEH_tOqfy2fGEA1_KgiXiDRc1mZofacMXD2mjwLYbS9jimE1HZH3Aj8ZtxRbBaWRJduTGRiH7xSrn6rOqJiqPrvENO0x-pcTSZ2U6wDd6-PEj_FH_G1M4Mc74n-EWQULqGkIUYTDZji7uKb_ilgk0uKQuEg6S2cUpKCyMm9TOn3TZiF6M14GQ"/>
+</div>
+<h2 class="font-headline-lg text-headline-lg mb-4 text-on-surface">Your Talent Pipeline Awaits</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto mb-10">
+                    NeuroHire's agents are ready to scan, score, and rank your candidates. Paste your first job description to get started.
+                </p>
+<button class="bg-gradient-to-r from-primary to-primary-container hover:scale-105 transition-transform duration-200 text-on-primary font-bold py-4 px-8 rounded-lg shadow-lg flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+<span>Create Your First Job</span>
+</button>
+</section>
+<!-- Right Side: Agent Panel (Dark Themed Sidebar) -->
+<aside class="w-full md:w-[400px] bg-[#1E1B4B] text-white border-l border-white/10 flex flex-col p-6 shadow-2xl relative overflow-hidden">
+<!-- Atmospheric subtle background glow -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] pointer-events-none"></div>
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm leading-tight">Agent Workspace</h3>
+<p class="text-xs text-on-primary-container/60 tracking-widest uppercase">Autonomous Intelligence</p>
+</div>
+</div>
+<div class="p-2 bg-white/5 rounded-full">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-6">
+<!-- Idle State Input Area -->
+<div class="flex-1 flex flex-col gap-4">
+<label class="text-xs font-bold text-on-primary-container/80 uppercase tracking-widest">Initial Context</label>
+<div class="relative flex-1 group">
+<div class="absolute inset-0 dashed-border opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<textarea class="w-full h-full bg-transparent border-none focus:ring-0 resize-none p-6 text-on-primary-container placeholder:text-outline/50 font-body-md" disabled="" placeholder="Waiting for job description..."></textarea>
+<div class="absolute bottom-6 right-6 flex items-center gap-2 text-outline/40">
+<span class="text-[10px] font-code-sm">IDLE_STATE_LISTEN</span>
+<div class="w-1.5 h-1.5 rounded-full bg-outline/40"></div>
+</div>
+</div>
+</div>
+<!-- Progress Indicator (Loading State Preview) -->
+<div class="p-6 rounded-xl border border-white/10 bg-white/5">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm font-bold text-on-primary-container">System Readiness</span>
+<span class="text-xs text-outline/60">0%</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary/20 w-0 transition-all duration-1000"></div>
+</div>
+<p class="mt-4 text-xs text-on-primary-container/40 italic leading-relaxed">
+                                Provide a job description to trigger the agent's parsing engine. The system will automatically identify key competencies and required experience levels.
+                            </p>
+</div>
+</div>
+<!-- Bottom CTA within Agent Panel -->
+<div class="mt-8">
+<div class="flex items-center gap-2 text-xs text-primary mb-4">
+<span class="material-symbols-outlined text-xs">info</span>
+<span>Agent needs content to synthesize workflow</span>
+</div>
+<button class="w-full py-4 border border-white/10 rounded-lg text-white/50 cursor-not-allowed flex items-center justify-center gap-2 bg-white/5">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span class="font-label-md text-label-md">Analyze with AI</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-margin-mobile py-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant shadow-lg z-50">
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-md text-[10px]">Apps</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-[10px]">Profile</span>
+</a>
+</nav>
+</main>
+<script>
+        // Micro-interaction for the "waiting" text
+        const placeholders = [
+            "Waiting for job description...",
+            "System standing by...",
+            "Input required for synthesis...",
+            "Listening for context..."
+        ];
+        let i = 0;
+        const textarea = document.querySelector('textarea');
+        if (textarea) {
+            setInterval(() => {
+                i = (i + 1) % placeholders.length;
+                textarea.placeholder = placeholders[i];
+            }, 3000);
+        }
+    </script>
+</body></html>
