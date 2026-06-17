@@ -259,11 +259,11 @@ async def mcp_status():
     import httpx
     # 5 local uvicorn servers setup in run_all_mock.ps1
     servers = {
-        "resume-mcp": "http://localhost:8001/health",
-        "jd-parser-mcp": "http://localhost:8002/health",
-        "tracker-mcp": "http://localhost:8003/health",
-        "company-intel-mcp": "http://localhost:8004/health",
-        "outreach-mcp": "http://localhost:8005/health",
+        "resume-mcp": os.getenv("RESUME_MCP_URL", "http://localhost:8001").rstrip("/") + "/health",
+        "jd-parser-mcp": os.getenv("JD_PARSER_MCP_URL", "http://localhost:8002").rstrip("/") + "/health",
+        "tracker-mcp": os.getenv("TRACKER_MCP_URL", "http://localhost:8003").rstrip("/") + "/health",
+        "company-intel-mcp": os.getenv("COMPANY_INTEL_MCP_URL", "http://localhost:8004").rstrip("/") + "/health",
+        "outreach-mcp": os.getenv("OUTREACH_MCP_URL", "http://localhost:8005").rstrip("/") + "/health",
     }
     
     results = {}

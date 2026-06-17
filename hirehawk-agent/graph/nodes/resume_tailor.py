@@ -17,8 +17,19 @@ async def tailor_resume_node(state: HireHawkState) -> dict:
             "hitl_approved": False
         }
         
-    crew_port = os.getenv("CREW_PORT", "8001")
-    url = f"http://localhost:{crew_port}/tailor"
+    crew_base_url = os.getenv("CREW_BASE_URL")
+    if crew_base_url:
+        if not crew_base_url.startswith("http://") and not crew_base_url.startswith("https://"):
+            if ":" not in crew_base_url:
+                crew_port = os.getenv("CREW_PORT", "8001")
+                url = f"http://{crew_base_url}:{crew_port}/tailor"
+            else:
+                url = f"http://{crew_base_url}/tailor"
+        else:
+            url = f"{crew_base_url}/tailor"
+    else:
+        crew_port = os.getenv("CREW_PORT", "8001")
+        url = f"http://localhost:{crew_port}/tailor"
     
     async with httpx.AsyncClient() as client:
         payload = {
