@@ -3,6 +3,7 @@ services:
   - type: web
     name: hirehawk-agent
     runtime: python
+    plan: free
     rootDir: hirehawk-agent
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn api.server:app --host 0.0.0.0 --port $PORT
@@ -60,6 +61,7 @@ services:
   - type: web
     name: hirehawk-crew
     runtime: python
+    plan: free
     rootDir: hirehawk-agent
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn crew.server:app --host 0.0.0.0 --port $PORT
