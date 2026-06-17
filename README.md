@@ -127,11 +127,21 @@ cd hirehawk && .\run_all_mock.ps1 start
 cd hirehawk-agent && .venv\Scripts\uvicorn main:app --port 8000 --reload
 
 # Terminal 3 — CrewAI A2A
-cd hirehawk-agent && .venv\Scripts\uvicorn crew.server:app --port 8001
+cd hirehawk-agent && .venv\Scripts\uvicorn crew.server:app --port 8006
 
 # Terminal 4 — Worker
 cd hirehawk-copilot/worker && npx wrangler dev --port 8787
 ```
+
+### Running Services
+
+| Service | Technology | Local URL | Task Description |
+|---|---|---|---|
+| **Recruitment Dashboard** | React + Vite | [http://localhost:5173/](http://localhost:5173/) | Frontend dashboard to monitor agent runs, edit candidate profile, and approve applications. |
+| **Cloudflare Worker Edge** | Wrangler / Hono | [http://127.0.0.1:8787](http://127.0.0.1:8787) | Handles routing and communication between the extension and FastAPI backend. |
+| **Agentic LangGraph Backend** | FastAPI + LangGraph | [http://127.0.0.1:8000](http://127.0.0.1:8000) | Core multi-agent supervisor orchestrating parsing, tailoring, and fit scoring. |
+| **CrewAI A2A Resume Tailor** | CrewAI + FastAPI | [http://127.0.0.1:8006](http://127.0.0.1:8006) | Specialized resume tailoring agent (relocated to port 8006 to prevent conflicts). |
+| **Model Context Protocol (MCP)** | FastMCP Servers | Ports 8001–8005 | 5 distinct FastMCP tool servers (`resume-mcp`, `jd-parser-mcp`, `tracker-mcp`, etc.). |
 
 ### 4. Run the demo
 

@@ -22,7 +22,8 @@ function Start-Servers {
         $Cwd = Join-Path $BaseDir "mcp_servers\$($S.Dir)"
         Write-Host "Launching $($S.Name) on port $($S.Port) in $Cwd..." -ForegroundColor Yellow
         # Start uvicorn as a background process
-        $Proc = Start-Process -FilePath "..\..\venv\Scripts\python.exe" -ArgumentList "-m uvicorn main:app --port $($S.Port)" -WorkingDirectory $Cwd -PassThru -NoNewWindow
+        $PythonPath = Join-Path $BaseDir "venv\Scripts\python.exe"
+        $Proc = Start-Process -FilePath $PythonPath -ArgumentList "-m uvicorn main:app --port $($S.Port)" -WorkingDirectory $Cwd -PassThru -NoNewWindow
         $Processes += $Proc
     }
 
@@ -34,7 +35,7 @@ function Start-Servers {
     Write-Host "Waiting for all /health endpoints to return 200..." -ForegroundColor Yellow
 
     foreach ($S in $Servers) {
-        $Url = "http://localhost:$($S.Port)/health"
+        $Url = "http://127.0.0.1:$($S.Port)/health"
         $Ready = $false
         for ($i = 0; $i -lt 30; $i++) {
             try {
@@ -54,7 +55,10 @@ function Start-Servers {
             Write-Warning "Server $($S.Name) on port $($S.Port) failed health check!"
         }
     }
-    Write-Host "All servers are ready." -ForegroundColor Green
+    Write-Host "All servers are ready. Keeping task alive..." -ForegroundColor Green
+    while ($true) {
+        Start-Sleep -Seconds 5
+    }
 }
 
 function Stop-Servers {
@@ -63,10 +67,10 @@ function Stop-Servers {
         $PidsText = Get-Content $PidFile
         $Pids = $PidsText -split " "
         Write-Host "Stopping servers with PIDs: $($Pids -join ', ')" -ForegroundColor Cyan
-        foreach ($Pid in $Pids) {
-            if ($Pid.Trim() -ne "") {
+        foreach ($ServerPid in $Pids) {
+            if ($ServerPid.Trim() -ne "") {
                 try {
-                    Stop-Process -Id $Pid -Force -ErrorAction SilentlyContinue
+                    Stop-Process -Id $ServerPid -Force -ErrorAction SilentlyContinue
                 } catch {}
             }
         }
