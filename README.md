@@ -1,6 +1,6 @@
 # HireHawk — Autonomous AI Job Application Copilot
 
-[![CI](https://github.com/gokul/actions/workflows/ci.yml/badge.svg)](https://github.com/gokul/actions)
+
 [![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.2+-green)](https://github.com/langchain-ai/langgraph)
