@@ -9,6 +9,8 @@ services:
     startCommand: uvicorn api.server:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.8"
       - key: PORT
         value: "8000"
       - key: HOST
@@ -67,6 +69,8 @@ services:
     startCommand: uvicorn crew.server:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.8"
       - key: PORT
         value: "8001"
       - key: A2A_MOCK
